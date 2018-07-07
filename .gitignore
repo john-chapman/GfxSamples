@@ -3,10 +3,6 @@ lib/*
 bin/*
 !bin/*.ini
 
-# Auto-generated docs (except configs)
-docs/*
-!docs/*.doxy
-
 # Visual Studio
 build/vs*/*
 build/vs*/*.user
@@ -15,5 +11,6 @@ build/vs*/*.user
 !build/vs*/*.filters
 !build/vs*/*.props
 
-# User configs
+# User configs, log files
 *.ini
+*.log
