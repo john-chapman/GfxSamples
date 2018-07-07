@@ -6,14 +6,26 @@ dofile(FRM_ROOT .. "build/GfxSampleFramework_premake.lua")
 
 workspace "GfxSamples"
 	location(_ACTION)
-	configurations { "Debug", "Release" }
 	platforms { "Win64" }
-	flags { "C++11", "StaticRuntime" }
+	language "C++"
+	cppdialect "C++11"
+	flags { "StaticRuntime" }
 	filter { "platforms:Win64" }
 		system "windows"
 		architecture "x86_64"
 	filter {}
 
+	configurations { "Debug", "Release" }
+	filter { "configurations:Debug" }
+		targetsuffix "_debug"
+		symbols "On"
+		optimize "Off"
+	filter {}
+	filter { "configurations:Release" }
+		symbols "Off"
+		optimize "Full"
+	filter {}
+	
 	group "libs"
 		ApplicationTools_ProjectExternal(APT_ROOT)
 	group ""
@@ -24,39 +36,28 @@ workspace "GfxSamples"
 			"../bin"
 			)
 	group ""
-	ApplicationTools_Link()
-	GfxSampleFramework_Link()
-
 
 	local projList = dofile("projects.lua")
 	for name,fileList in pairs(projList) do
 		project(tostring(name))
 			kind "ConsoleApp"
-			language "C++"
 			targetdir "../bin"
 
-		filter { "configurations:debug" }
-			targetsuffix "_debug"
-			symbols "On"
-			optimize "Off"
-		filter {}
-		filter { "configurations:release" }
-			symbols "Off"
-			optimize "Full"
-		filter {}
+				ApplicationTools_Link()
+				GfxSampleFramework_Link()
 
-			files(fileList)
-			files({
-				"../src/_sample.cpp",
-				})
-
-			filter { "action:vs*" }
-				postbuildcommands({
-				  -- make the project data dir
-					"mkdir \"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
-
-				  -- make link to project data dir in bin
-					"rmdir \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\"",
-					"mklink /j \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\" " .. "\"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
+				files(fileList)
+				files({
+					"../src/_sample.cpp",
 					})
+
+				filter { "action:vs*" }
+					postbuildcommands({
+					  -- make the project data dir
+						"mkdir \"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
+
+					  -- make link to project data dir in bin
+						"rmdir \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\"",
+						"mklink /j \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\" " .. "\"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
+						})
 	end
