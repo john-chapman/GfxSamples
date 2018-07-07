@@ -147,7 +147,7 @@ void LensFlare_ScreenSpace::draw()
 	Camera* cam = Scene::GetDrawCamera();
 
  // scene
-	{	AUTO_MARKER("Scene");
+	{	PROFILER_MARKER("Scene");
 		ctx->setFramebufferAndViewport(m_fbScene);
 		ctx->setShader(m_shEnvMap);
 		ctx->bindTexture("txEnvmap", m_txEnvmap);
@@ -155,7 +155,7 @@ void LensFlare_ScreenSpace::draw()
 	}
 	 
  // downsample
-	{	AUTO_MARKER("Downsample");
+	{	PROFILER_MARKER("Downsample");
 	
 		const int localX = m_shDownsample->getLocalSize().x;
 		const int localY = m_shDownsample->getLocalSize().y;
@@ -180,8 +180,8 @@ void LensFlare_ScreenSpace::draw()
 	}
 
  // lens flare
-	{	AUTO_MARKER("Lens Flare");
-		{	AUTO_MARKER("Features");
+	{	PROFILER_MARKER("Lens Flare");
+		{	PROFILER_MARKER("Features");
 			ctx->setFramebufferAndViewport(m_fbFeatures);
 			ctx->setShader(m_shFeatures);
 			ctx->bindTexture(m_txSceneColor);
@@ -197,7 +197,7 @@ void LensFlare_ScreenSpace::draw()
 			ctx->setUniform("uChromaticAberration", m_chromaticAberration);
 			ctx->drawNdcQuad();
 		}
-		{	AUTO_MARKER("Blur");
+		{	PROFILER_MARKER("Blur");
 			ctx->setShader(m_shBlur);
 			ctx->setUniform("uRadiusPixels", m_blurSize);
 
@@ -218,7 +218,7 @@ void LensFlare_ScreenSpace::draw()
 			ctx->dispatch(m_txFeatures[0]);
 			glAssert(glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT));
 		}
-		{	AUTO_MARKER("Composite");
+		{	PROFILER_MARKER("Composite");
 
 			vec3 viewVec = Scene::GetDrawCamera()->getViewVector();
 			float starburstOffset = viewVec.x + viewVec.y + viewVec.z;
