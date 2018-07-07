@@ -13,5 +13,10 @@ local projList =
 	{ 
 		"../src/LensFlare_ScreenSpace.*",
 	},
+
+	BlockCompression =
+	{ 
+		"../src/BlockCompression.*",
+	},
 }
 return projList
