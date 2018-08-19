@@ -2,7 +2,6 @@
 
 #define USE_SHARED_MEMORY  1  // Load src block into shared memory (else call texelFetch() for each sample).
 #define ENDPOINTS_PCA      0  // Use principle component analysis to find the block endpoints (else use the color space extents).
-#define INDICES_EUCLIDEAN  0  // Use euclidean distance to find the indices per pixel (else project onto the line segment).
 
 uniform sampler2D txSrc;
 
@@ -152,39 +151,19 @@ void main()
 	block[0] = bitfieldInsert(block[0], ep1i, 0,  16);
 	block[0] = bitfieldInsert(block[0], ep0i, 16, 16);
 
- // find indices
-	#if INDICES_EUCLIDEAN
-	{
-		vec3 palette[4];
-		palette[0] = ep1;
-		palette[1] = ep0;
-		palette[2] = 2.0/3.0 * palette[0] + 1.0/3.0 * palette[1];
-		palette[3] = 1.0/3.0 * palette[0] + 2.0/3.0 * palette[1];
-		#if 1
-		 // pack/unpack the palette values = quantize palette so that texel indices are generated from the final result
-			for (int i = 0; i < 4; ++i) {
-				palette[i] = UnpackRGB565(PackRGB565(palette[i]));
-			}
-		#endif
-
-		int idx = 0;
-		float minErr = 999.0;
-		for (int i = 0; i < 4; ++i) {
-			float err = length2(SRC_TEXEL(TEXEL_INDEX) - palette[i]);
-			if (err < minErr) {
-				minErr = err;
-				idx = i;
-			}
-			s_indices[TEXEL_INDEX] = idx;
+ // early-out solid color blocks
+ 	if (ep0i == ep1i) {
+		if (TEXEL_INDEX == 0) {
+			bfDst[BLOCK_INDEX] = block;
 		}
+		return;
 	}
-	#else
+
+ // find indices
 	{
-		#if 1
-		 // pack/unpack the endpoint values = quantize endpoints to minimize final error
-			ep0 = UnpackRGB565(PackRGB565(ep0));
-			ep1 = UnpackRGB565(PackRGB565(ep1));
-		#endif
+	 // pack/unpack the endpoint values = quantize endpoints to minimize final error
+		ep0 = UnpackRGB565(PackRGB565(ep0));
+		ep1 = UnpackRGB565(PackRGB565(ep1));
 		
 	 // project onto (ep1 - ep0)
 		vec3 d = ep1 - ep0;
@@ -198,7 +177,6 @@ void main()
 		const uvec4 idxMap = uvec4(1, 3, 2, 0);
 		s_indices[TEXEL_INDEX] = idxMap[uint(idx)];
 	}
-	#endif
 	groupMemoryBarrier();
 
  // encode block

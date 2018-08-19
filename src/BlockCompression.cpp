@@ -151,6 +151,8 @@ void BlockCompression::drawPreview(int _x, int _y, int _w, int _h, frm::Texture*
 	const vec2 mainWH = vec2(_w, _h);
 	const vec2 subXY  = vec2(_x, _y + _h + 2.0f);
 	const vec2 subWH  = vec2(200.0f);
+	
+	const float subSize = 20.0f;
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32_BLACK_TRANS);
 	ImGui::SetNextWindowPos(vec2(0, 0));
@@ -172,7 +174,7 @@ void BlockCompression::drawPreview(int _x, int _y, int _w, int _h, frm::Texture*
 	if (ImGui::IsItemHovered() && ImGui::IsMouseDown(1)) {
 		hoverUv = (vec2(ImGui::GetMousePos()) - vec2(ImGui::GetItemRectMin())) / mainWH;
 	}
-	drawList->AddRect(Floor(mainXY + hoverUv * mainWH - vec2(10.0f)), Floor(mainXY + hoverUv * mainWH + vec2(10.0f)), IM_COL32_WHITE);
+	drawList->AddRect(Floor(mainXY + hoverUv * mainWH - vec2(subSize * 0.5f)), Floor(mainXY + hoverUv * mainWH + vec2(subSize * 0.5f)), IM_COL32_WHITE);
 
 	auto ctx = GlContext::GetCurrent();
 	ctx->setFramebuffer(0);
@@ -185,7 +187,7 @@ void BlockCompression::drawPreview(int _x, int _y, int _w, int _h, frm::Texture*
 	ctx->bindTexture("txCmp", _txCmp);
 	ctx->drawNdcQuad();
 
-	vec2 uvScale = vec2(20.0f) / vec2(m_txSrc->getWidth(), m_txSrc->getHeight());
+	vec2 uvScale = vec2(subSize) / vec2(m_txSrc->getWidth(), m_txSrc->getHeight());
 	ctx->setViewport(_x, m_windowSize.y - (int)subXY.y - (int)subWH.y, (int)subWH.x, (int)subWH.y);
 	ctx->setUniform("uUvBias", hoverUv - uvScale * 0.5f);
 	ctx->setUniform("uUvScale", uvScale);
