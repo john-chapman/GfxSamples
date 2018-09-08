@@ -1,4 +1,4 @@
-local projList = 
+return
 {
 	--skeleton = 
 	--{ 
@@ -14,4 +14,3 @@ local projList =
 		"../src/LensFlare_ScreenSpace.*",
 	},
 }
-return projList
