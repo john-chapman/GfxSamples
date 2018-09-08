@@ -1,16 +1,18 @@
-#include <frm/def.h>
-#include <frm/gl.h>
-#include <frm/AppSample.h>
-#include <frm/GlContext.h>
-#include <frm/Window.h>
+#include <frm/core/def.h>
+#include <frm/core/gl.h>
+#include <frm/core/AppSample.h>
+#include <frm/core/GlContext.h>
+#include <frm/core/Window.h>
 
 #include <apt/ArgList.h>
+#include <apt/FileSystem.h>
 
 using namespace frm;
 using namespace apt;
 
 int main(int _argc, char** _argv)
 {
+	FileSystem::AddRoot("common2");
 	AppSample* app = AppSample::GetCurrent();
 	if (!app->init(ArgList(_argc, _argv))) {
 		APT_ASSERT(false);
