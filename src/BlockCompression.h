@@ -2,7 +2,7 @@
 #ifndef BlockCompression_h
 #define BlockCompression_h
 
-#include <frm/AppSample.h>
+#include <frm/core/AppSample.h>
 
 class BlockCompression: public frm::AppSample
 {
