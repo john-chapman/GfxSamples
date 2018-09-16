@@ -51,13 +51,13 @@ workspace "GfxSamples"
 					"../src/_sample.cpp",
 					})
 
+				local projDir = "$(ProjectDir)../../"
+				local dataDir = projDir .. "data/"
+				local binDir  = projDir .. "bin/"
 				filter { "action:vs*" }
 					postbuildcommands({
-					  -- make the project data dir
-						"mkdir \"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
-
-					  -- make link to project data dir in bin
-						"rmdir \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\"",
-						"mklink /j \"$(ProjectDir)..\\..\\bin\\" .. tostring(name) .. "\" " .. "\"$(ProjectDir)..\\..\\data\\" .. tostring(name) .. "\"",
+						"if not exist \"" .. dataDir .. tostring(name) .. "\" mkdir \"" .. dataDir .. tostring(name) .. "\"",
+						"if not exist \"" .. binDir .. tostring(name) .. "\" mklink /j \"" .. binDir .. tostring(name) .. "\" \"" .. dataDir .. "\"",
+						"if not exist \"" .. binDir .. "common2\" mklink /j \"" .. binDir .. "common2\" \"" .. dataDir .. "common\"",
 						})
 	end

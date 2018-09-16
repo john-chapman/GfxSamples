@@ -1,4 +1,4 @@
-local projList = 
+return
 {
 	--skeleton = 
 	--{ 
@@ -19,4 +19,3 @@ local projList =
 		"../src/BlockCompression.*",
 	},
 }
-return projList

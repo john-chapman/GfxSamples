@@ -57,8 +57,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EA_COMPILER_NO_EXCEPTIONS;APT_DEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLEW_STATIC;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all\extern;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win\extern;..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\all\extern;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\win\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EA_COMPILER_NO_EXCEPTIONS;APT_DEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLEW_STATIC=1;FRM_MODULE_CORE=1;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all\extern;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win\extern;..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\all\frm\core\extern;..\..\extern\GfxSampleFramework\src\win\frm\core\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -72,17 +72,17 @@
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\..\data\BlockCompression"
-rmdir "$(ProjectDir)..\..\bin\BlockCompression"
-mklink /j "$(ProjectDir)..\..\bin\BlockCompression" "$(ProjectDir)..\..\data\BlockCompression"</Command>
+      <Command>if not exist "$(ProjectDir)../../data/BlockCompression" mkdir "$(ProjectDir)../../data/BlockCompression"
+if not exist "$(ProjectDir)../../bin/BlockCompression" mklink /j "$(ProjectDir)../../bin/BlockCompression" "$(ProjectDir)../../data/"
+if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EA_COMPILER_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLEW_STATIC;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all\extern;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win\extern;..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\all\extern;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\win\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EA_COMPILER_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;GLEW_STATIC=1;FRM_MODULE_CORE=1;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\all\extern;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win;..\..\extern\GfxSampleFramework\extern\ApplicationTools\src\win\extern;..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\all\frm\core\extern;..\..\extern\GfxSampleFramework\src\win\frm\core\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -102,9 +102,9 @@ mklink /j "$(ProjectDir)..\..\bin\BlockCompression" "$(ProjectDir)..\..\data\Blo
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\..\data\BlockCompression"
-rmdir "$(ProjectDir)..\..\bin\BlockCompression"
-mklink /j "$(ProjectDir)..\..\bin\BlockCompression" "$(ProjectDir)..\..\data\BlockCompression"</Command>
+      <Command>if not exist "$(ProjectDir)../../data/BlockCompression" mkdir "$(ProjectDir)../../data/BlockCompression"
+if not exist "$(ProjectDir)../../bin/BlockCompression" mklink /j "$(ProjectDir)../../bin/BlockCompression" "$(ProjectDir)../../data/"
+if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

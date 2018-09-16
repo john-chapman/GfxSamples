@@ -1,7 +1,7 @@
 #pragma once
 
-#include <frm/AppSample3d.h>
-#include <frm/RenderNodes.h>
+#include <frm/core/AppSample3d.h>
+#include <frm/core/RenderNodes.h>
 
 class LensFlare_ScreenSpace: public frm::AppSample3d
 {

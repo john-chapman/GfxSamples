@@ -1,15 +1,15 @@
 #include "LensFlare_ScreenSpace.h"
 
-#include <frm/def.h>
-#include <frm/gl.h>
-#include <frm/Framebuffer.h>
-#include <frm/GlContext.h>
-#include <frm/Mesh.h>
-#include <frm/MeshData.h>
-#include <frm/Profiler.h>
-#include <frm/Property.h>
-#include <frm/Shader.h>
-#include <frm/Texture.h>
+#include <frm/core/def.h>
+#include <frm/core/gl.h>
+#include <frm/core/Framebuffer.h>
+#include <frm/core/GlContext.h>
+#include <frm/core/Mesh.h>
+#include <frm/core/MeshData.h>
+#include <frm/core/Profiler.h>
+#include <frm/core/Property.h>
+#include <frm/core/Shader.h>
+#include <frm/core/Texture.h>
 
 #include <apt/ArgList.h>
 #include <apt/Image.h>
@@ -264,7 +264,7 @@ bool LensFlare_ScreenSpace::initScene()
 	m_fbScene = Framebuffer::Create(2, m_txSceneColor, m_txSceneDepth);
 
 	m_txEnvmap = Texture::Create("textures/env_factory.dds");
-	m_shEnvMap = Shader::CreateVsFs("shaders/Envmap_vs.glsl", "shaders/Envmap_fs.glsl", "ENVMAP_CUBE\0");
+	m_shEnvMap = Shader::CreateVsFs("shaders/Envmap_vs.glsl", "shaders/Envmap_fs.glsl", { "ENVMAP_CUBE" });
 	
 	return true;
 }
