@@ -57,7 +57,7 @@ workspace "GfxSamples"
 				filter { "action:vs*" }
 					postbuildcommands({
 						"if not exist \"" .. dataDir .. tostring(name) .. "\" mkdir \"" .. dataDir .. tostring(name) .. "\"",
-						"if not exist \"" .. binDir .. tostring(name) .. "\" mklink /j \"" .. binDir .. tostring(name) .. "\" \"" .. dataDir .. "\"",
+						"if not exist \"" .. binDir .. tostring(name) .. "\" mklink /j \"" .. binDir .. tostring(name) .. "\" \"" .. dataDir .. tostring(name) .. "\"",
 						"if not exist \"" .. binDir .. "common2\" mklink /j \"" .. binDir .. "common2\" \"" .. dataDir .. "common\"",
 						})
 	end
