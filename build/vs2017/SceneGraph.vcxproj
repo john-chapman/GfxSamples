@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CCAD043E-381A-C038-010E-58966D39E2A0}</ProjectGuid>
+    <ProjectGuid>{05BA97CB-F171-D918-5A79-B27446507409}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>LensFlare_ScreenSpace</RootNamespace>
+    <RootNamespace>SceneGraph</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'" Label="Configuration">
@@ -42,15 +42,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Win64\Debug\LensFlare_ScreenSpace\</IntDir>
-    <TargetName>LensFlare_ScreenSpace_debug</TargetName>
+    <IntDir>obj\Win64\Debug\SceneGraph\</IntDir>
+    <TargetName>SceneGraph_debug</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Win64\Release\LensFlare_ScreenSpace\</IntDir>
-    <TargetName>LensFlare_ScreenSpace</TargetName>
+    <IntDir>obj\Win64\Release\SceneGraph\</IntDir>
+    <TargetName>SceneGraph</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
@@ -72,8 +72,8 @@
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../data/LensFlare_ScreenSpace" mkdir "$(ProjectDir)../../data/LensFlare_ScreenSpace"
-if not exist "$(ProjectDir)../../bin/LensFlare_ScreenSpace" mklink /j "$(ProjectDir)../../bin/LensFlare_ScreenSpace" "$(ProjectDir)../../data/LensFlare_ScreenSpace"
+      <Command>if not exist "$(ProjectDir)../../data/SceneGraph" mkdir "$(ProjectDir)../../data/SceneGraph"
+if not exist "$(ProjectDir)../../bin/SceneGraph" mklink /j "$(ProjectDir)../../bin/SceneGraph" "$(ProjectDir)../../data/SceneGraph"
 if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -102,16 +102,20 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../data/LensFlare_ScreenSpace" mkdir "$(ProjectDir)../../data/LensFlare_ScreenSpace"
-if not exist "$(ProjectDir)../../bin/LensFlare_ScreenSpace" mklink /j "$(ProjectDir)../../bin/LensFlare_ScreenSpace" "$(ProjectDir)../../data/LensFlare_ScreenSpace"
+      <Command>if not exist "$(ProjectDir)../../data/SceneGraph" mkdir "$(ProjectDir)../../data/SceneGraph"
+if not exist "$(ProjectDir)../../bin/SceneGraph" mklink /j "$(ProjectDir)../../bin/SceneGraph" "$(ProjectDir)../../data/SceneGraph"
 if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\LensFlare_ScreenSpace.h" />
+    <ClInclude Include="..\..\src\SceneGraph.h" />
+    <ClInclude Include="..\..\src\SceneGraph\MaterialResource.h" />
+    <ClInclude Include="..\..\src\SceneGraph\MeshResource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\LensFlare_ScreenSpace.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\MaterialResource.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\MeshResource.cpp" />
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>

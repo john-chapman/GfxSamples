@@ -13,4 +13,10 @@ return
 	{ 
 		"../src/LensFlare_ScreenSpace.*",
 	},
+
+	SceneGraph =
+	{
+		"../src/SceneGraph.*",
+		"../src/SceneGraph/**",
+	},
 }

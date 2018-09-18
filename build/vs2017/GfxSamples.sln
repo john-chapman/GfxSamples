@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GfxSampleFramework", "GfxSa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LensFlare_ScreenSpace", "LensFlare_ScreenSpace.vcxproj", "{CCAD043E-381A-C038-010E-58966D39E2A0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneGraph", "SceneGraph.vcxproj", "{05BA97CB-F171-D918-5A79-B27446507409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win64 = Debug|Win64
@@ -27,6 +29,10 @@ Global
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Debug|Win64.Build.0 = Debug Win64|x64
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Release|Win64.ActiveCfg = Release Win64|x64
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Release|Win64.Build.0 = Release Win64|x64
+		{05BA97CB-F171-D918-5A79-B27446507409}.Debug|Win64.ActiveCfg = Debug Win64|x64
+		{05BA97CB-F171-D918-5A79-B27446507409}.Debug|Win64.Build.0 = Debug Win64|x64
+		{05BA97CB-F171-D918-5A79-B27446507409}.Release|Win64.ActiveCfg = Release Win64|x64
+		{05BA97CB-F171-D918-5A79-B27446507409}.Release|Win64.Build.0 = Release Win64|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
