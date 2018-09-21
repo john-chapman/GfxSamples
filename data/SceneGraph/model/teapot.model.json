@@ -1,0 +1,49 @@
+{
+	"_class"   : "Model",
+	"_version" : 0,
+	
+	"lod_coefficients" : // can override per pass
+	{
+		"size"         : 0.25,
+		"distance"     : 0.0,
+		"eccentricity" : 0.0,
+		"velocity"     : 0.0
+	},
+	"pass_list" :
+	{
+		"*" : // filters
+		{
+			"lod_list" :
+			[
+				{
+					"mesh" : "mesh/teapot_lod0.mesh",
+					"material_list" : // per submesh
+					[
+						"material/default.material"
+					]
+				},
+				{
+					"mesh" : "mesh/teapot_lod1.mesh",
+					"material_list" :
+					[
+						"material/default.material"
+					]
+				},
+				{
+					"mesh" : "mesh/teapot_lod2.mesh",
+					"material_list" :
+					[
+						"material/default.material"
+					]
+				},
+				{
+					"mesh" : "mesh/teapot_lod3.mesh",
+					"material_list" :
+					[
+						"material/default.material"
+					]
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"_class"   : "Material",
+	"_version" : 0,
+	
+	"data" :
+	{
+		"color" : [ 1.0, 1.0, 1.0, 1.0 ]
+	},
+
+	"pass_list" :
+	{
+		"gbuffer" :
+		{
+			"shader" :
+			{
+				"path" : "shaders/default.glsl", // could also have separate paths
+				"defines" : [ "PASS_gbuffer 1" ]
+			},
+
+			"states" : "opaque", // shortcut for depth test, depth write, no blending - could have a table of individual states too
+
+			"texture_list" :
+			{
+				"txAlbedo" : "texture/brick0_albedo.texture", 
+				"txRough"  : "texture/brick0_rough.texture",
+				"txNormal" : "texture/brick0_normal.texture"
+			}
+		},
+
+		"shadow" : 
+		{
+			"shader" :
+			{
+				"path" : "shaders/default.glsl",
+				"defines" : [ "PASS_shadow 1" ]
+			},
+
+			"states" : "shadow"
+		}
+	}
+}
