@@ -6,7 +6,7 @@
 
 #include <EASTL/fixed_vector.h>
 
-class MaterialResource;
+class Material;
 
 // https://pdfs.semanticscholar.org/presentation/2b40/34c1638aa8c24324b508d80ad14dab0511e3.pdf
 struct LodCoefficients
@@ -18,15 +18,14 @@ struct LodCoefficients
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-// MeshResource
-// Mesh/material pairs, grouped into order lists for LOD selection.
+// Model
+// Mesh/material pairs, grouped into ordered lists for LOD selection.
 // Multiple LOD lists corresponding to pass masks may be present (e.g. to
 // support proxy meshes for shadow passes).
 //
-// \todo LodCoefficients per pass?
 // \todo Resolve pass masks at load time to avoid string comparisons.
 ///////////////////////////////////////////////////////////////////////////////
-class MeshResource
+class Model
 {
 public:
 	static constexpr int kVersion = 0;
@@ -36,34 +35,40 @@ public:
 	struct LodData
 	{
 		frm::Mesh* m_mesh;
-		eastl::fixed_vector<MaterialResource*, 1> m_materials;
+		eastl::fixed_vector<Material*, 1> m_materials;
 	};
 
-	static MeshResource* Create(const char* _path);
-	static void Release(MeshResource* _res);
+	static Model* Create(const char* _path);
+	static void Release(Model* _res);
 
 	int findPass(const char* _name) const;
 	
-	const LodData& getLod(int _pass, int _lod) const    { return m_passList[_pass].second[_lod]; }
-	const LodCoefficients& getLodCoefficients() const   { return m_lodCoefficients; }
+	const LodData& getLod(int _pass, int _lod) const           { return m_passList[_pass].second.m_lodList[_lod]; }
+	const LodCoefficients& getLodCoefficients(int _pass) const { return m_passList[_pass].second.m_lodCoefficients; }
 
-	friend bool Serialize(apt::Serializer& _serializer_, MeshResource& _res_);
+	friend bool Serialize(apt::Serializer& _serializer_, Model& _res_);
 
 private:
 	typedef eastl::fixed_vector<LodData, 5> LodList;
+	struct PassData
+	{
+		LodCoefficients m_lodCoefficients;
+		LodList m_lodList;
+	};
 	
 	apt::PathStr m_path;
-	eastl::fixed_vector<eastl::pair<apt::String<8>, LodList>, 1> m_passList;
-	LodCoefficients m_lodCoefficients;
+	eastl::fixed_vector<eastl::pair<apt::String<8>, PassData>, 1> m_passList;
 
-	MeshResource();
-	~MeshResource();
-	
+	static bool Serialize(apt::Serializer& _serializer_, LodCoefficients& _lodCoefficients_);
+	static bool Serialize(apt::Serializer& _serializer_, PassData& _passData_);
+
+	Model();
+	~Model();	
 };
 
-bool Serialize(apt::Serializer& _serializer_, MeshResource& _res_);
+bool Serialize(apt::Serializer& _serializer_, Model& _res_);
 
-inline int MeshResource::findPass(const char* _name) const
+inline int Model::findPass(const char* _name) const
 {
  // first LodList is the 'default', start the search at 1
 	for (int i = 1, n = (int)m_passList.size(); i < n; ++i) {

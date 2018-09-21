@@ -7,21 +7,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\SceneGraph.h" />
-    <ClInclude Include="..\..\src\SceneGraph\MaterialResource.h">
+    <ClInclude Include="..\..\src\SceneGraph\Material.h">
       <Filter>SceneGraph</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\SceneGraph\MeshResource.h">
+    <ClInclude Include="..\..\src\SceneGraph\Model.h">
       <Filter>SceneGraph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SceneGraph.cpp" />
-    <ClCompile Include="..\..\src\SceneGraph\MaterialResource.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SceneGraph\MeshResource.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\_sample.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Material.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SceneGraph\Model.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

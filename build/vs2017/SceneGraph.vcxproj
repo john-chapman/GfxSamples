@@ -109,13 +109,13 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\SceneGraph.h" />
-    <ClInclude Include="..\..\src\SceneGraph\MaterialResource.h" />
-    <ClInclude Include="..\..\src\SceneGraph\MeshResource.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Material.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SceneGraph.cpp" />
-    <ClCompile Include="..\..\src\SceneGraph\MaterialResource.cpp" />
-    <ClCompile Include="..\..\src\SceneGraph\MeshResource.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Material.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Model.cpp" />
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
