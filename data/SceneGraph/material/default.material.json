@@ -21,9 +21,9 @@
 
 			"texture_list" :
 			{
-				"txAlbedo" : "texture/brick0_albedo.texture", 
-				"txRough"  : "texture/brick0_rough.texture",
-				"txNormal" : "texture/brick0_normal.texture"
+				"txAlbedo" : "texture/default_albedo.texture", 
+				"txRough"  : "texture/default_rough.texture",
+				"txNormal" : "texture/default_normal.texture"
 			}
 		},
 

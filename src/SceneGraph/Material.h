@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Serializable.h"
+
 #include <frm/core/def.h>
 
 #include <apt/String.h>
@@ -9,13 +11,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Material
-// 
 ///////////////////////////////////////////////////////////////////////////////
-class Material
+class Material: public Serializable<Material>
 {
 public:
-	static constexpr int kVersion = 0;
-
 	struct PassData
 	{
 		frm::Shader* m_shader = nullptr;
@@ -47,8 +46,10 @@ bool Serialize(apt::Serializer& _serializer_, Material& _res_);
 inline int Material::findPass(const char* _name) const
 {
  // first LodList is the 'default', start the search at 1
-	for (int i = 1, n = (int)m_passList.size(); i < n; ++i) {
-		if (m_passList[i].first == _name) { // \todo could me more complex e.g. a comma separated list
+	for (int i = 1, n = (int)m_passList.size(); i < n; ++i) 
+	{
+		if (m_passList[i].first == _name) // \todo could me more complex e.g. a comma separated list
+		{
 			return i;
 		}
 	} 

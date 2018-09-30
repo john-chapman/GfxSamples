@@ -15,20 +15,20 @@ ATTRIBUTE(3, vec2, aTexcoord);
 #endif
 
 #ifdef VERTEX_SHADER
-	uniform mat4 uWorldMatrix;
+	uniform mat4 uWorld;
 
 	void main()
 	{
 		#if PASS_gbuffer
 		{
 			vUv         = aTexcoord;
-			vNormalV    = TransformDirection(uWorldMatrix, aNormal);
-			vTangentV   = TransformDirection(uWorldMatrix, aTangent);
+			vNormalV    = TransformDirection(bfCamera.m_view, TransformDirection(uWorld, aNormal));
+			vTangentV   = TransformDirection(bfCamera.m_view, TransformDirection(uWorld, aTangent));
 			vBitangentV = cross(vNormalV, vTangentV);
 		}
 		#endif
 
-		vec3 posW = TransformPosition(uWorldMatrix, aPosition);
+		vec3 posW = TransformPosition(uWorld, aPosition);
 		gl_Position = bfCamera.m_viewProj * vec4(posW, 1.0);
 	}
 

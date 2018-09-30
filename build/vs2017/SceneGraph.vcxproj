@@ -111,11 +111,14 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
     <ClInclude Include="..\..\src\SceneGraph.h" />
     <ClInclude Include="..\..\src\SceneGraph\Material.h" />
     <ClInclude Include="..\..\src\SceneGraph\Model.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Scene.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Serializable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SceneGraph.cpp" />
     <ClCompile Include="..\..\src\SceneGraph\Material.cpp" />
     <ClCompile Include="..\..\src\SceneGraph\Model.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Scene.cpp" />
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>

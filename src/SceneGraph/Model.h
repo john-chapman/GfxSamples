@@ -1,6 +1,9 @@
 #pragma once
 
+#include "Serializable.h"
+
 #include <frm/core/def.h>
+#include <frm/core/math.h>
 
 #include <apt/String.h>
 
@@ -25,11 +28,9 @@ struct LodCoefficients
 //
 // \todo Resolve pass masks at load time to avoid string comparisons.
 ///////////////////////////////////////////////////////////////////////////////
-class Model
+class Model: public Serializable<Model>
 {
 public:
-	static constexpr int kVersion = 0;
-
 	// Mesh + per submesh material resource. Note that submesh 0 represents all
 	// submeshes, hence element 0 in the material list may be null.
 	struct LodData
@@ -42,6 +43,7 @@ public:
 	static void Release(Model* _res);
 
 	int findPass(const char* _name) const;
+	int findLod(int _pass, const LodCoefficients& _lodCoefficients) const;
 	
 	const LodData& getLod(int _pass, int _lod) const           { return m_passList[_pass].second.m_lodList[_lod]; }
 	const LodCoefficients& getLodCoefficients(int _pass) const { return m_passList[_pass].second.m_lodCoefficients; }
@@ -78,4 +80,18 @@ inline int Model::findPass(const char* _name) const
 	} 
 
 	return 0;
+}
+
+inline int Model::findLod(int _pass, const LodCoefficients& _lodCoefficients) const
+{
+	auto& passData = m_passList[_pass].second;
+	auto& passLodCoefficients = passData.m_lodCoefficients;
+
+	float lod = 0.0f;
+	lod = apt::Max(lod, _lodCoefficients.m_size         * passLodCoefficients.m_size);
+	lod = apt::Max(lod, _lodCoefficients.m_distance     * passLodCoefficients.m_distance);
+	lod = apt::Max(lod, _lodCoefficients.m_eccentricity * passLodCoefficients.m_eccentricity);
+	lod = apt::Max(lod, _lodCoefficients.m_velocity     * passLodCoefficients.m_velocity);
+	
+	return apt::Clamp((int)lod, 0, (int)passData.m_lodList.size() - 1);
 }

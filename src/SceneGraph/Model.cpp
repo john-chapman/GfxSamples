@@ -1,6 +1,7 @@
 #include "Model.h"
 
 #include "Material.h"
+#include "Serializable.h"
 
 #include <frm/core/Mesh.h>
 
@@ -13,24 +14,29 @@
 using namespace frm;
 using namespace apt;
 
+SERIALIZABLE_DEFINE(Model, 0);
+
 // PUBLIC
 
 Model* Model::Create(const char* _path)
 {
 	File f;
-	if (!FileSystem::Read(f, _path)) {
+	if (!FileSystem::Read(f, _path)) 
+	{
 		return nullptr;
 	}
 
 	Model* ret = APT_NEW(Model());
 	ret->m_path = _path;
-	if (FileSystem::CompareExtension("json", _path)) {
+	if (FileSystem::CompareExtension("json", _path)) 
+	{
 		Json json;
 		Json::Read(json, f);
 		SerializerJson serializer(json, SerializerJson::Mode_Read);
 		APT_VERIFY(::Serialize(serializer, *ret));
 
-	} else {
+	} else 
+	{
 		APT_ASSERT(false); // only json implemented
 
 	}
@@ -48,28 +54,27 @@ bool Serialize(Serializer& _serializer_, Model& _res_)
  // \todo better error handling in this function, can skip invalid meshes or materials without assert, only fully empty resources are illegal
 
 	APT_ASSERT(_serializer_.getMode() == Serializer::Mode_Read); // \todo implement write
-	if (_serializer_.getMode() == Serializer::Mode_Read) {
+	if (_serializer_.getMode() == Serializer::Mode_Read) 
+	{
 		APT_ASSERT(_res_.m_passList.empty()); // already serialized?
 
 	 // \todo this validation could be moved into common code
-		String<32> className;
-		APT_VERIFY(Serialize(_serializer_, className, "_class"));
-		if (className != "Model") {
-			APT_LOG_ERR("Model (%s): invalid file '%s'.", FileSystem::StripPath(_res_.m_path.c_str()));
+		if (!Model::SerializeAndValidateClassName(_serializer_)) 
+		{
 			return false;
 		}
-		int version;
-		APT_VERIFY(Serialize(_serializer_, version, "_version"));
-		if (version > Model::kVersion) {
-			APT_LOG_ERR("Model (%s): incompatible version %d (min is %d).", FileSystem::StripPath(_res_.m_path.c_str()), version, Model::kVersion);
+		if (!Model::SerializeAndValidateClassVersion(_serializer_)) 
+		{
 			return false;
 		}
 
 		LodCoefficients defaultLodCoefficients;
 		Model::Serialize(_serializer_, defaultLodCoefficients);
 
-		if (_serializer_.beginObject("pass_list")) {
-			while (_serializer_.beginObject()) {
+		if (_serializer_.beginObject("pass_list")) 
+		{
+			while (_serializer_.beginObject()) 
+			{
 				_res_.m_passList.push_back();
 				auto& pass = _res_.m_passList.back();
 				pass.first = _serializer_.getName();
@@ -88,7 +93,8 @@ bool Serialize(Serializer& _serializer_, Model& _res_)
 
 bool Model::Serialize(Serializer& _serializer_, LodCoefficients& _lodCoefficients_)
 {
-	if (!_serializer_.beginObject("lod_coefficients")) {
+	if (!_serializer_.beginObject("lod_coefficients")) 
+	{
 		return false;
 	}
 	_serializer_.value(_lodCoefficients_.m_size,         "size");
@@ -103,11 +109,13 @@ bool Model::Serialize(Serializer& _serializer_, LodCoefficients& _lodCoefficient
 bool Model::Serialize(Serializer& _serializer_, PassData& _passData_)
 {
 	uint lodCount;
-	if (!_serializer_.beginArray(lodCount, "lod_list")) {
+	if (!_serializer_.beginArray(lodCount, "lod_list")) 
+	{
 		return false;
 	}
 	_passData_.m_lodList.reserve(lodCount);
-	while (_serializer_.beginObject()) {
+	while (_serializer_.beginObject()) 
+	{
 		_passData_.m_lodList.push_back();
 		auto& lod = _passData_.m_lodList.back();
 	
@@ -117,10 +125,12 @@ meshPath.append(".obj"); // \todo
 		lod.m_mesh = Mesh::Create(meshPath.c_str()); // calls Use() implicitly
 
 		uint matCount = 0;
-		if (_serializer_.beginArray(matCount, "material_list")) {
+		if (_serializer_.beginArray(matCount, "material_list")) 
+		{
 			APT_ASSERT((int)matCount <= lod.m_mesh->getSubmeshCount());
 			PathStr matPath;
-			while (_serializer_.value(matPath)) {
+			while (_serializer_.value(matPath)) 
+			{
 matPath.append(".json"); // \todo
 				lod.m_materials.push_back();
 				lod.m_materials.back() = Material::Create(matPath.c_str());
@@ -144,10 +154,13 @@ Model::Model()
 
 Model::~Model()
 {
-	for (auto& passList : m_passList) {
-		for (auto& lodData : passList.second.m_lodList) {
+	for (auto& passList : m_passList) 
+	{
+		for (auto& lodData : passList.second.m_lodList) 
+		{
 			Mesh::Release(lodData.m_mesh);
-			for (auto& mat : lodData.m_materials) {
+			for (auto& mat : lodData.m_materials) 
+			{
 				Material::Release(mat);
 			}
 		}

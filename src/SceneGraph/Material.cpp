@@ -1,5 +1,7 @@
 #include "Material.h"
 
+#include "Serializable.h"
+
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
@@ -14,24 +16,29 @@
 using namespace frm;
 using namespace apt;
 
+SERIALIZABLE_DEFINE(Material, 0);
+
 // PUBLIC
 
 Material* Material::Create(const char* _path)
 {
 	File f;
-	if (!FileSystem::Read(f, _path)) {
+	if (!FileSystem::Read(f, _path)) 
+	{
 		return nullptr;
 	}
 
 	Material* ret = APT_NEW(Material());
 	ret->m_path = _path;
-	if (FileSystem::CompareExtension("json", _path)) {
+	if (FileSystem::CompareExtension("json", _path)) 
+	{
 		Json json;
 		Json::Read(json, f);
 		SerializerJson serializer(json, SerializerJson::Mode_Read);
 		APT_VERIFY(::Serialize(serializer, *ret));
 
-	} else {
+	} else 
+	{
 		APT_ASSERT(false); // only json implemented
 
 	}
@@ -48,28 +55,27 @@ void Material::Release(Material* _res)
 bool Serialize(Serializer& _serializer_, Material& _res_)
 {	
 	APT_ASSERT(_serializer_.getMode() == Serializer::Mode_Read); // \todo implement write
-	if (_serializer_.getMode() == Serializer::Mode_Read) {
+	if (_serializer_.getMode() == Serializer::Mode_Read) 
+	{
 		APT_ASSERT(_res_.m_passList.empty()); // already serialized?
 
 	 // \todo this validation could be moved into common code
-		String<32> className;
-		APT_VERIFY(Serialize(_serializer_, className, "_class"));
-		if (className != "Material") {
-			APT_LOG_ERR("Material (%s): invalid file '%s'.", FileSystem::StripPath(_res_.m_path.c_str()));
+		if (!Material::SerializeAndValidateClassName(_serializer_))
+		{
 			return false;
 		}
-		int version;
-		APT_VERIFY(Serialize(_serializer_, version, "_version"));
-		if (version > Material::kVersion) {
-			APT_LOG_ERR("Material (%s): incompatible version %d (min is %d).", FileSystem::StripPath(_res_.m_path.c_str()), version, Material::kVersion);
+		if (!Material::SerializeAndValidateClassVersion(_serializer_))
+		{
 			return false;
 		}
 
 		Material::PassData defaultPassData;
 		Material::Serialize(_serializer_, defaultPassData);
 	
-		if (_serializer_.beginObject("pass_list")) {
-			while (_serializer_.beginObject()) {
+		if (_serializer_.beginObject("pass_list")) 
+		{
+			while (_serializer_.beginObject()) 
+			{
 				_res_.m_passList.push_back();
 				auto& pass = _res_.m_passList.back();
 				pass.first = _serializer_.getName();
@@ -97,16 +103,19 @@ bool Material::Serialize(Serializer& _serializer_, PassData& _passData_)
 
 	bool ret = true;
 
-	if (_serializer_.beginObject("shader")) {
+	if (_serializer_.beginObject("shader")) 
+	{
 		PathStr path;
 		eastl::vector<Str> defines;
 		APT_VERIFY(_serializer_.value(path, "path"));
 //path.append(".glsl"); // \todo
 		uint defineCount;
-		if (_serializer_.beginArray(defineCount, "defines")) {
+		if (_serializer_.beginArray(defineCount, "defines")) 
+		{
 			defines.reserve(defineCount);
 			Str define;
-			while (_serializer_.value(define)) {
+			while (_serializer_.value(define)) 
+			{
 				defines.push_back(define);
 			}
 			_serializer_.endArray();
@@ -115,7 +124,8 @@ bool Material::Serialize(Serializer& _serializer_, PassData& _passData_)
 		ShaderDesc shDesc;
 		shDesc.setPath(GL_VERTEX_SHADER,   (const char*)path);
 		shDesc.setPath(GL_FRAGMENT_SHADER, (const char*)path);
-		for (auto& define : defines) {
+		for (auto& define : defines) 
+		{
 			shDesc.addGlobalDefine((const char*)define);
 		}
 		_passData_.m_shader = Shader::Create(shDesc);
@@ -124,31 +134,34 @@ bool Material::Serialize(Serializer& _serializer_, PassData& _passData_)
 		_serializer_.endObject(); // shader
 	}
 
-	if (_serializer_.beginObject("states")) {
+	if (_serializer_.beginObject("states")) 
+	{
 		APT_ASSERT(false);
 		_serializer_.endObject(); // states
-	} else {
+	} else 
+	{
 		Str state;
-		if (_serializer_.value(state, "states")) {
+		if (_serializer_.value(state, "states")) 
+		{
 			_passData_.m_state = state.c_str();
 		}
 	}
 
-	if (_serializer_.beginObject("texture_list")) {
-		while (_serializer_.beginObject()) {
+	if (_serializer_.beginObject("texture_list")) 
+	{
+		PathStr texturePath;
+		while (_serializer_.value(texturePath)) 
+		{
 			_passData_.m_textures.push_back();
 			auto& texture = _passData_.m_textures.back();
 			texture.first = _serializer_.getName();
-			PathStr path;
-			APT_VERIFY(_serializer_.value(path));
-path.append(".tga"); // \todo
-			texture.second = Texture::Create(path.c_str());
+texturePath.append(".tga"); // \todo
+			texture.second = Texture::Create(texturePath.c_str());
 			ret &= texture.second != nullptr;
-			if (texture.second) {
+			if (texture.second) 
+			{
 				texture.second->setName(texture.first.c_str());
 			}
-
-			_serializer_.endObject(); // texture
 		}
 		_serializer_.endObject(); // texture_list
 	}

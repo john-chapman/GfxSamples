@@ -1,6 +1,8 @@
-/*
-	\todo
-	- SOA for MeshResource/MaterialResource.
+/*	\todo
+	- Need to decide whether a scene should collapse all of it's children, i.e. whether or not a scene contains Scene* nodes.
+	- Simple cooker to generate the 'runtime' files (use JSON instead of BSON for the first version).
+		- Watches data/SceneGraph.
+		- Cooks to data/bin or something.
 */
 #include "SceneGraph.h"
 
@@ -106,11 +108,17 @@ void SceneGraph::draw()
 
 	{	PROFILER_MARKER("gbuffer");
 		ctx->setFramebufferAndViewport(m_fbGBuffer);
-		glAssert(glClear(GL_DEPTH_BUFFER_BIT));
-
+		//glAssert(glClear(GL_DEPTH_BUFFER_BIT));
+		glAssert(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+glAssert(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
+		LodCoefficients lodCoefficients;
+		lodCoefficients.m_distance = Length(GetTranslation(m_worldMatrix) - cullCamera->getPosition());
+		lodCoefficients.m_size = lodCoefficients.m_distance / cullCamera->m_proj[1][1];
 		int modelPass = m_model->findPass("gbuffer");
 		if (modelPass >= 0) {
-			auto lodData = m_model->getLod(modelPass, 0);
+			int lod = m_model->findLod(modelPass, lodCoefficients);
+			auto lodData = m_model->getLod(modelPass, lod);
+ImGui::Text("Lod Size: %f, Lod: %d", lodCoefficients.m_size, lod);
 			
 			for (int i = 0; i < lodData.m_mesh->getSubmeshCount(); ++i) {
 				if (lodData.m_materials[i]) {
@@ -121,31 +129,35 @@ void SceneGraph::draw()
 						auto& passData = material->getPass(materialPass);
 						
 						ctx->setShader(passData.m_shader);
-						ctx->bindBuffer("bfCamera", drawCamera->m_gpuBuffer);
+						ctx->bindBuffer(drawCamera->m_gpuBuffer);
 						ctx->setMesh(lodData.m_mesh, i);
 						if (passData.m_state == "opaque") {
 							glAssert(glEnable(GL_DEPTH_TEST));
+							glAssert(glEnable(GL_CULL_FACE));
 						} else if (passData.m_state == "shadow") {
 							glAssert(glColorMask(0, 0, 0, 0));
 							glAssert(glEnable(GL_DEPTH_TEST));
+							glAssert(glEnable(GL_CULL_FACE));
 						}
 						for (auto tx : passData.m_textures) {
 							ctx->bindTexture(tx.first.c_str(), tx.second);
 						}
-						ctx->setUniform("uWorldMatrix", m_worldMatrix);
+						ctx->setUniform("uWorld", m_worldMatrix);
 						ctx->draw();
 						if (passData.m_state == "opaque") {
 							glAssert(glDisable(GL_DEPTH_TEST));
+							glAssert(glDisable(GL_CULL_FACE));
 						} else if (passData.m_state == "shadow") {
 							glAssert(glColorMask(1, 1, 1, 1));
 							glAssert(glDisable(GL_DEPTH_TEST));
+							glAssert(glDisable(GL_CULL_FACE));
 						}
 					}
 				}
 			}
 		}
 	}
-
+glAssert(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
 	ctx->blitFramebuffer(m_fbGBuffer, nullptr);
 
 	AppBase::draw();
