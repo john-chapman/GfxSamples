@@ -42,6 +42,9 @@ bool SceneGraph::init(const apt::ArgList& _args)
 		return false;
 	}
 
+	//FileSystem::AddRoot("SceneGraph/_raw");
+	FileSystem::SetDefaultRoot(FileSystem::AddRoot("SceneGraph/_raw"));
+
 	m_txGBuffer0 = Texture::Create2d(m_resolution.x, m_resolution.y, GL_RGBA8);
 	m_txGBuffer0->setName("txGBuffer0");
 	m_txGBuffer0->setFilter(GL_NEAREST);

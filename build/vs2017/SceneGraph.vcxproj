@@ -109,6 +109,7 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\SceneGraph.h" />
+    <ClInclude Include="..\..\src\SceneGraph\DataProcessor.h" />
     <ClInclude Include="..\..\src\SceneGraph\Material.h" />
     <ClInclude Include="..\..\src\SceneGraph\Model.h" />
     <ClInclude Include="..\..\src\SceneGraph\Scene.h" />
@@ -116,6 +117,7 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SceneGraph.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\DataProcessor.cpp" />
     <ClCompile Include="..\..\src\SceneGraph\Material.cpp" />
     <ClCompile Include="..\..\src\SceneGraph\Model.cpp" />
     <ClCompile Include="..\..\src\SceneGraph\Scene.cpp" />

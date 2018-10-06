@@ -19,6 +19,9 @@
     <ClInclude Include="..\..\src\SceneGraph\Serializable.h">
       <Filter>SceneGraph</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\SceneGraph\DataProcessor.h">
+      <Filter>SceneGraph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SceneGraph.cpp" />
@@ -30,6 +33,9 @@
       <Filter>SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SceneGraph\Scene.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SceneGraph\DataProcessor.cpp">
       <Filter>SceneGraph</Filter>
     </ClCompile>
   </ItemGroup>
