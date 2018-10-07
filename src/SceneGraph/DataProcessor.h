@@ -11,6 +11,8 @@
 	- Loop over all Command instances and check the state of the dependencies.
 
 	\todo
+	- Currently files in _raw can only map to 1 command because we reference them by the dep file hash. In theory they could map to one command per rule
+	  instead (separate queue per rule).
 */
 #pragma once
 
@@ -46,16 +48,18 @@ public:
 	{
 		apt::String<32> m_name;
 		apt::String<32> m_pattern; 
-		bool            (*OnInit)();               // called once on init after the file scan is complete
-		bool            (*OnModify)(File* _file_); // called once when a matching file is created or modified
-		bool            (*OnDelete)(File* _file_); // called once when a matching file is deleted
-		void            (*CreateCommand)(File* _file_);
+		int             m_version                      = -1;
+		bool            (*OnInit)()                    = nullptr;  // called once on init after the file scan is complete
+		bool            (*OnModify)(File* _file_)      = nullptr;  // called once when a matching file is created or modified
+		bool            (*OnDelete)(File* _file_)      = nullptr;  // called once when a matching file is deleted
+		void            CreateCommand(File* _file_);
 	};
 
 	struct Command
 	{
 		Rule*                          m_rule;
 		apt::DateTime                  m_timeLastExecuted;
+		bool                           m_isDirty;
 		apt::PathStr                   m_depPath;
 		eastl::vector<apt::StringHash> m_inputs;
 		eastl::vector<apt::StringHash> m_outputs;
@@ -82,25 +86,31 @@ private:
 	{
 	};
 
-	eastl::vector<Rule*>              m_rules;
+	eastl::vector<Rule*>               m_rules;
 
-	apt::Pool<File>                   m_filePool;
-	HashMap<apt::StringHash, File*>   m_files;
-	size_t                            m_fileCount = 0;
+	apt::Pool<File>                    m_filePool;
+	HashMap<apt::StringHash, File*>    m_files;            // key is the path hash
+	size_t                             m_fileCount = 0;
 
-	apt::Pool<Command>                m_commandPool;
-	HashMap<apt::StringHash, File*>   m_commands;
-	size_t                            m_commandCount = 0;
-	eastl::vector<Command*>           m_commandQueue;
+	apt::Pool<Command>                 m_commandPool;
+	HashMap<apt::StringHash, Command*> m_commands;
+	size_t                             m_commandCount = 0; // key is the dep file path hash
+	eastl::vector<Command*>            m_commandQueue;
 	
 
 	void         dispatchNotifications(const char* _path, apt::FileSystem::FileAction _action);
 
 	File*        findOrAddFile(const char* _path);
+	void         addCommand(Command* _command);
 
 	Rule*        findRule(const char* _name);
+	void         createCommands(const File* _file_, apt::StringHash _pathHash);
 
 	void         readDepFile(Command* command_);
 	void         writeDepFile(const Command* _command);
 	apt::PathStr getDepFilePath(const char* _rawPath);
+
+	void         initRules();
+	void         scanTemp();
+	void         scanRaw();
 };
