@@ -50,6 +50,13 @@ bool OnDelete(DataProcessor::File* _file_)
 
 *******************************************************************************/
 
+static const char* kRootPaths[DataProcessor::Root_Count] =
+{
+	"_raw",   // Root_Raw
+	"_temp",  // Root_Temp
+	"_bin",   // Root_Bin
+};
+
 // PUBLIC
 
 bool DataProcessor::ProcessModel(File* _file_, FileSystem::FileAction _action)

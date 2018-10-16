@@ -1,18 +1,20 @@
-/*	Simple version of a data processing system.
-	- File objects are allocated once and are never deleted. Files are identified by a hash of the full path (NB could use a simpler index system like MC).
-	- File actions (detected by the file watcher) are dispatched to matching Rules which generate Commands.
-	- Commands depend on files: some are input dependencies (build when the input changes), some are output dependencies (build when the output is missing).
-	  Every file in _raw/ maps to a command, however commands may have many input/output dependencies.
-	- Dependencies are stored in a .dep file in the _temp dir.
-
-	On init:
-	- Scan the _temp dir for .dep files, generate commands.
-	- Scan the _raw/_bin dirs, generate file instances. Files in _raw should generate commands (if they weren't already generated from the .dep scan). 
-	- Loop over all Command instances and check the state of the dependencies.
+/*	Simple data processing system.
+	- Files in _raw and _temp map to build commands. Commands are therefore identified by the provoking file path.
+	- Commands have input and output dependencies. A command is dirty if any of its inputs is newer than the last time the command was executed,
+	  or if any of its outputs is missing. The provoking file is also an input dependency.
+	- Missing inputs should also trigger a command execution - either the dependency is no longer required, or the command will be in an error state.
+	  If *all* inputs are missing then the command should be removed and all outputs deleted.
+	- Commands cache state in .dep files in the _temp dir. These are simple text files which should be fast to read (no JSON). A DB might be a better
+	  solution (see \todo). .dep files are *not* dependencies themselves.
+	- All files (except .dep files) are tracked by the system.
+	- Files and commands need to reference each other (by pointer). It is therefore simpler to *never* free file or command instances to avoid the
+	  headache of updating all the references. The downside of this is that the memory footprint will grow over time, which is a problem for long-lived
+	  instances of DataProcessor.
 
 	\todo
 	- Currently files in _raw can only map to 1 command because we reference them by the dep file hash. In theory they could map to one command per rule
 	  instead (separate queue per rule).
+	- Replace .dep files with a DB to eliminate file access overhead (faster startup).
 */
 #pragma once
 
@@ -36,10 +38,21 @@ public:
 	struct Rule;
 	struct Command;
 
+	enum RootType_
+	{
+		Root_Raw,
+		Root_Temp,
+		Root_Bin,
+
+		Root_Count
+	};
+	typedef int RootType;
+
 	struct File
 	{
-		apt::String<255> m_path;             // full path
-		apt::String<64>  m_name;             // name
+		RootType         m_root;
+		apt::String<255> m_path;             // full path (including root)
+		apt::String<64>  m_name;             // name (excluding path and extension)
 		apt::String<32>  m_extension;        // extension (e.g. .model.json)
 		apt::DateTime    m_timeLastModified;
 	};
@@ -55,11 +68,23 @@ public:
 		void            CreateCommand(File* _file_);
 	};
 
+
+	enum CommandState
+	{
+		CommandState_Ok,       // Execution succeeded, nothing to do.
+		CommandState_Warning,  // Execution succeeded but with a warning.
+		CommandState_Error,    // Execution failed.
+		CommandState_Dirty,    // Requires execution.
+
+		CommandState_Count
+	};
+	typedef apt::uint8 CommandState;
+
 	struct Command
 	{
 		Rule*                          m_rule;
 		apt::DateTime                  m_timeLastExecuted;
-		bool                           m_isDirty;
+		CommandState                   m_state;
 		apt::PathStr                   m_depPath;
 		eastl::vector<apt::StringHash> m_inputs;
 		eastl::vector<apt::StringHash> m_outputs;
