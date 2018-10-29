@@ -10,11 +10,43 @@
 	- Files and commands need to reference each other (by pointer). It is therefore simpler to *never* free file or command instances to avoid the
 	  headache of updating all the references. The downside of this is that the memory footprint will grow over time, which is a problem for long-lived
 	  instances of DataProcessor.
+	- Creating/modifying/deleting a tracked file basically causes all dependent commands to be marked as dirty and pushed into the command queue. 
+	- Queued commands should be sorted by rule (in rule priority order) to easily support batching of commands.
+
 
 	\todo
 	- Currently files in _raw can only map to 1 command because we reference them by the dep file hash. In theory they could map to one command per rule
 	  instead (separate queue per rule).
 	- Replace .dep files with a DB to eliminate file access overhead (faster startup).
+
+	Use Cases
+	=========
+
+	Startup:
+		- Init rules.
+		- Scan _temp for .dep files (or read DB), generate commands and files. Don't update the file status here, just init the object.
+		- Scan roots for all other files, update file status (attributes etc). Push any new files from _raw into a temporary 'new' list.
+		- For each file in the 'new' list, add new commands.
+		- For each command, push into the queue if dirty.
+
+	File created:
+		- Find/add the file and init it's status.
+		- If from _raw then find or add command, mark as dirty and push into the command queue.
+
+	File modified:
+		- Mark all input-dependent commands as dirty and push into the command queue.
+
+	File deleted:
+		- Update all input-dependent commands, mark as dirty and push into the command queue.
+		- Update all output-dependent commands, mark as dirty and push into the command queue.
+		- If it's a .dep file, mark as dirty and push into the command queue.
+
+	Command execution:
+		- Check that input files aren't marked as missing - if *all* are missing then clean the command, else mark as error.
+
+	Command clean:
+		- Delete outputs from disk.
+
 */
 #pragma once
 
@@ -48,49 +80,75 @@ public:
 	};
 	typedef int RootType;
 
-	struct File
+	enum FileState_
 	{
-		RootType         m_root;
-		apt::String<255> m_path;             // full path (including root)
-		apt::String<64>  m_name;             // name (excluding path and extension)
-		apt::String<32>  m_extension;        // extension (e.g. .model.json)
-		apt::DateTime    m_timeLastModified;
+		FileState_Ok,
+		FileState_Missing,
+
+		FileState_Count
 	};
-
-	struct Rule
+	typedef int FileState;
+	
+	enum CommandState_
 	{
-		apt::String<32> m_name;
-		apt::String<32> m_pattern; 
-		int             m_version                      = -1;
-		bool            (*OnInit)()                    = nullptr;  // called once on init after the file scan is complete
-		bool            (*OnModify)(File* _file_)      = nullptr;  // called once when a matching file is created or modified
-		bool            (*OnDelete)(File* _file_)      = nullptr;  // called once when a matching file is deleted
-		void            CreateCommand(File* _file_);
-	};
-
-
-	enum CommandState
-	{
-		CommandState_Ok,       // Execution succeeded, nothing to do.
+		CommandState_Ok,       // Execution succeeded.
 		CommandState_Warning,  // Execution succeeded but with a warning.
 		CommandState_Error,    // Execution failed.
 		CommandState_Dirty,    // Requires execution.
 
 		CommandState_Count
 	};
-	typedef apt::uint8 CommandState;
+	typedef int CommandState;
+
+	struct Path: public apt::String<255>
+	{
+		Path(): apt::String<255>() {}
+		Path(const char* _path);
+		Path(RootType _root, const char* _path, const char* _name, const char* _type, const char* _extension);
+
+		apt::String<64> getRoot() const;
+		apt::String<64> getPath() const;
+		apt::String<64> getName() const;
+		apt::String<16> getType() const;
+		apt::String<16> getExtension() const;
+
+		apt::uint8 m_pathOffset      = ~0;  // Start of the path (first char after the root).
+		apt::uint8 m_nameOffset      = ~0;  // File name.
+		apt::uint8 m_typeOffset      = ~0;  // 'Type' part of the extension.
+		apt::uint8 m_extensionOffset = ~0;  // Extension.
+	};
+
+	struct File
+	{
+		RootType                m_root;
+		Path                    m_path;
+		apt::DateTime           m_timeLastModified;
+		FileState               m_state;
+		
+		eastl::vector<Command*> m_commandsIn;       // Commands which reference this file as an input.
+		eastl::vector<Command*> m_commandsOut;      // Commands which reference this file as an output (should only be 1).
+	};
+
+	struct Rule
+	{
+		apt::String<32> m_name;
+		apt::String<32> m_pattern;
+		int             m_version                                        = -1;
+		void           (*Init)   (Command* _commandList_, size_t _count) = nullptr;
+		void           (*Execute)(Command* _commandList_, size_t _count) = nullptr;
+	};
 
 	struct Command
 	{
-		Rule*                          m_rule;
-		apt::DateTime                  m_timeLastExecuted;
-		CommandState                   m_state;
-		apt::PathStr                   m_depPath;
-		eastl::vector<apt::StringHash> m_inputs;
-		eastl::vector<apt::StringHash> m_outputs;
+		Rule*                m_rule;
+		apt::DateTime        m_timeLastExecuted;
+		CommandState         m_state;
+		Path                 m_depPath;
+		eastl::vector<File*> m_filesIn;            // Input files.
+		eastl::vector<File*> m_filesOut;           // Output files.
 	};
 
-	static bool ProcessModel(File* _file_, apt::FileSystem::FileAction _action);
+	static bool NeedsClean(const Command& _command);
 
 	DataProcessor();
 	~DataProcessor();
@@ -101,7 +159,7 @@ private:
 	static DataProcessor* s_inst; // \hack static callbacks need to access an instance
 
 	static void DispatchNotifications(const char* _path, apt::FileSystem::FileAction _action) { s_inst->dispatchNotifications(_path, _action); }
-	
+
 	struct NullHash 
 	{
 		apt::StringHash operator()(apt::StringHash _val) const { return _val; } 
@@ -133,7 +191,7 @@ private:
 
 	void         readDepFile(Command* command_);
 	void         writeDepFile(const Command* _command);
-	apt::PathStr getDepFilePath(const char* _rawPath);
+	Path         getDepFilePath(const char* _rawPath);
 
 	void         initRules();
 	void         scanTemp();

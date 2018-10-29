@@ -24,25 +24,187 @@ static const char* FindExtension(const char* _path)
 	return strchr(_path, '.');
 }
 
+static const char* kRootPaths[DataProcessor::Root_Count] =
+{
+	"_raw/",   // Root_Raw
+	"_temp/",  // Root_Temp
+	"_bin/",   // Root_Bin
+};
+
+static const char* RemoveRoot(DataProcessor::RootType _root, const char* _path)
+{
+	const char* root = kRootPaths[_root];
+	auto rootLen = strlen(root);
+	if (strstr(_path, root))
+	{
+		_path += rootLen;
+	}
+	return _path;
+}
+
+static PathStr MakePath(DataProcessor::RootType _root, const char* _path)
+{
+	return PathStr("%s%s", kRootPaths[_root], _path);
+}
+
 namespace Rule_texture
 {
 
-bool OnInit()
+void Init(DataProcessor::Command* _commandList_, size_t _count)
 {
 }
 
-bool OnModify(DataProcessor::File* _file_)
+void Execute(DataProcessor::Command* _commandList_, size_t _count)
 {
-	return true;
-}
+	for (size_t i = 0; i < _count; ++i) 
+	{
+		auto& command = _commandList_[i];
 
-bool OnDelete(DataProcessor::File* _file_)
-{
-	return true;
-}
+		command.m_timeLastExecuted = Time::GetDateTime();
 
+		APT_ASSERT(command.m_state == DataProcessor::CommandState_Dirty); // \todo executing a non-dirty command?
+
+		if (DataProcessor::NeedsClean(command))
+		{
+			for (auto fileOut : command.m_filesOut)
+			{
+				FileSystem::Delete(fileOut->m_path.c_str());
+			}
+		}
+		
+		/*auto outPath =
+		command.m_filesOut.clear();
+		command.m_filesOut.
+
+		command.m_state = DataProcessor::CommandState_Ok;*/
+	}
+}
 
 } // namespace Rule_texture
+
+/*******************************************************************************
+
+                             DataProcessor::Path
+
+*******************************************************************************/
+DataProcessor::Path::Path(const char* _path)
+{
+	m_pathOffset = 0;
+	for (auto rootPath : kRootPaths)
+	{
+		auto rootLen = strlen(rootPath);
+		if (strncmp(rootPath, _path, m_pathOffset) == 0)
+		{
+			m_pathOffset = rootLen;
+			break;
+		}
+	}
+
+	auto pathEnd = strrchr(_path + m_pathOffset, '/');
+	if (pathEnd)
+	{
+		m_nameOffset = pathEnd - _path + 1;
+	} else
+	{
+		m_pathOffset = ~0;
+	}
+
+	auto nameEnd = strchr(_path + m_nameOffset, '.');
+	if (nameEnd)
+	{
+		m_typeOffset = nameEnd - _path + 1;
+	}
+
+	auto typeEnd = strchr(_path + m_typeOffset, '.');
+	if (typeEnd)
+	{
+		m_extensionOffset = typeEnd - _path + 1;
+	}
+
+	set(_path);
+}
+
+DataProcessor::Path::Path(RootType _root, const char* _path, const char* _name, const char* _type, const char* _extension)
+{
+	m_pathOffset = strlen(kRootPaths[_root]);
+	append(kRootPaths[_root]);
+	append(_path);
+	bool needPathSeparator = _path[strlen(_path) - 1] != '/';
+	if (needPathSeparator)
+	{
+		append("/");
+	}
+	
+	m_nameOffset = m_pathOffset + strlen(_path) + (needPathSeparator ? 1 : 0);
+	append(_name);
+
+	if (_type)
+	{ 
+		m_typeOffset = m_nameOffset + strlen(_name) + 1;
+		appendf(".%s", _type);
+	}
+
+	if (_extension)
+	{
+		m_extensionOffset = m_typeOffset + strlen(_type) + 1;
+		appendf(".%s", _extension);
+	}
+}
+
+String<64> DataProcessor::Path::getRoot() const
+{
+	if (m_pathOffset == 0)
+	{
+		return "";
+	}
+	String<64> ret;
+	ret.set(begin(), m_pathOffset);
+	return ret;
+}
+
+String<64> DataProcessor::Path::getPath() const
+{
+	if (m_pathOffset == ~0)
+	{
+		return "";
+	}
+	String<64> ret;
+	ret.set(begin() + m_pathOffset, m_nameOffset - m_pathOffset);
+	return ret;
+}
+
+String<64> DataProcessor::Path::getName() const
+{
+	if (m_nameOffset == ~0)
+	{
+		return "";
+	}
+	String<64> ret;
+	ret.set(begin() + m_nameOffset, m_typeOffset - m_nameOffset - 1);
+	return ret;
+}
+
+String<16> DataProcessor::Path::getType() const
+{
+	if (m_typeOffset == ~0)
+	{
+		return "";
+	}
+	String<16> ret;
+	ret.set(begin() + m_typeOffset, m_extensionOffset - m_typeOffset - 1);
+	return ret;
+}
+
+String<16> DataProcessor::Path::getExtension() const
+{
+	if (m_extensionOffset == ~0)
+	{
+		return "";
+	}
+	String<16> ret;
+	ret.set(begin() + m_extensionOffset, getLength() - m_extensionOffset);
+	return ret;
+}
 
 /*******************************************************************************
 
@@ -50,28 +212,17 @@ bool OnDelete(DataProcessor::File* _file_)
 
 *******************************************************************************/
 
-static const char* kRootPaths[DataProcessor::Root_Count] =
-{
-	"_raw",   // Root_Raw
-	"_temp",  // Root_Temp
-	"_bin",   // Root_Bin
-};
-
 // PUBLIC
 
-bool DataProcessor::ProcessModel(File* _file_, FileSystem::FileAction _action)
+bool DataProcessor::NeedsClean(const Command& _command)
 {
-	switch (_action)
+	for (auto& fileIn : _command.m_filesIn)
 	{
-		case FileSystem::FileAction_Created:
-		case FileSystem::FileAction_Modified:
-			break;
-		case FileSystem::FileAction_Deleted:
-			break;
-		default:
-			break;
-	};
-
+		if (fileIn->m_state != FileState_Missing)
+		{
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -98,49 +249,43 @@ DataProcessor::DataProcessor()
 	{
 		auto command = it.second;
 
-		if (command->m_isDirty)
+		if (command->m_state == CommandState_Dirty)
 		{
 		 // command already dirty (e.g. rule version changed)
 			m_commandQueue.push_back(command);
 
 		} else
 		{
-			for (auto input : command->m_inputs)
+			for (auto fileIn : command->m_filesIn)
 			{
-				auto f = m_files.find(input);
-				APT_ASSERT(f != m_files.end()); // \todo if all inputs are missing then remove the command, if some inputs are missing mark as error
-				auto file = f->second;
+				APT_ASSERT(fileIn->m_state != FileState_Missing); // \todo if all inputs are missing then remove the command, if some inputs are missing mark as error
 
 			 // dirty if input is newer
-				if (file->m_timeLastModified > command->m_timeLastExecuted)
+				if (fileIn->m_timeLastModified > command->m_timeLastExecuted)
 				{
-					command->m_isDirty = true;
+					command->m_state = CommandState_Dirty;
 					break;
 				}
 			}
 
-			for (auto output : command->m_outputs)
+			for (auto fileOut : command->m_filesOut)
 			{
-				auto f = m_files.find(output);
-		 
 			 // dirty if output is missing
-				if (f == m_files.end())
+				if (fileOut->m_state == FileState_Missing)
 				{
-					command->m_isDirty = true;
+					command->m_state = CommandState_Dirty;
 					break;
 				}
-
-				auto file = f->second;
 			
 			 // dirty if output is older
-				if (file->m_timeLastModified < command->m_timeLastExecuted)
+				if (fileOut->m_timeLastModified < command->m_timeLastExecuted)
 				{
-					command->m_isDirty = true;
+					command->m_state = CommandState_Dirty;
 					break;
 				}
 			}
 
-			if (command->m_isDirty)
+			if (command->m_state == CommandState_Dirty)
 			{
 				m_commandQueue.push_back(command);
 			}
@@ -171,13 +316,7 @@ DataProcessor* DataProcessor::s_inst = nullptr;
 
 void DataProcessor::dispatchNotifications(const char* _path, FileSystem::FileAction _action)
 {
-	File* f = findOrAddFile(_path);
-	
-	if (f->m_extension == ".model") 
-	{
-		ProcessModel(f, _action);
-		return;
-	}
+	File* file = findOrAddFile(_path);
 }
 
 DataProcessor::File* DataProcessor::findOrAddFile(const char* _path)
@@ -189,9 +328,7 @@ DataProcessor::File* DataProcessor::findOrAddFile(const char* _path)
 	{
 		ret                     = m_filePool.alloc();
 		m_files[pathHash]       = ret;
-		ret->m_path             = _path;
-		ret->m_name             = FileSystem::GetFileName(_path).c_str();
-		ret->m_extension        = FileSystem::FindExtension(_path);
+		ret->m_path             = Path(_path);
 		ret->m_timeLastModified = FileSystem::GetTimeModified(_path);
 		++m_fileCount;
 
@@ -262,14 +399,25 @@ void DataProcessor::readDepFile(Command* command_)
 				command_->m_timeLastExecuted = DateTime(line.c_str());
 				break;
 			case 'I':
-				command_->m_inputs.push_back(StringHash(line.c_str()));
+			{
+				auto file = findOrAddFile(line.c_str());
+				command_->m_filesIn.push_back(file);
+				break;
+			}
 			case 'O':
-				command_->m_outputs.push_back(StringHash(line.c_str()));
+			{
+				auto file = findOrAddFile(line.c_str());
+				command_->m_filesOut.push_back(file);
+				break;
+			}
 			default:
 				break;
 		};
 	}
-	command_->m_isDirty = ruleVersion < command_->m_rule->m_version;
+	if (ruleVersion < command_->m_rule->m_version)
+	{
+		command_->m_state = CommandState_Dirty;
+	}
 }
 
 void DataProcessor::writeDepFile(const Command* _command)
@@ -286,19 +434,15 @@ void DataProcessor::writeDepFile(const Command* _command)
 	dep.appendf("T %s\n", _command->m_timeLastExecuted.asString());
 	
  // inputs
-	for (auto pathHash : _command->m_inputs)
+	for (auto fileIn : _command->m_filesIn)
 	{
-		auto f = findFile(pathHash);
-		APT_ASSERT(f);
-		dep.appendf("I %s\n", f->m_path.c_str());
+		dep.appendf("I %s\n", fileIn->m_path.c_str());
 	}
 	 
  // outputs
-	for (auto pathHash : _command->m_outputs)
+	for (auto fileOut : _command->m_filesOut)
 	{
-		auto f = findFile(pathHash);
-		APT_ASSERT(f);
-		dep.appendf("O %s\n", f->m_path.c_str());
+		dep.appendf("O %s\n", fileOut->m_path.c_str());
 	}
 
 	apt::File f;
@@ -306,9 +450,11 @@ void DataProcessor::writeDepFile(const Command* _command)
 	apt::File::Write(f, _command->m_depPath.c_str());
 }
 
-PathStr DataProcessor::getDepFilePath(const char* _rawPath)
+DataProcessor::Path DataProcessor::getDepFilePath(const char* _rawPath)
 {
-	return PathStr("_temp/%s.dep", _rawPath + sizeof("_raw/"));
+	Path ret;
+	ret.setf("%s%s.dep", kRootPaths[Root_Temp], RemoveRoot(Root_Raw, _rawPath));
+	return ret;
 }
 
 void DataProcessor::initRules()
@@ -317,9 +463,8 @@ void DataProcessor::initRules()
 		rule->m_name    = "texture";
 		rule->m_pattern = "*.texture.*";
 		rule->m_version = 0;
-		rule->OnInit    = &Rule_texture::OnInit;
-		rule->OnModify  = &Rule_texture::OnModify;
-		rule->OnDelete  = &Rule_texture::OnDelete;
+		rule->Init      = &Rule_texture::Init;
+		rule->Execute   = &Rule_texture::Execute;
 
 		m_rules.push_back(rule);
 	}
@@ -351,13 +496,12 @@ void DataProcessor::scanTemp()
 {
 	eastl::vector<PathStr> fileList;
 	fileList.resize(4096);
-	APT_VERIFY(FileSystem::ListFiles(fileList.data(), (int)fileList.size(), "_temp/", { "*.dep" }, true) < (int)fileList.size());
+	APT_VERIFY(FileSystem::ListFiles(fileList.data(), (int)fileList.size(), kRootPaths[Root_Temp], { "*.dep" }, true) < (int)fileList.size());
 
 	for (auto& path : fileList)
 	{
-		StringHash pathHash(path.c_str());
 		Command* command = m_commandPool.alloc();
-		command->m_depPath = path;
+		command->m_depPath = Path(path.c_str());
 		addCommand(command);
 		readDepFile(command);
 	}
@@ -368,7 +512,7 @@ void DataProcessor::scanRaw()
 {
 	eastl::vector<PathStr> fileList;
 	fileList.resize(4096);
-	APT_VERIFY(FileSystem::ListFiles(fileList.data(), (int)fileList.size(), "_raw/", { "*.*" }, true) < (int)fileList.size());
+	APT_VERIFY(FileSystem::ListFiles(fileList.data(), (int)fileList.size(), kRootPaths[Root_Raw], { "*.*" }, true) < (int)fileList.size());
 
 	for (auto& path : fileList)
 	{
