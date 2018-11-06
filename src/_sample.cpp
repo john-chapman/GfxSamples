@@ -12,7 +12,7 @@ using namespace apt;
 
 int main(int _argc, char** _argv)
 {
-	FileSystem::AddRoot("common2");
+	FileSystem::AddRoot("sample_common");
 	AppSample* app = AppSample::GetCurrent();
 	if (!app->init(ArgList(_argc, _argv))) {
 		APT_ASSERT(false);
