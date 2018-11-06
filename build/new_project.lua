@@ -20,28 +20,6 @@ end
 -- Name of the application bas class ("AppSample" or "AppSample3d")
 local appBase = arg[2] or "AppSample"
 
--- add to projects.lua
-local projList = dofile("build/projects.lua") or {}
-if projList[projName] ~= nil then
-	err("\"" .. projName .. "\" already exists!")
-end
-
-projList[projName] = { "../src/" .. projName .. "/**" }
-local projFile = io.open("build/projects.lua", "w")
-if projFile == nil then
-	os.exit(-1)
-end
-projFile:write("return\n{\n")
-for k, v in pairs(projList) do
-	projFile:write("\t" .. tostring(k) .. " =\n\t{\n")
-	for i, w in ipairs(v) do
-		projFile:write("\t\t\"" .. tostring(w) .. "\",\n")
-	end
-	projFile:write("\t},\n\n")
-end
-projFile:write("}")
-projFile:close()
-
 -- generate main source files
 function makeSrc(_projName, _appBase, _ext)
 	local srcDir = "src\\" .. _projName .. "\\"
@@ -54,7 +32,7 @@ function makeSrc(_projName, _appBase, _ext)
 	end
 
  -- load the skeleton file
-	local skeletonFile = io.open("src/_skeleton" .. _ext, "r")
+	local skeletonFile = io.open("src\\_skeleton" .. _ext, "r")
 	local src = skeletonFile:read("*all")
 	skeletonFile:close()
 	src = string.gsub(src, "_skeleton", _projName) -- substitute _skeleton for the project name
@@ -68,3 +46,28 @@ function makeSrc(_projName, _appBase, _ext)
 end
 makeSrc(projName, appBase, ".h")
 makeSrc(projName, appBase, ".cpp")
+
+-- create the data dir
+os.execute("if not exist data\\" .. projName .. " mkdir data\\" .. projName)
+
+-- add to projects.lua
+local projList = dofile("build\\projects.lua") or {}
+if projList[projName] ~= nil then
+	err("\"" .. projName .. "\" already exists!")
+end
+
+projList[projName] = { "../src/" .. projName .. "/**" }
+local projFile = io.open("build\\projects.lua", "w")
+if projFile == nil then
+	os.exit(-1)
+end
+projFile:write("return\n{\n")
+for k, v in pairs(projList) do
+	projFile:write("\t" .. tostring(k) .. " =\n\t{\n")
+	for i, w in ipairs(v) do
+		projFile:write("\t\t\"" .. tostring(w) .. "\",\n")
+	end
+	projFile:write("\t},\n\n")
+end
+projFile:write("}")
+projFile:close()
