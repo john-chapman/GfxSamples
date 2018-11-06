@@ -10,9 +10,4 @@ return
 		"../src/LensFlare_ScreenSpace/**",
 	},
 
-	Test2d =
-	{
-		"../src/Test2d/**",
-	},
-
 }
