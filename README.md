@@ -26,7 +26,7 @@ _You can also run the `build/premake.lua` script directly (requires [premake5](h
 
 ### Creating a New Project
 
-1. Run `New2dProject2d.bat` or `New3dProject.bat` and give your project a name:
+1. Run `New2dProject.bat` or `New3dProject.bat` and give your project a name:
 
 ![NewProject.bat](build/tools/newproject.gif)
 
