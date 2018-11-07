@@ -164,7 +164,7 @@ void Tutorial::draw()
 
 		ctx->setFramebufferAndViewport(m_fbScene);
 		glAssert(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)); // can make gl* calls directly, wrap with glAssert() to check the error state
-		FRM_GL_ENABLE(GL_DEPTH_TEST, GL_TRUE); // FRM_GL_ENABLE() is convenient for setting gl state within a scope block only 
+		glScopedEnable(GL_DEPTH_TEST, GL_TRUE); // glScopedEnable() is convenient for setting gl state within a scope block only 
 	
 		ctx->setShader(m_shMesh);
 		ctx->bindTexture("txDiffuse", m_txDiffuse);
