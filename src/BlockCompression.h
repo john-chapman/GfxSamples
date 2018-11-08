@@ -26,14 +26,15 @@ protected:
 	frm::Shader*  m_shBc1;
 	frm::Shader*  m_shView;
 
-	enum Mode 
+	enum Mode_
 	{
-		Mode_Node,
+		Mode_None,
 		Mode_Difference,
 
 		Mode_Count
 	};
-	int m_mode;
+	typedef int Mode;
+	Mode m_mode = Mode_None;
 
 	bool initTextures();
 	void shutdownTextures();

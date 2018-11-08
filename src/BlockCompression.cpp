@@ -20,8 +20,8 @@ BlockCompression::BlockCompression()
 	: AppBase("BlockCompression") 
 {
 	PropertyGroup& propGroup = m_props.addGroup("BlockCompression");
-	//                  name             default            min     max    storage
-	//propGroup.addFloat  ("Float",        0.0f,              0.0f,   1.0f,  &foo);
+	//                name                 default          min     max          storage
+	propGroup.addInt ("Mode",              m_mode,          0,      Mode_Count,  &m_mode);
 	propGroup.addPath("Source Image Path", "kodim23.png", &m_txSrcPath);
 }
 
