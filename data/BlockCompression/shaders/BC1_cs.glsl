@@ -1,7 +1,7 @@
 #include "shaders/def.glsl"
 
 #define USE_SHARED_MEMORY  1  // Load src block into shared memory (else call texelFetch() for each sample).
-#define ENDPOINTS_PCA      0  // Use principle component analysis to find the block endpoints (else use the color space extents).
+#define ENDPOINTS_PCA      1  // Use principle component analysis to find the block endpoints (else use the color space extents).
 
 uniform sampler2D txSrc;
 
@@ -80,6 +80,7 @@ void main()
 	vec3 ep1 = vec3(0.0);
 	#if ENDPOINTS_PCA
 	{
+#if 0
 	 	ep0 = ep1 = SRC_TEXEL(0);
 		vec3 avg = ep0;
 		for (int i = 1; i < 16; ++i) {
@@ -128,6 +129,32 @@ void main()
 				maxd = d;
 			}
 		}
+
+#elif 0
+// OR power method for finding the first eigenvector of the covariance matrix
+// see http://www.math.tamu.edu/~dallen/linear_algebra/chpt6.pdf
+
+#else
+// OR a covariance-free method http://www.cse.msu.edu/~weng/research/CCIPCApami.pdf
+
+	const float l = 2.0;
+	vec3 v = SRC_TEXEL(0);
+	for (int i = 1; i < 16; ++i) {
+		float n = float(i);
+		vec3 u = SRC_TEXEL(i);
+		v = (n - 1.0 - l) / n * v + (1.0 + l) / n * dot(u, u) * normalize(v);
+	}
+
+	vec3 avg = ep0;
+	for (int i = 1; i < 16; ++i) {
+		avg += SRC_TEXEL(i);
+	}
+	avg *= 1.0/16.0;
+		
+	ep0 = avg + v * 0.5;
+	ep1 = avg - v * 0.5;
+
+#endif
 	}
 	#else
 	{
