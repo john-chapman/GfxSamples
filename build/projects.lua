@@ -1,13 +1,18 @@
 return
 {
-	Tutorial =
+	PCA =
 	{
-		"../src/Tutorial/**",
+		"../src/PCA/**",
 	},
 
 	LensFlare_ScreenSpace =
 	{
 		"../src/LensFlare_ScreenSpace/**",
+	},
+
+	Tutorial =
+	{
+		"../src/Tutorial/**",
 	},
 
 }
