@@ -37,7 +37,6 @@ workspace "GfxSamples"
 			)
 	group ""
 
-
  -- symlink to common sample data in bin/sample_common (bin/common already points to GfxSampleFramework/data/common)
 	local projDir = "$(ProjectDir)..\\..\\"
 	local dataDir = projDir .. "data\\"

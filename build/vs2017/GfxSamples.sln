@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GfxSampleFramework", "GfxSa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LensFlare_ScreenSpace", "LensFlare_ScreenSpace.vcxproj", "{CCAD043E-381A-C038-010E-58966D39E2A0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Convolution", "Convolution.vcxproj", "{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tutorial", "Tutorial.vcxproj", "{B93F5A46-A50C-B551-CE25-A3F9BA51EADF}"
 EndProject
 Global
@@ -29,6 +31,10 @@ Global
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Debug|Win64.Build.0 = Debug Win64|x64
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Release|Win64.ActiveCfg = Release Win64|x64
 		{CCAD043E-381A-C038-010E-58966D39E2A0}.Release|Win64.Build.0 = Release Win64|x64
+		{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}.Debug|Win64.ActiveCfg = Debug Win64|x64
+		{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}.Debug|Win64.Build.0 = Debug Win64|x64
+		{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}.Release|Win64.ActiveCfg = Release Win64|x64
+		{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}.Release|Win64.Build.0 = Release Win64|x64
 		{B93F5A46-A50C-B551-CE25-A3F9BA51EADF}.Debug|Win64.ActiveCfg = Debug Win64|x64
 		{B93F5A46-A50C-B551-CE25-A3F9BA51EADF}.Debug|Win64.Build.0 = Debug Win64|x64
 		{B93F5A46-A50C-B551-CE25-A3F9BA51EADF}.Release|Win64.ActiveCfg = Release Win64|x64

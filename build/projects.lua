@@ -1,5 +1,10 @@
 return
 {
+	Convolution =
+	{
+		"../src/Convolution/**",
+	},
+
 	Tutorial =
 	{
 		"../src/Tutorial/**",
