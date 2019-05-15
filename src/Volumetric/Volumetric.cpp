@@ -111,7 +111,6 @@ void Volumetric::draw()
 
 void Volumetric::editVolumeData()
 {
-	Im3d::GizmoTranslation("Volume Origin", &m_volumeData.m_volumeOrigin.x);
 	ImGui::SliderFloat("Volume Width", &m_volumeData.m_volumeWidth, 10.0f, 10000.0f);
 	ImGui::SliderFloat("Volume Height", &m_volumeData.m_volumeHeight, 1.0f, 10000.0f);
 	ImGui::Spacing();
@@ -122,11 +121,15 @@ void Volumetric::editVolumeData()
 	float boxHalfHeight = m_volumeData.m_volumeHeight / 2.0f;
 	vec3  boxHalfExtent = vec3(boxHalfWidth, boxHalfHeight, boxHalfWidth);
 
-	Im3d::PushDrawState();
-		Im3d::SetColor(Im3d::Color_Magenta);
-		Im3d::SetSize(3.0f);
-		Im3d::DrawAlignedBox(m_volumeData.m_volumeOrigin - boxHalfExtent, m_volumeData.m_volumeOrigin + boxHalfExtent);
-	Im3d::PopDrawState();
+	if (m_showHelpers)
+	{
+		Im3d::GizmoTranslation("Volume Origin", &m_volumeData.m_volumeOrigin.x);
+		Im3d::PushDrawState();
+			Im3d::SetColor(Im3d::Color_Magenta);
+			Im3d::SetSize(3.0f);
+			Im3d::DrawAlignedBox(m_volumeData.m_volumeOrigin - boxHalfExtent, m_volumeData.m_volumeOrigin + boxHalfExtent);
+		Im3d::PopDrawState();
+	}
 }
 
 void Volumetric::updateVolumeDataGPU()

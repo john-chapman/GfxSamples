@@ -2,10 +2,10 @@
 #include "shaders/Camera.glsl"
 #include "shaders/Volume.glsl"
 
-#define FIXED_STEP_INTEGRAL           0
+#define FIXED_STEP_INTEGRAL           1
 #define ENERGY_CONSERVING_INTEGRATION 1
-#define FIXED_STEP_COUNT              64
-#define MIN_STEP_LENGTH               1e-3
+#define FIXED_STEP_COUNT              256
+#define MIN_STEP_LENGTH               0.1
 
 layout(rgba16f) uniform image2D txDst;
 
@@ -25,9 +25,14 @@ float Clouds_Remap(in float _x, in float _min0, in float _max0, in float _min1, 
 	return _min1 + (((_x - _min0) / (_max0 - _min0)) * (_max1 - _min1));
 }
 
+vec3 Volume_GetNormalizedPosition(in vec3 _p)
+{
+	return (_p - uVolumeData.m_volumeExtentMin.xyz) /  (uVolumeData.m_volumeExtentMax.xyz - uVolumeData.m_volumeExtentMin.xyz);
+}
+
 vec4 Volume_GetCloudControl(in vec3 _p)
 {
-	vec2 uv = (_p.xz - uVolumeData.m_volumeExtentMin.xz) / (uVolumeData.m_volumeExtentMax.xz - uVolumeData.m_volumeExtentMin.xz);
+	vec2 uv = Volume_GetNormalizedPosition(_p).xz;
 	return textureLod(txCloudControl, uv, 0.0);
 }
 
@@ -35,9 +40,9 @@ float Volume_GetDensity(in vec3 _p, in float _lod)
 {
 	float density = 0.0;
 
-const float kShapeScale   = 0.03;
-const float kErosionScale = kShapeScale * 8.0;
-const float kErosionStrength = 0.5;
+const float kShapeScale   = 0.05;
+const float kErosionScale = kShapeScale * 4.0;
+const float kErosionStrength = 0.9;
 
 	vec4 cloudControl = Volume_GetCloudControl(_p);
 
@@ -46,6 +51,10 @@ const float kErosionStrength = 0.5;
 
 	float noiseErosion  = textureLod(txNoiseErosion, _p * kErosionScale, _lod).x;
 	density = Clouds_Remap(density, saturate(noiseErosion * kErosionStrength), 1.0, 0.0, 1.0);
+
+ // fade at the box edges
+	vec3 edge = abs(Volume_GetNormalizedPosition(_p) * 2.0 - 1.0);
+	density = density * (1.0 - smoothstep(0.7, 0.9, max3(edge.x, edge.y, edge.z)));
 
 	return density * uVolumeData.m_density;
 }
@@ -73,9 +82,9 @@ void main()
 			float stp = max((tmax - tmin) / float(FIXED_STEP_COUNT), MIN_STEP_LENGTH);
 		#endif
 
-		float scatter = 0.0;
+		vec3 scatter = vec3(0.0);
 		float transmittance = 1.0;
-		float t = tmin + stp;
+		float t = tmin;
 		while (t < tmax)
 		{
 			vec3 p = rayOrigin + rayDirection * t;
@@ -88,19 +97,19 @@ void main()
 				float s = muS ;// * Volume_Phase(VdotL);
 				float si = (s - s * exp(-muE * stp)) / muE; // integrate wrt current step segment
 				float w = 1.0; // \todo simpson/trapezoid rule
-				scatter = scatter + si * transmittance * w;
+				scatter = scatter + (si * Volume_GetNormalizedPosition(p)) * transmittance * w;
 				transmittance *= exp(-muE * stp);
 			}
 			#else
 			{
-				scatter = scatter + muS * transmittance * stp * ;//Volume_Phase(VdotL);
+				scatter = scatter + (muS * Volume_GetNormalizedPosition(p)) * transmittance * stp ;// * Volume_Phase(VdotL);
 				transmittance *= exp(-muE * stp);
 			}
 			#endif
 			t = t + stp;
 		}
 		
-		ret = vec4(scatter * (1.0 - transmittance));
+		ret = vec4(scatter, 1.0);
 	}
 
 	imageStore(txDst, ivec2(gl_GlobalInvocationID.xy), vec4(ret));

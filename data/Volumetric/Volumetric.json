@@ -8,7 +8,7 @@
 	"AppSample": {
 		"ShowMenu": true,
 		"ShowPropertyEditor": false,
-		"ShowProfiler": true,
+		"ShowProfiler": false,
 		"ShowShaderViewer": false,
 		"VsyncMode": 0,
 		"ShowLogNotifications": false,
