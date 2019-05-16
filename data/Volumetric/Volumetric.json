@@ -5,6 +5,19 @@
 		"FontEnableScaling": false,
 		"FontSize": 13.0
 	},
+	"Volumetric": {
+		"m_volumeData.m_volumeHeight": 8.0,
+		"m_volumeData.m_erosionStrength": 0.0,
+		"m_sunPath.m_elevation": 2.1293017864227297,
+		"m_sunPath.m_azimuth": 0.6981317400932312,
+		"m_volumeData.m_erosionScale": 8.0,
+		"m_volumeData.m_coverageBias": -0.16900001466274262,
+		"m_volumeData.m_volumeWidth": 32.0,
+		"m_volumeData.m_density": 1.034000039100647,
+		"m_sunPath.m_theta": 0.35200002789497378,
+		"m_volumeData.m_shapeScale": 0.03100000135600567,
+		"m_volumeData.m_scatter": 1.0
+	},
 	"AppSample": {
 		"ShowMenu": true,
 		"ShowPropertyEditor": false,

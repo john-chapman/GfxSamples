@@ -2,9 +2,14 @@ struct VolumeData
 {
 	vec4   m_volumeExtentMin;
 	vec4   m_volumeExtentMax;
+	vec4   m_lightDirection;
 
+	float  m_coverageBias;
 	float  m_density;
 	float  m_scatter;
+	float  m_shapeScale;
+	float  m_erosionScale;
+	float  m_erosionStrength;
 };
 
 bool _SolveQuadratic(in float _a, in float _b, in float _c, out float x0_, out float x1_) 

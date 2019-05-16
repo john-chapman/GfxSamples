@@ -4,12 +4,12 @@
 
 #define FIXED_STEP_INTEGRAL           0
 #define ENERGY_CONSERVING_INTEGRATION 1
-#define FIXED_STEP_COUNT              256
+#define FIXED_STEP_COUNT              64
 #define MIN_STEP_LENGTH               0.1
 #define TRANSMITTANCE_THRESHOLD       1e-2
-
 #define TRAPEZOID_RULE 0
 #define SIMPSONS_RULE  0
+#define SHADOW_STEP_SCALE             4.0
 
 layout(rgba16f) uniform image2D txDst;
 
@@ -44,28 +44,58 @@ float Volume_GetDensity(in vec3 _p, in float _lod)
 {
 	float density = 0.0;
 
-const float kShapeScale   = 0.05;
-const float kErosionScale = kShapeScale * 4.0;
-const float kErosionStrength = 0.9;
-
+ // shape/erosion noise (clouds)
+ // \todo enable a 'cheap' mode which applied erosion without sampling the high frequency texture
 	vec4 cloudControl = Volume_GetCloudControl(_p);
-
-	float noiseShape = textureLod(txNoiseShape, _p * kShapeScale, _lod).x;
-	density = Clouds_Remap(noiseShape, 1.0 - cloudControl.y, 1.0, 0.0, 1.0);
-
-	float noiseErosion  = textureLod(txNoiseErosion, _p * kErosionScale, _lod).x;
-	density = Clouds_Remap(density, saturate(noiseErosion * kErosionStrength), 1.0, 0.0, 1.0);
+	float cloudCoverage = saturate(cloudControl.y + uVolumeData.m_coverageBias);
+	float noiseShape = textureLod(txNoiseShape, _p * uVolumeData.m_shapeScale, _lod).x;
+	density = Clouds_Remap(noiseShape, 1.0 - cloudCoverage, 1.0, 0.0, 1.0);
+	density = saturate(density);
+	float noiseErosion  = textureLod(txNoiseErosion, _p * uVolumeData.m_erosionScale, _lod).x;
+	density = Clouds_Remap(density, saturate(noiseErosion * uVolumeData.m_erosionStrength), 1.0, 0.0, 1.0);
 
  // fade at the box edges
 	vec3 edge = abs(Volume_GetNormalizedPosition(_p) * 2.0 - 1.0);
-	density *= (1.0 - smoothstep(0.7, 0.9, max3(edge.x, edge.y, edge.z)));
+	density = density * (1.0 - smoothstep(0.8, 0.9, max3(edge.x, edge.y, edge.z)));
 
 	return density * uVolumeData.m_density;
 }
 
+float Volume_Phase(in float _VdotL)
+{
+	return 1.0;
+}
+
+float Volume_Shadow(in vec3 _p, in vec3 _dir)
+{
+	float transmittance = 1.0;
+	float tmin, tmax;
+	if (_IntersectRayBox(_p, _dir, uVolumeData.m_volumeExtentMin.xyz, uVolumeData.m_volumeExtentMax.xyz, tmin, tmax))
+	{
+		#if FIXED_STEP_INTEGRAL
+			float stp = MIN_STEP_LENGTH;
+		#else
+			float stp = max((tmax - tmin) / float(FIXED_STEP_COUNT), MIN_STEP_LENGTH);
+		#endif
+		stp *= SHADOW_STEP_SCALE;
+
+		float t = tmin + stp;
+		while (t < tmax && transmittance > 0.1)
+		{
+			vec3 p = _p + _dir * t;
+			float density = Volume_GetDensity(p, 0.0);
+			float muS = density * uVolumeData.m_scatter;
+			float muE = max(muS, 1e-7);
+			transmittance *= exp(-muE * stp);
+			t += stp;
+		}
+	}
+
+	return saturate(transmittance);
+}
+
 void main()
 {
- // discard any redundant thread invocations
 	vec2 txSize = vec2(imageSize(txDst).xy);
 	if (any(greaterThanEqual(ivec2(gl_GlobalInvocationID.xy), ivec2(txSize))))
 	{
@@ -98,10 +128,11 @@ void main()
 			float density = Volume_GetDensity(p, 0.0);
 			float muS = density * uVolumeData.m_scatter;
 			float muE = max(muS, 1e-7);
+			float shadow = Volume_Shadow(p, uVolumeData.m_lightDirection.xyz);
 			#if ENERGY_CONSERVING_INTEGRATION
 			{
 			 // Sebastien Hillaire, energy-conserving integration
-				float s = muS ;// * Volume_Phase(VdotL);
+				float s = muS;
 				float si = (s - s * exp(-muE * stp)) / muE; // integrate wrt current step segment
 				#if defined(SIMPSONS_RULE)
 					float w = (mod(stpi - 1, 3) == 2) ? 2.0: 3.0;
@@ -111,12 +142,13 @@ void main()
 				#else
 					float w = 1.0;
 				#endif
+				si = si * shadow * Volume_Phase(dot(rayDirection, uVolumeData.m_lightDirection.xyz));
 				scatter = scatter + (si * Volume_GetNormalizedPosition(p)) * transmittance * w;
 				transmittance *= exp(-muE * stp);
 			}
 			#else
 			{
-				scatter = scatter + (muS * Volume_GetNormalizedPosition(p)) * transmittance * stp ;// * Volume_Phase(VdotL);
+				scatter = scatter + (muS * Volume_GetNormalizedPosition(p)) * transmittance * stp;
 				transmittance *= exp(-muE * stp);
 			}
 			#endif
