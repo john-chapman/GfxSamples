@@ -2,10 +2,14 @@
 #include "shaders/Camera.glsl"
 #include "shaders/Volume.glsl"
 
-#define FIXED_STEP_INTEGRAL           1
+#define FIXED_STEP_INTEGRAL           0
 #define ENERGY_CONSERVING_INTEGRATION 1
 #define FIXED_STEP_COUNT              256
 #define MIN_STEP_LENGTH               0.1
+#define TRANSMITTANCE_THRESHOLD       1e-2
+
+#define TRAPEZOID_RULE 0
+#define SIMPSONS_RULE  0
 
 layout(rgba16f) uniform image2D txDst;
 
@@ -54,7 +58,7 @@ const float kErosionStrength = 0.9;
 
  // fade at the box edges
 	vec3 edge = abs(Volume_GetNormalizedPosition(_p) * 2.0 - 1.0);
-	density = density * (1.0 - smoothstep(0.7, 0.9, max3(edge.x, edge.y, edge.z)));
+	density *= (1.0 - smoothstep(0.7, 0.9, max3(edge.x, edge.y, edge.z)));
 
 	return density * uVolumeData.m_density;
 }
@@ -78,14 +82,17 @@ void main()
 	{
 		#if FIXED_STEP_INTEGRAL
 			float stp = MIN_STEP_LENGTH;
+			int stpCount = int((tmax - tmin) / stp);
 		#else
 			float stp = max((tmax - tmin) / float(FIXED_STEP_COUNT), MIN_STEP_LENGTH);
+			int stpCount = FIXED_STEP_COUNT;
 		#endif
 
 		vec3 scatter = vec3(0.0);
 		float transmittance = 1.0;
 		float t = tmin;
-		while (t < tmax)
+		int stpi = 0;
+		while (t < tmax && transmittance > TRANSMITTANCE_THRESHOLD)
 		{
 			vec3 p = rayOrigin + rayDirection * t;
 			float density = Volume_GetDensity(p, 0.0);
@@ -96,7 +103,14 @@ void main()
 			 // Sebastien Hillaire, energy-conserving integration
 				float s = muS ;// * Volume_Phase(VdotL);
 				float si = (s - s * exp(-muE * stp)) / muE; // integrate wrt current step segment
-				float w = 1.0; // \todo simpson/trapezoid rule
+				#if defined(SIMPSONS_RULE)
+					float w = (mod(stpi - 1, 3) == 2) ? 2.0: 3.0;
+					w = (stpi == 0 || stpi == (stpCount - 1)) ? 1.0 : w;
+				#elif defined(TRAPEZOID_RULE)
+					float w = (stpi == 0 || stpi == (stpCount - 1)) ? 1.0 : 2.0;
+				#else
+					float w = 1.0;
+				#endif
 				scatter = scatter + (si * Volume_GetNormalizedPosition(p)) * transmittance * w;
 				transmittance *= exp(-muE * stp);
 			}
@@ -106,8 +120,15 @@ void main()
 				transmittance *= exp(-muE * stp);
 			}
 			#endif
+
 			t = t + stp;
+			++stpi;
 		}
+		#if defined(SIMPSONS_RULE)
+			scatter *= 3.0 / 8.0;
+		#elif defined(TRAPEZOID_RULE)
+			scatter *= 0.5;
+		#endif
 		
 		ret = vec4(scatter, 1.0);
 	}
