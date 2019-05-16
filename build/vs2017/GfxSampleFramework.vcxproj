@@ -69,7 +69,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
 if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/extern" "$(ProjectDir)../../extern/GfxSampleFramework//extern"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -97,7 +98,8 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
 if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/extern" "$(ProjectDir)../../extern/GfxSampleFramework//extern"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -257,4 +259,4 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 

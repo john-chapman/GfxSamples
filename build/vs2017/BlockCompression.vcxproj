@@ -72,9 +72,9 @@
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../data/BlockCompression" mkdir "$(ProjectDir)../../data/BlockCompression"
-if not exist "$(ProjectDir)../../bin/BlockCompression" mklink /j "$(ProjectDir)../../bin/BlockCompression" "$(ProjectDir)../../data/"
-if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist $(ProjectDir)..\..\data\BlockCompression mkdir "$(ProjectDir)..\..\data\BlockCompression"
+if not exist $(ProjectDir)..\..\bin\BlockCompression mklink /j "$(ProjectDir)..\..\bin\BlockCompression" "$(ProjectDir)..\..\data\BlockCompression"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
@@ -102,9 +102,9 @@ if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/
       <AdditionalDependencies>shlwapi.lib;hid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>if not exist "$(ProjectDir)../../data/BlockCompression" mkdir "$(ProjectDir)../../data/BlockCompression"
-if not exist "$(ProjectDir)../../bin/BlockCompression" mklink /j "$(ProjectDir)../../bin/BlockCompression" "$(ProjectDir)../../data/"
-if not exist "$(ProjectDir)../../bin/common2" mklink /j "$(ProjectDir)../../bin/common2" "$(ProjectDir)../../data/common"</Command>
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist $(ProjectDir)..\..\data\BlockCompression mkdir "$(ProjectDir)..\..\data\BlockCompression"
+if not exist $(ProjectDir)..\..\bin\BlockCompression mklink /j "$(ProjectDir)..\..\bin\BlockCompression" "$(ProjectDir)..\..\data\BlockCompression"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

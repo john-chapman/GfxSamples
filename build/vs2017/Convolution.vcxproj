@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CCAD043E-381A-C038-010E-58966D39E2A0}</ProjectGuid>
+    <ProjectGuid>{45EB06EC-B1A0-7FE1-3A95-79B8A64976E5}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>LensFlare_ScreenSpace</RootNamespace>
+    <RootNamespace>Convolution</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'" Label="Configuration">
@@ -42,15 +42,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Win64\Debug\LensFlare_ScreenSpace\</IntDir>
-    <TargetName>LensFlare_ScreenSpace_debug</TargetName>
+    <IntDir>obj\Win64\Debug\Convolution\</IntDir>
+    <TargetName>Convolution_debug</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\bin\</OutDir>
-    <IntDir>obj\Win64\Release\LensFlare_ScreenSpace\</IntDir>
-    <TargetName>LensFlare_ScreenSpace</TargetName>
+    <IntDir>obj\Win64\Release\Convolution\</IntDir>
+    <TargetName>Convolution</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
@@ -73,8 +73,8 @@
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
-if not exist $(ProjectDir)..\..\data\LensFlare_ScreenSpace mkdir "$(ProjectDir)..\..\data\LensFlare_ScreenSpace"
-if not exist $(ProjectDir)..\..\bin\LensFlare_ScreenSpace mklink /j "$(ProjectDir)..\..\bin\LensFlare_ScreenSpace" "$(ProjectDir)..\..\data\LensFlare_ScreenSpace"</Command>
+if not exist $(ProjectDir)..\..\data\Convolution mkdir "$(ProjectDir)..\..\data\Convolution"
+if not exist $(ProjectDir)..\..\bin\Convolution mklink /j "$(ProjectDir)..\..\bin\Convolution" "$(ProjectDir)..\..\data\Convolution"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
@@ -103,15 +103,15 @@ if not exist $(ProjectDir)..\..\bin\LensFlare_ScreenSpace mklink /j "$(ProjectDi
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
-if not exist $(ProjectDir)..\..\data\LensFlare_ScreenSpace mkdir "$(ProjectDir)..\..\data\LensFlare_ScreenSpace"
-if not exist $(ProjectDir)..\..\bin\LensFlare_ScreenSpace mklink /j "$(ProjectDir)..\..\bin\LensFlare_ScreenSpace" "$(ProjectDir)..\..\data\LensFlare_ScreenSpace"</Command>
+if not exist $(ProjectDir)..\..\data\Convolution mkdir "$(ProjectDir)..\..\data\Convolution"
+if not exist $(ProjectDir)..\..\bin\Convolution mklink /j "$(ProjectDir)..\..\bin\Convolution" "$(ProjectDir)..\..\data\Convolution"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\LensFlare_ScreenSpace\LensFlare_ScreenSpace.h" />
+    <ClInclude Include="..\..\src\Convolution\Convolution.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\LensFlare_ScreenSpace\LensFlare_ScreenSpace.cpp" />
+    <ClCompile Include="..\..\src\Convolution\Convolution.cpp" />
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>

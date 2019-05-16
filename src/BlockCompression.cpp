@@ -117,7 +117,7 @@ bool BlockCompression::update()
 					
 			{	PROFILER_MARKER("Copy");
 				glAssert(glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT));
-				FRM_GL_PIXELSTOREI(GL_UNPACK_ALIGNMENT, 1);
+				glScopedPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 				glAssert(glBindBuffer(GL_PIXEL_UNPACK_BUFFER, test.m_bfDst->getHandle()));
 				glAssert(glCompressedTextureSubImage2D(test.m_txDst->getHandle(), 0, 0, 0, test.m_txDst->getWidth(), test.m_txDst->getHeight(), test.m_txDst->getFormat(), test.m_bfDst->getSize(), 0));
 				glAssert(glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
