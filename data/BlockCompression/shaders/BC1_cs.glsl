@@ -14,6 +14,12 @@ layout(std430) restrict writeonly buffer _bfDst
 	uvec2 bfDst[];
 };
 
+
+#define TEXEL_INDEX (gl_LocalInvocationIndex)
+#define TEXEL_COORD (gl_LocalInvocationID.xy)
+#define BLOCK_INDEX (gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x)
+#define BLOCK_COORD (gl_WorkGroupID.xy * 4)
+
 #if USE_SHARED_MEMORY
 	shared vec3 s_srcTexels[16];
 	#define SRC_TEXEL(_i) s_srcTexels[_i]
@@ -146,17 +152,13 @@ void SelectEndpoints(in vec3 _axis, in vec3 _avg, out vec3 ep0_, out vec3 ep1_)
 
 void main()
 {
-	#define TEXEL_INDEX (gl_LocalInvocationIndex)
-	#define TEXEL_COORD (gl_LocalInvocationID.xy)
-	#define BLOCK_INDEX (gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x)
-	#define BLOCK_COORD (gl_WorkGroupID.xy * 4)
-
 	#if USE_SHARED_MEMORY
 	{
 	 // load src block into shared memory (1 fetch per thread)
 		ivec2 iuv = ivec2(BLOCK_COORD + TEXEL_COORD);
 		s_srcTexels[TEXEL_INDEX] = texelFetch(txSrc, iuv, 0).rgb;
-		groupMemoryBarrier();
+		memoryBarrierShared();
+		barrier();
 	}
 	#endif
 
@@ -246,7 +248,8 @@ void main()
 		const uvec4 idxMap = uvec4(1, 3, 2, 0);
 		s_indices[TEXEL_INDEX] = idxMap[uint(idx)];
 	}
-	groupMemoryBarrier();
+	memoryBarrierShared();
+	barrier();
 
  // encode block
 	if (TEXEL_INDEX == 0) 
