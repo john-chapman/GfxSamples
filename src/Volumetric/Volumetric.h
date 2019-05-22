@@ -35,6 +35,7 @@ protected:
 	frm::Texture*     m_txNoiseShape   = nullptr;
 	frm::Texture*     m_txNoiseErosion = nullptr;
 	frm::Texture*     m_txCloudControl = nullptr;
+	frm::Texture*     m_txCloudPhase   = nullptr;
 
 	bool editVolumeData();
 	void updateVolumeDataGPU();

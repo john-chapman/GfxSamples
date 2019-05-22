@@ -2,11 +2,11 @@
 #include "shaders/Camera.glsl"
 #include "shaders/Volume.glsl"
 
-#define FIXED_STEP_INTEGRAL           0
+#define FIXED_STEP_INTEGRAL           1
 #define ENERGY_CONSERVING_INTEGRATION 1
 #define FIXED_STEP_COUNT              64
-#define MIN_STEP_LENGTH               0.1
-#define TRANSMITTANCE_THRESHOLD       1e-2
+#define MIN_STEP_LENGTH               0.3
+#define TRANSMITTANCE_THRESHOLD       1e-1
 #define TRAPEZOID_RULE 0
 #define SIMPSONS_RULE  0
 #define SHADOW_STEP_SCALE             4.0
@@ -21,13 +21,7 @@ layout(std430) restrict readonly buffer bfVolumeData
 uniform sampler3D txNoiseShape;
 uniform sampler3D txNoiseErosion;
 uniform sampler2D txCloudControl;
-
-
-// Remap _x from [_min0,_max0] to [_min1,_max1].
-float Clouds_Remap(in float _x, in float _min0, in float _max0, in float _min1, in float _max1)
-{
-	return _min1 + (((_x - _min0) / (_max0 - _min0)) * (_max1 - _min1));
-}
+uniform sampler2D txCloudPhase;
 
 vec3 Volume_GetNormalizedPosition(in vec3 _p)
 {
@@ -49,11 +43,10 @@ float Volume_GetDensity(in vec3 _p, in float _lod)
 	vec4 cloudControl = Volume_GetCloudControl(_p);
 	float cloudCoverage = saturate(cloudControl.y + uVolumeData.m_coverageBias);
 	float noiseShape = textureLod(txNoiseShape, _p * uVolumeData.m_shapeScale, _lod).x;
-	density = Clouds_Remap(noiseShape, 1.0 - cloudCoverage, 1.0, 0.0, 1.0);
-	density = saturate(density);
+	density = linearstep(1.0 - cloudCoverage, 1.0, noiseShape);
 	float noiseErosion  = textureLod(txNoiseErosion, _p * uVolumeData.m_erosionScale, _lod).x;
-	density = Clouds_Remap(density, saturate(noiseErosion * uVolumeData.m_erosionStrength), 1.0, 0.0, 1.0);
-
+	density = linearstep(saturate(noiseErosion * uVolumeData.m_erosionStrength), 1.0, density);
+density = cloudCoverage;
  // fade at the box edges
 	vec3 edge = abs(Volume_GetNormalizedPosition(_p) * 2.0 - 1.0);
 	density = density * (1.0 - smoothstep(0.8, 0.9, max3(edge.x, edge.y, edge.z)));
@@ -63,7 +56,7 @@ float Volume_GetDensity(in vec3 _p, in float _lod)
 
 float Volume_Phase(in float _VdotL)
 {
-	return 1.0;
+	return textureLod(txCloudPhase, vec2(_VdotL * 0.5 + 0.5, 0.0), 0.0).x;
 }
 
 float Volume_Shadow(in vec3 _p, in vec3 _dir)
@@ -125,10 +118,11 @@ void main()
 		while (t < tmax && transmittance > TRANSMITTANCE_THRESHOLD)
 		{
 			vec3 p = rayOrigin + rayDirection * t;
+			float phase = Volume_Phase(dot(rayDirection, uVolumeData.m_lightDirection.xyz));
+			phase = phase * Volume_Shadow(p, uVolumeData.m_lightDirection.xyz);
 			float density = Volume_GetDensity(p, 0.0);
 			float muS = density * uVolumeData.m_scatter;
 			float muE = max(muS, 1e-7);
-			float shadow = Volume_Shadow(p, uVolumeData.m_lightDirection.xyz);
 			#if ENERGY_CONSERVING_INTEGRATION
 			{
 			 // Sebastien Hillaire, energy-conserving integration
@@ -142,7 +136,7 @@ void main()
 				#else
 					float w = 1.0;
 				#endif
-				si = si * shadow * Volume_Phase(dot(rayDirection, uVolumeData.m_lightDirection.xyz));
+				si = si * phase;
 				scatter = scatter + (si * Volume_GetNormalizedPosition(p)) * transmittance * w;
 				transmittance *= exp(-muE * stp);
 			}
@@ -164,6 +158,6 @@ void main()
 		
 		ret = vec4(scatter, 1.0);
 	}
-
+	
 	imageStore(txDst, ivec2(gl_GlobalInvocationID.xy), vec4(ret));
 }

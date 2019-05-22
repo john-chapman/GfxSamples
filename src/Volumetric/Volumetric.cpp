@@ -52,6 +52,9 @@ bool Volumetric::init(const apt::ArgList& _args)
 	m_txNoiseErosion->setName("txNoiseErosion");
 	m_txCloudControl = Texture::Create("textures/cloud_control.tga");
 	m_txCloudControl->setName("txCloudControl");
+	m_txCloudPhase = Texture::Create("textures/cloud_phase.psd");
+	m_txCloudPhase->setName("txCloudPhase");
+	m_txCloudPhase->setWrap(GL_CLAMP_TO_EDGE);
 
 	m_txSceneColor = Texture::Create2d(m_resolution.x, m_resolution.y, GL_RGBA16F);
 	m_txSceneColor->setName("txSceneColor");
@@ -129,6 +132,7 @@ void Volumetric::draw()
 		ctx->bindTexture(m_txNoiseShape);
 		ctx->bindTexture(m_txNoiseErosion);
 		ctx->bindTexture(m_txCloudControl);
+		ctx->bindTexture(m_txCloudPhase);
 		ctx->bindImage("txDst", m_txSceneColor, GL_WRITE_ONLY);
 		ctx->dispatch(m_txSceneColor);
 	}
