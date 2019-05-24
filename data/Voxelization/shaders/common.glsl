@@ -1,0 +1,1 @@
+#define ENCODE_RGBM 0

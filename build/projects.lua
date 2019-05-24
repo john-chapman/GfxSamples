@@ -1,8 +1,13 @@
 return
 {
-	Convolution =
+	Voxelization =
 	{
-		"../src/Convolution/**",
+		"../src/Voxelization/**",
+	},
+
+	LensFlare_ScreenSpace =
+	{
+		"../src/LensFlare_ScreenSpace/**",
 	},
 
 	Tutorial =
@@ -10,9 +15,9 @@ return
 		"../src/Tutorial/**",
 	},
 
-	LensFlare_ScreenSpace =
+	Convolution =
 	{
-		"../src/LensFlare_ScreenSpace/**",
+		"../src/Convolution/**",
 	},
 
 }
