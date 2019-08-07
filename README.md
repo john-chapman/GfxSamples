@@ -1,6 +1,6 @@
 Graphics samples for [john-chapman.github.io](https://john-chapman.github.io/).
 
-This project also serves as an example for using the [GfxSampleFramework](https://github.com/john-chapman/GfxSampleFramework) as a basis for your own demo/samples projects.
+This project also serves as an example for using the [GfxSampleFramework](https://github.com/john-chapman/GfxSampleFramework) as a basis for your own demo/sample projects.
 
 Currently only supporting Visual Studio/Windows.
 
@@ -16,7 +16,7 @@ git clone --recursive https://github.com/john-chapman/GfxSamples.git
 
 ### Building the Samples
 
-1. Run `BuildVS.bat` and enter the target to generate a solution for:
+1. Run `BuildVS.bat` and enter the target to generate a solution for Visual Studio:
 
 ![BuildVS.bat](build/tools/buildvs.gif)
 
