@@ -8,7 +8,7 @@
 	"BlockCompression": {
 		"m_mode": 0,
 		"m_tests[1].m_usePCA": false,
-		"m_txSrcPath": "kodim23.png",
+		"m_txSrcPath": "sample_common/textures/baboon.png",
 		"m_tests[0].m_usePCA": true
 	},
 	"AppSample": {
