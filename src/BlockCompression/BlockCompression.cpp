@@ -43,11 +43,21 @@ bool BlockCompression::init(const apt::ArgList& _args)
 
 	m_shView = Shader::CreateVsFs("shaders/Basic_vs.glsl", "shaders/View_fs.glsl");
 
-	initSourceTexture();
+	if (!initSourceTexture())
+	{
+		return false;
+	}
+
 	for (auto& test : m_tests)
 	{
-		initTextures(test);
-		initShaders(test);
+		if (!initShaders(test))
+		{
+			return false;
+		}
+		if (!initTextures(test))
+		{
+			return false;
+		}
 	}
 
 	return true;

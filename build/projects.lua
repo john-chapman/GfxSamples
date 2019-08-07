@@ -17,6 +17,6 @@ return
 
 	BlockCompression =
 	{ 
-		"../src/BlockCompression.*",
+		"../src/BlockCompression/**",
 	},
 }

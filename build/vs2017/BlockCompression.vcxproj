@@ -108,10 +108,10 @@ if not exist $(ProjectDir)..\..\bin\BlockCompression mklink /j "$(ProjectDir)..\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\BlockCompression.h" />
+    <ClInclude Include="..\..\src\BlockCompression\BlockCompression.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\BlockCompression.cpp" />
+    <ClCompile Include="..\..\src\BlockCompression\BlockCompression.cpp" />
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
