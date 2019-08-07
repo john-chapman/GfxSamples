@@ -1,12 +1,11 @@
 #pragma once
-#ifndef _skeleton_h
-#define _skeleton_h
 
-#include <frm/AppSample.h>
+#include <frm/core/AppSample.h>
 
-class _skeleton: public frm::AppSample
+typedef frm::AppSample AppBase;
+
+class _skeleton: public AppBase
 {
-	typedef AppSample AppBase;
 public:
 	_skeleton();
 	virtual ~_skeleton();
@@ -17,8 +16,4 @@ public:
 	virtual void draw() override;
 
 protected:
-
 };
-
-
-#endif // _skeleton_h

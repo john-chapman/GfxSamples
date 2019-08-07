@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="SceneGraph">
-      <UniqueIdentifier>{05BA97CB-F171-D918-5A79-B27446507409}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\SceneGraph.h" />
-    <ClInclude Include="..\..\src\SceneGraph\Material.h">
-      <Filter>SceneGraph</Filter>
+    <ClInclude Include="..\..\src\SceneGraph.h">
+      <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\SceneGraph\Model.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SceneGraph\Scene.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SceneGraph\Serializable.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SceneGraph\DataProcessor.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\src\SceneGraph\DataProcessor.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Material.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Model.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Scene.h" />
+    <ClInclude Include="..\..\src\SceneGraph\Serializable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\SceneGraph.cpp" />
-    <ClCompile Include="..\..\src\_sample.cpp" />
-    <ClCompile Include="..\..\src\SceneGraph\Material.cpp">
-      <Filter>SceneGraph</Filter>
+    <ClCompile Include="..\..\src\SceneGraph.cpp">
+      <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\SceneGraph\Model.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SceneGraph\Scene.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SceneGraph\DataProcessor.cpp">
-      <Filter>SceneGraph</Filter>
+    <ClCompile Include="..\..\src\SceneGraph\DataProcessor.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Material.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Model.cpp" />
+    <ClCompile Include="..\..\src\SceneGraph\Scene.cpp" />
+    <ClCompile Include="..\..\src\_sample.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

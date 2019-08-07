@@ -37,27 +37,38 @@ workspace "GfxSamples"
 			)
 	group ""
 
+ -- symlink to common sample data in bin/sample_common (bin/common already points to GfxSampleFramework/data/common)
+	local projDir = "$(ProjectDir)..\\..\\"
+	local dataDir = projDir .. "data\\"
+	local binDir  = projDir .. "bin\\"
+	filter { "action:vs*" }
+		postbuildcommands({
+			"if not exist \"" .. binDir .. "sample_common\" mklink /j \"" .. binDir .. "sample_common\" \"" .. dataDir .. "common\"",
+			})
+	filter{}
+
+ -- create projects
 	local projList = dofile("projects.lua")
 	for name,fileList in pairs(projList) do
 		project(tostring(name))
 			kind "ConsoleApp"
 			targetdir "../bin"
-
 				ApplicationTools_Link()
 				GfxSampleFramework_Link()
 
+				vpaths({ ["*"] = { "../src/" .. tostring(name) .. "/**" } })
 				files(fileList)
-				files({
-					"../src/_sample.cpp",
-					})
+				files("../src/_sample.cpp")
 
-				local projDir = "$(ProjectDir)../../"
-				local dataDir = projDir .. "data/"
-				local binDir  = projDir .. "bin/"
+				local projDataDir = dataDir .. tostring(name)
+				local projBinDir  = binDir  .. tostring(name)
 				filter { "action:vs*" }
 					postbuildcommands({
-						"if not exist \"" .. dataDir .. tostring(name) .. "\" mkdir \"" .. dataDir .. tostring(name) .. "\"",
-						"if not exist \"" .. binDir .. tostring(name) .. "\" mklink /j \"" .. binDir .. tostring(name) .. "\" \"" .. dataDir .. tostring(name) .. "\"",
-						"if not exist \"" .. binDir .. "common2\" mklink /j \"" .. binDir .. "common2\" \"" .. dataDir .. "common\"",
+					  -- make the project data dir
+						"if not exist " .. projDataDir .. " mkdir \"" .. projDataDir .. "\"",
+
+					  -- make link to project data dir in bin
+						"if not exist " .. projBinDir .. " mklink /j \"" .. projBinDir .. "\" \"" .. projDataDir .. "\"",
 						})
+				filter {}
 	end
