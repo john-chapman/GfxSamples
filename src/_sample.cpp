@@ -15,7 +15,7 @@ int main(int _argc, char** _argv)
 	FileSystem::AddRoot("sample_common");
 	AppSample* app = AppSample::GetCurrent();
 	if (!app->init(ArgList(_argc, _argv))) {
-		APT_ASSERT(false);
+		//APT_ASSERT(false);
 		return 1;
 	}
 	Window* win = app->getWindow();
