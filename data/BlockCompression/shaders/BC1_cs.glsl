@@ -62,9 +62,29 @@ vec3 UnpackRGB565(in uint _565)
 
 vec3 FindPrincipleAxis(in vec3 _min, in vec3 _max, in vec3 _avg)
 {
+#if 0
+	// Incremental PCA
+	vec3 axis = _max - _min;
+      for (int i = 0; i < 16; i++)
+      {
+        	vec3 x = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[0]);
+            vec3 y = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[1]);
+            vec3 z = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[2]);
+
+            vec3 v = vec3((i == 0) ? SRC_TEXEL(i) : axis);
+
+			v = normalize(v);
+            //v.normalize(&def);
+
+            axis += (x * v);
+            axis += (y * v);
+            axis += (z * v);
+      }
+
+      return normalize(axis);
+#else
  // compute the covariance matrix (it's symmetrical, only need 6 elements)
-	float cov[6];
-	cov[0] = cov[1] = cov[2] = cov[3] = cov[4] = cov[5] = 0.0;
+	float cov[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 	for (int i = 0; i < 16; ++i) 
 	{
 		vec3 data = SRC_TEXEL(i) - _avg;
@@ -101,7 +121,7 @@ vec3 FindPrincipleAxis(in vec3 _min, in vec3 _max, in vec3 _avg)
 	float len = length2(axis);
 	if (len > 1e-7) 
 	{
-		axis = axis * (1.0 / sqrt(len));
+		axis = axis / sqrt(len);
 	} 
 	else 
 	{
@@ -109,6 +129,7 @@ vec3 FindPrincipleAxis(in vec3 _min, in vec3 _max, in vec3 _avg)
 	}
 
 	return axis;
+#endif
 }
 
 void SelectEndpoints(in vec3 _axis, in vec3 _avg, out vec3 ep0_, out vec3 ep1_)
@@ -117,6 +138,7 @@ void SelectEndpoints(in vec3 _axis, in vec3 _avg, out vec3 ep0_, out vec3 ep1_)
  // project onto vf and choose the extrema (from stb_dxt)
 	float mind, maxd;
 	mind = maxd = dot(_axis, SRC_TEXEL(0) - _avg);
+	ep0_ = ep1_ = _avg;
 	for (int i = 1; i < 16; ++i) 
 	{
 		float d = dot(_axis, SRC_TEXEL(i) - _avg);
@@ -187,13 +209,40 @@ void main()
 	}
 	#else
 	{
-	 // color space extents
-		ep0 = ep1 = SRC_TEXEL(0);
-		for (int i = 1; i < 16; ++i) 
-		{
-			ep0 = min(ep0, SRC_TEXEL(i));
-			ep1 = max(ep1, SRC_TEXEL(i));
-		}
+		#if 0
+		 // basic color space extents
+		 // this seems to work a bit better than the variance clipping method below, preserving luminance 
+			ep0 = ep1 = SRC_TEXEL(0);
+			for (int i = 1; i < 16; ++i) 
+			{
+				vec3 texel = SRC_TEXEL(i);
+				ep0 = min(ep0, texel);
+				ep1 = max(ep1, texel);
+			}
+		#else
+		 // variance clipping (see https://developer.download.nvidia.com/gameworks/events/GDC2016/msalvi_temporal_supersampling.pdf)
+			vec3 m1 = SRC_TEXEL(0);
+			vec3 m2 = SRC_TEXEL(0) * SRC_TEXEL(0);
+			vec3 mn, mx;
+			mn, mx = SRC_TEXEL(0);
+			for (int i = 1; i < 16; ++i) 
+			{
+				vec3 texel = SRC_TEXEL(i);
+				m1 += texel;
+				m2 += texel * texel;				
+				mn = min(mn, texel);
+				mx = max(mx, texel);
+			}
+			vec3 mu = m1 / 16.0;
+			vec3 sigma = sqrt(m2 / 16.0 - mu * mu);
+			const float kGamma = 2.5;
+			ep0 = mu - kGamma * sigma;
+			ep1 = mu + kGamma * sigma;
+
+		 // clamp to original color space extents
+			ep0 = max(mn, ep0);
+			ep1 = min(mx, ep1);
+		#endif
 	}
 	#endif
 
@@ -210,14 +259,14 @@ void main()
 	block[0] = bitfieldInsert(block[0], ep0i, 16, 16);
 
  // early-out solid color blocks
- 	if (ep0i == ep1i) 
+ 	/*if (ep0i == ep1i) 
 	{
 		if (TEXEL_INDEX == 0) 
 		{
 			bfDst[BLOCK_INDEX] = block;
 		}
 		return;
-	}
+	}*/
 
  // find indices
 	{
