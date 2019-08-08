@@ -20,6 +20,8 @@ PCA::PCA()
 	propGroup.addBool  ("m_incrementalEstimateAvg", m_incrementalEstimateAvg,                   &m_incrementalEstimateAvg);
 	propGroup.addInt   ("m_dataCount",              m_dataCount,               2,      512,     &m_dataCount);
 	propGroup.addInt   ("m_randomSeed",             m_randomSeed,              1,      99999,   &m_randomSeed);
+	propGroup.addBool  ("m_varianceBounds",         m_varianceBounds,                           &m_varianceBounds);
+	propGroup.addFloat ("m_varianceGamma",          m_varianceGamma,           0.0f,   2.0f,    &m_varianceGamma);
 
 }
 
@@ -29,7 +31,8 @@ PCA::~PCA()
 
 bool PCA::init(const apt::ArgList& _args)
 {
-	if (!AppBase::init(_args)) {
+	if (!AppBase::init(_args)) 
+	{
 		return false;
 	}
 
@@ -50,36 +53,57 @@ void PCA::shutdown()
 
 bool PCA::update()
 {
-	if (!AppBase::update()) {
+	if (!AppBase::update()) 
+	{
 		return false;
 	}
 
 	bool reinit = !m_rawData;
 	reinit |= ImGui::SliderInt("Data Count", &m_dataCount, 4, 512);
 	reinit |= ImGui::SliderInt("Seed", &m_randomSeed, 1, 4096);
-	if (reinit) {
+	if (reinit) 
+	{
 		initData();
 	}
 
 	ImGui::Checkbox("Incremental Estimate Avg", &m_incrementalEstimateAvg);
 	
 	ImGui::Checkbox("Show Gizmo", &m_showGizmo);
-	if (m_showGizmo) {
+	if (m_showGizmo) 
+	{
 		Im3d::Gizmo("World Matrix", (float*)&m_worldMatrix);
 	}
-	for (int i = 0; i < m_dataCount; ++i) {
+	for (int i = 0; i < m_dataCount; ++i) 
+	{
 		m_data[i] = TransformPosition(m_worldMatrix, m_rawData[i] - vec3(0.5f));
 	}
 
- // compute min, max, avg
+	ImGui::Checkbox("Variance Bounds", &m_varianceBounds);
+	if (m_varianceBounds)
+	{
+		ImGui::SliderFloat("Variance Gamma", &m_varianceGamma, 0.0f, 2.0f);
+	}
+
+ // compute min, max, avg + first and second moments
 	vec3 dataMin, dataMax, dataAvg;
 	dataMin = dataMax = dataAvg = m_data[0];
-	for (int i = 1; i < m_dataCount; ++i) {
+	vec3 dataM1 = m_data[0];
+	vec3 dataM2 = dataM1 * dataM1;
+	for (int i = 1; i < m_dataCount; ++i) 
+	{
 		dataMin  = Min(dataMin, m_data[i]);
 		dataMax  = Max(dataMax, m_data[i]);
 		dataAvg += m_data[i];
+		dataM1  += m_data[i];
+		dataM2  += m_data[i] * m_data[i];
 	}
 	dataAvg = dataAvg / (float)m_dataCount;
+
+ // variance clipping
+	vec3 mu = dataM1 / (float)m_dataCount;
+	vec3 sigma = sqrt(dataM2 / (float)m_dataCount - mu * mu);
+	vec3 ep0Variance = mu - m_varianceGamma * sigma;
+	vec3 ep1Variance = mu + m_varianceGamma * sigma;
 
  // PCA batch
 	vec3 axisBatch = pcaBatch(dataMin, dataMax, dataAvg);
@@ -95,10 +119,13 @@ bool PCA::update()
 	Im3d::PushLayerId(Im3d::MakeId("background"));
 		Im3d::PushDrawState();
 		Im3d::SetSize(3.0f);
-		Im3d::SetAlpha(0.5f);
+		Im3d::SetAlpha(0.25f);
 		
 		Im3d::SetColor(Im3d::Color_White);
 		Im3d::DrawAlignedBox(vec3(0.0f), vec3(1.0f));
+
+		Im3d::SetAlpha(0.5f);
+		Im3d::DrawAlignedBox(dataMin, dataMax);
 		
 		Im3d::SetColor(Im3d::Color_Red);
 		//Im3d::DrawAlignedBox(dataMin, dataMax);
@@ -116,7 +143,8 @@ bool PCA::update()
 
 		Im3d::SetAlpha(1.0f);
 		Im3d::BeginPoints();
-			for (int i = 0; i < m_dataCount; ++i) {
+			for (int i = 0; i < m_dataCount; ++i) 
+			{
 				Im3d::Vertex(m_data[i], 16.0f, Im3d::Color(m_data[i].x, m_data[i].y, m_data[i].z, 0.75f));
 			}
 		Im3d::End();
@@ -132,7 +160,15 @@ bool PCA::update()
 		Im3d::DrawArrow(ep0Batch, ep1Batch);
 
 		Im3d::SetColor(Im3d::Color_Yellow);
-		Im3d::DrawArrow(ep0Incremental, ep1Incremental);
+
+		if (m_varianceBounds)
+		{
+			Im3d::DrawArrow(ep0Variance, ep1Variance);
+		}
+		else
+		{
+			Im3d::DrawArrow(ep0Incremental, ep1Incremental);
+		}
 
 		Im3d::PopDrawState();
 	Im3d::PopLayerId();
@@ -152,7 +188,8 @@ vec3 PCA::pcaBatch(const vec3& _min, const vec3& _max, const vec3& _avg)
 {
  // compute the covariance matrix (it's symmetrical, only need 6 elements)
 	float cov[6] = { 0.0f };
-	for (int i = 0; i < m_dataCount; ++i) {
+	for (int i = 0; i < m_dataCount; ++i) 
+	{
 		vec3 data = m_data[i] - _avg; // center the data on the mean
 		
 		cov[0] += data.x * data.x;
@@ -166,7 +203,8 @@ vec3 PCA::pcaBatch(const vec3& _min, const vec3& _max, const vec3& _avg)
 	vec3 axis = vec3(0.9f, 1.0f, 0.7f); // from Crunch, more stable?
 
  // principle axis via power method
-	for (int i = 0; i < 8; ++i) {
+	for (int i = 0; i < 8; ++i) 
+	{
 		vec3 estimate = vec3(
 			dot(axis, vec3(cov[0], cov[1], cov[2])),
 			dot(axis, vec3(cov[1], cov[3], cov[4])),
@@ -174,20 +212,25 @@ vec3 PCA::pcaBatch(const vec3& _min, const vec3& _max, const vec3& _avg)
 			);
 
 		float mx = Max(Abs(estimate.x), Max(Abs(estimate.y), Abs(estimate.z)));
-		if (mx > 1e-7f) {
+		if (mx > 1e-7f) 
+		{
 			estimate = estimate * (1.0f / mx);
 		}
 		float delta = Length2(axis - estimate);
 		axis = estimate;
-		if (i > 2 && delta < 1e-6f) {
+		if (i > 2 && delta < 1e-6f) 
+		{
 			break;
 		}
 	}
 
 	float palen = Length2(axis);
-	if (palen> 1e-7f) {
+	if (palen> 1e-7f) 
+	{
 		axis = axis * (1.0f / sqrtf(palen));
-	} else {
+	} 
+	else 
+	{
 		axis = _max - _min;
 	}
 
@@ -200,12 +243,14 @@ vec3 PCA::pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_)
 #if 0
  // https://arxiv.org/pdf/1511.03688.pdf
  // http://www.cse.msu.edu/~weng/research/CCIPCApami.pdf
-	if (m_incrementalEstimateAvg) {
+	if (m_incrementalEstimateAvg) 
+	{
 		float amnesic =  2.0f;
 		vec3  estAvg  = m_data[0];
 			  estAvg  = ((1.0f - 1.0f - amnesic) / 1.0f) * estAvg + ((1.0f + amnesic) / 1.0f) * m_data[1];
 		axis = m_data[1] - estAvg;
-		for (int i = 2; i < m_dataCount; ++i) {
+		for (int i = 2; i < m_dataCount; ++i) 
+		{
 			float n  = (float)i;
 			float w0 = (n - 1.0f - amnesic) / n;
 			float w1 = (1.0f + amnesic) / n;
@@ -218,7 +263,9 @@ vec3 PCA::pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_)
 		ImGui::Text("Avg err: %f", Length(estAvg - _avg_));
 		_avg_ = estAvg;
 		
-	} else {
+	} 
+	else 
+	{
 		float amnesic = 0.0f;
 		axis = m_data[0] - _avg_;
 		for (int i = 1; i < m_dataCount; ++i) {
@@ -233,15 +280,18 @@ vec3 PCA::pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_)
 	axis = normalize(axis);
 #else
  // https://github.com/BinomialLLC/crunch/blob/master/crnlib/crn_dxt1.cpp
-	if (m_incrementalEstimateAvg) {
+	if (m_incrementalEstimateAvg) 
+	{
 		vec3 estAvg = m_data[0];
-		for (int i = 1; i < m_dataCount; ++i) {
+		for (int i = 1; i < m_dataCount; ++i) 
+		{
 			float n = float(i);
 			estAvg = n / (n + 1.0f) * estAvg + (1.0f / n) * m_data[i];
 		}
 
 		axis = m_data[0] - estAvg;
-		for (int i = 1; i < m_dataCount; ++i) {
+		for (int i = 1; i < m_dataCount; ++i) 
+		{
 			//float n = float(i + 1);
 			//estAvg = n / (n + 1.0f) * estAvg + (1.0f / n) * m_data[i];
 			vec3 data = m_data[i] - estAvg;
@@ -259,9 +309,12 @@ vec3 PCA::pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_)
 		ImGui::Text("Avg err: %f", Length(estAvg - _avg_));
 		_avg_ = estAvg;
 
-	} else {
+	} 
+	else 
+	{
 		axis = m_data[0] - _avg_;
-		for (int i = 1; i < m_dataCount; ++i) {
+		for (int i = 1; i < m_dataCount; ++i) 
+		{
 			vec3 data = m_data[i] - _avg_;
 
 			vec3 x = data * data.x;
@@ -284,16 +337,19 @@ vec3 PCA::pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_)
 void PCA::selectEndpoints(const vec3& _axis, const vec3& _avg, vec3& ep0_, vec3& ep1_)
 {
 #if 0
- // project onto vf and choose the extrema (from stb_dxt)
+ // project onto axis and choose the extrema (from stb_dxt)
 	float mind, maxd;
 	mind = maxd = dot(_axis, m_data[0] - _avg);
-	for (int i = 1; i < m_dataCount; ++i) {
+	for (int i = 1; i < m_dataCount; ++i)
+	{
 		float d = dot(_axis, m_data[i] - _avg);
-		if (d < mind) {
+		if (d < mind) 
+		{
 			ep0_ = m_data[i];
 			mind = d;
 		}
-		if (d > maxd) {
+		if (d > maxd) 
+		{
 			ep1_ = m_data[i];
 			maxd = d;
 		}
@@ -303,7 +359,8 @@ void PCA::selectEndpoints(const vec3& _axis, const vec3& _avg, vec3& ep0_, vec3&
  // note that this is probably better as the result is guaranteed to pass through the mean, which in most cases should reduce overall error
 	float mind, maxd;
 	mind = maxd = dot(_axis, m_data[0] - _avg);
-	for (int i = 1; i < m_dataCount; ++i) {
+	for (int i = 1; i < m_dataCount; ++i) 
+	{
 		float d = dot(_axis, m_data[i] - _avg);
 		mind = Min(mind, d);
 		maxd = Max(maxd, d);
@@ -324,7 +381,8 @@ void PCA::initData()
 	m_data    = new vec3[m_dataCount];
 
 	Rand<> rnd((uint32)m_randomSeed);
-	for (int i = 0; i < m_dataCount; ++i) {
+	for (int i = 0; i < m_dataCount; ++i) 
+	{
 	#if 0
 	 // sphere
 		m_rawData[i] = rnd.get<vec3>(vec3(-1.0f), vec3(1.0f));

@@ -26,6 +26,8 @@ protected:
 	mat4   m_worldMatrix             = identity;
 	bool   m_showGizmo               = true;
 	bool   m_incrementalEstimateAvg  = false;
+	bool   m_varianceBounds          = false;
+	float  m_varianceGamma           = 1.0f;
 
 	vec3 pcaBatch(const vec3& _min, const vec3& _max, const vec3& _avg);
 	vec3 pcaIncremental(const vec3& _min, const vec3& _max, vec3& _avg_);
