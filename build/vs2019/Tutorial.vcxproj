@@ -115,7 +115,7 @@ if not exist $(ProjectDir)..\..\bin\Tutorial mklink /j "$(ProjectDir)..\..\bin\T
     <ClCompile Include="..\..\src\_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\extern\GfxSampleFramework\extern\ApplicationTools\build\vs2019\ApplicationTools.vcxproj">
+    <ProjectReference Include="ApplicationTools.vcxproj">
       <Project>{6ADD11F4-56D6-3046-7F08-16CB6B601052}</Project>
     </ProjectReference>
     <ProjectReference Include="GfxSampleFramework.vcxproj">

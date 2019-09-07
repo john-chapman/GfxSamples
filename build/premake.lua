@@ -9,11 +9,14 @@ workspace "GfxSamples"
 	platforms { "Win64" }
 	language "C++"
 	cppdialect "C++11"
-	flags { "StaticRuntime" }
 	filter { "platforms:Win64" }
 		system "windows"
 		architecture "x86_64"
 	filter {}
+
+	rtti "Off"
+	exceptionhandling "Off"
+	staticruntime "On"
 
 	configurations { "Debug", "Release" }
 	filter { "configurations:Debug" }
@@ -27,12 +30,16 @@ workspace "GfxSamples"
 	filter {}
 	
 	group "libs"
-		ApplicationTools_ProjectExternal(APT_ROOT)
+		--ApplicationTools_ProjectExternal(APT_ROOT)
+		ApplicationTools_Project(
+			APT_ROOT,
+			APT_ROOT .. "lib"
+			)
 	group ""
 	group "libs"
 		GfxSampleFramework_Project(
 			FRM_ROOT,
-			FRM_ROOT .. "/lib",
+			FRM_ROOT .. "lib",
 			"../bin"
 			)
 	group ""
