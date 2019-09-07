@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug Win64|x64">
       <Configuration>Debug Win64</Configuration>
@@ -21,13 +21,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -107,13 +107,15 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\App.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicRenderer.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Buffer.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Camera.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Component.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.h" />
-    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Light.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.h" />
@@ -178,18 +180,21 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\gl.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\interpolation.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\math.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\win\frm\core\extern\renderdoc_app.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\App.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicRenderer.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Buffer.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Camera.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Component.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.cpp" />
-    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Light.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.cpp" />
