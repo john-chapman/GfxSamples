@@ -1,6 +1,4 @@
 #pragma once
-#ifndef BlockCompression_h
-#define BlockCompression_h
 
 #include <frm/core/AppSample.h>
 
@@ -11,16 +9,16 @@ public:
 	BlockCompression();
 	virtual ~BlockCompression();
 
-	virtual bool init(const apt::ArgList& _args) override;
+	virtual bool init(const frm::ArgList& _args) override;
 	virtual void shutdown() override;
 	virtual bool update() override;
 	virtual void draw() override;
 
 protected:
 
-	apt::PathStr  m_txSrcPath;                      // Path for m_txSrc.
+	frm::PathStr  m_txSrcPath;                      // Path for m_txSrc.
 	frm::Texture* m_txSrc          = nullptr;       // Source texture.
-	apt::Image*   m_imgSrc         = nullptr;       // CPU-side copy of m_txSrc.
+	frm::Image*   m_imgSrc         = nullptr;       // CPU-side copy of m_txSrc.
 	frm::Shader*  m_shView         = nullptr;       // Shader for final preview.
 	frm::ivec2    m_previewRectXY  = frm::ivec2(0); // Position of the preview sub rectangle in texels.
 
@@ -60,8 +58,5 @@ protected:
 
 	void drawPreview(int _x, int _y, int _w, int _h, Test& _test);
 
-	void getSourceBlock(apt::Image* _img, int _x, int _y, frm::uint8 block_[(4* 4) * 4]); 
+	void getSourceBlock(frm::Image* _img, int _x, int _y, frm::uint8 block_[(4* 4) * 4]); 
 };
-
-
-#endif // BlockCompression_h

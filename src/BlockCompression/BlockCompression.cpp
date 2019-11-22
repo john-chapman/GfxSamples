@@ -1,21 +1,19 @@
 #include "BlockCompression.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
 #include <frm/core/gl.h>
+#include <frm/core/log.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Buffer.h>
+#include <frm/core/FileSystem.h>
 #include <frm/core/GlContext.h>
+#include <frm/core/Image.h>
 #include <frm/core/Profiler.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 #include <frm/core/Window.h>
 
-#include <apt/log.h>
-#include <apt/ArgList.h>
-#include <apt/Image.h>
-#include <apt/FileSystem.h>
-
 using namespace frm;
-using namespace apt;
 
 static BlockCompression s_inst;
 
@@ -34,7 +32,7 @@ BlockCompression::~BlockCompression()
 {
 }
 
-bool BlockCompression::init(const apt::ArgList& _args)
+bool BlockCompression::init(const frm::ArgList& _args)
 {
 	if (!AppBase::init(_args)) 
 	{
@@ -167,7 +165,7 @@ bool BlockCompression::initSourceTexture()
 		return false;
 	}
 
-	m_imgSrc = APT_NEW(Image);
+	m_imgSrc = FRM_NEW(Image);
 	if (!Image::Read(*m_imgSrc, f))
 	{
 		return false;
@@ -183,7 +181,7 @@ bool BlockCompression::initSourceTexture()
 void BlockCompression::shutdownSourceTexture()
 {
 	Texture::Release(m_txSrc);
-	APT_DELETE(m_imgSrc);
+	FRM_DELETE(m_imgSrc);
 }
 
 bool BlockCompression::initTextures(Test& _test_)
@@ -192,7 +190,7 @@ bool BlockCompression::initTextures(Test& _test_)
 
 	if (!m_txSrc)
 	{
-		APT_LOG_ERR("initTextures: m_txSrc was not loaded");
+		FRM_LOG_ERR("initTextures: m_txSrc was not loaded");
 		return false;
 	}
 
@@ -310,10 +308,10 @@ void BlockCompression::drawPreview(int _x, int _y, int _w, int _h, Test& _test)
 
 void BlockCompression::getSourceBlock(Image* _img, int _x, int _y, uint8 block_[(4* 4) * 4])
 {
-	APT_ASSERT(_img->getImageDataType() == DataType_Uint8N);
+	FRM_ASSERT(_img->getImageDataType() == DataType_Uint8N);
 
-	_x = APT_CLAMP(_x, 0, (int)_img->getWidth());
-	_y = APT_CLAMP(_y, 0, (int)_img->getHeight());
+	_x = FRM_CLAMP(_x, 0, (int)_img->getWidth());
+	_y = FRM_CLAMP(_y, 0, (int)_img->getHeight());
 
 	uint    texelSizeBytes = (uint)_img->getBytesPerTexel();
 	uint    stride         = _img->getWidth() * texelSizeBytes;
@@ -337,7 +335,7 @@ void BlockCompression::getSourceBlock(Image* _img, int _x, int _y, uint8 block_[
 			} 
 			else
 			{
-				*block_ = APT_DATA_TYPE_MAX(uint8N);
+				*block_ = FRM_DATA_TYPE_MAX(uint8N);
 			}
 			++block_;
 		}
