@@ -1,7 +1,4 @@
 local FRM_ROOT = "../extern/GfxSampleFramework/"
-local APT_ROOT = FRM_ROOT .. "extern/ApplicationTools/"
-
-dofile(APT_ROOT .. "build/ApplicationTools_premake.lua")
 dofile(FRM_ROOT .. "build/GfxSampleFramework_premake.lua")
 
 workspace "GfxSamples"
@@ -9,11 +6,14 @@ workspace "GfxSamples"
 	platforms { "Win64" }
 	language "C++"
 	cppdialect "C++11"
-	flags { "StaticRuntime" }
 	filter { "platforms:Win64" }
 		system "windows"
 		architecture "x86_64"
 	filter {}
+
+	rtti "Off"
+	exceptionhandling "Off"
+	staticruntime "On"
 
 	configurations { "Debug", "Release" }
 	filter { "configurations:Debug" }
@@ -27,12 +27,9 @@ workspace "GfxSamples"
 	filter {}
 	
 	group "libs"
-		ApplicationTools_ProjectExternal(APT_ROOT)
-	group ""
-	group "libs"
 		GfxSampleFramework_Project(
 			FRM_ROOT,
-			FRM_ROOT .. "/lib",
+			FRM_ROOT .. "lib",
 			"../bin"
 			)
 	group ""
@@ -53,7 +50,6 @@ workspace "GfxSamples"
 		project(tostring(name))
 			kind "ConsoleApp"
 			targetdir "../bin"
-				ApplicationTools_Link()
 				GfxSampleFramework_Link()
 
 				vpaths({ ["*"] = { "../src/" .. tostring(name) .. "/**" } })

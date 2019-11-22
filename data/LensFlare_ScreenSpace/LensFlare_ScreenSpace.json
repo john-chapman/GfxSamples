@@ -1,4 +1,10 @@
 {
+	"Font": {
+		"Font": "",
+		"FontOversample": 1,
+		"FontEnableScaling": true,
+		"FontSize": 13.0
+	},
 	"Lens Flare": {
 		"Ghost Spacing": 0.4000000059604645,
 		"Halo Aspect Ratio": 0.6000000238418579,
@@ -16,17 +22,21 @@
 		"Ghost Threshold": 9.0
 	},
 	"AppSample": {
-		"Vsync Mode": 2,
-		"Show Shader Viewer": false,
-		"GlVersion": [4, 5],
-		"Show Menu": true,
-		"Show Profiler": false,
-		"Show Property Editor": false,
-		"Show Texture Viewer": false,
-		"GlCompatibility": false,
-		"Show Log": false,
+		"ShowMenu": false,
+		"ShowPropertyEditor": false,
+		"ShowProfiler": false,
+		"ShowShaderViewer": false,
+		"VsyncMode": 0,
+		"ShowLogNotifications": false,
+		"ShowTextureViewer": false,
 		"WindowSize": [-1, -1],
-		"Resolution": [-1, -1]
+		"Resolution": [-1, -1],
+		"ShowLog": false
+	},
+	"GlContext": {
+		"GlVersion": [-1, -1],
+		"GlCompatibility": false,
+		"GlDebug": false
 	},
 	"AppSample3d": {
 		"Scene Path": "Scene.json",

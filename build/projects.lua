@@ -1,13 +1,13 @@
 return
 {
-	Convolution =
-	{
-		"../src/Convolution/**",
-	},
-
 	Tutorial =
 	{
 		"../src/Tutorial/**",
+	},
+
+	Convolution =
+	{
+		"../src/Convolution/**",
 	},
 
 	LensFlare_ScreenSpace =

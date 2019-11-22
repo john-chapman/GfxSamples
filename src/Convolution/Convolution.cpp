@@ -1,6 +1,8 @@
 #include "Convolution.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/rand.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Buffer.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
@@ -10,11 +12,7 @@
 #include <frm/core/Texture.h>
 #include <frm/core/Window.h>
 
-#include <apt/rand.h>
-#include <apt/ArgList.h>
-
 using namespace frm;
-using namespace apt;
 
 namespace {
 
@@ -101,7 +99,7 @@ float KernelGaussian2d(int _size, float _sigma, float* weights_, bool _normalize
 // Find sigma such that no weights are < _epsilon. Epsilon should be the smallest representable for the precision of the signal to be convolved e.g. 1/255 for 8-bit.
 float GaussianFindSigma(int _size, float _epsilon)
 {
-	float* tmp = APT_NEW_ARRAY(float, _size);
+	float* tmp = FRM_NEW_ARRAY(float, _size);
 	const float d = (float)(-_size / 2);
 	float sigma = 1.0f;
 	float stp = 1.0f;
@@ -116,7 +114,7 @@ float GaussianFindSigma(int _size, float _epsilon)
 		}
 		sigma += stp;
 	}
-	APT_DELETE_ARRAY(tmp);
+	FRM_DELETE_ARRAY(tmp);
 	return sigma;
 }
 
@@ -272,7 +270,7 @@ Convolution::~Convolution()
 {
 }
 
-bool Convolution::init(const apt::ArgList& _args)
+bool Convolution::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) 
 	{
@@ -283,7 +281,7 @@ bool Convolution::init(const apt::ArgList& _args)
 	m_txSrc->setWrap(GL_CLAMP_TO_EDGE);
 	m_txSrc->generateMipmap(); // alloc mip chain for Mode_Prefilter
 	
-	for (uint i = 0; i < APT_ARRAY_COUNT(m_txDst); ++i) 
+	for (uint i = 0; i < FRM_ARRAY_COUNT(m_txDst); ++i) 
 	{
 		m_txDst[i] = Texture::Create2d(m_txSrc->getWidth(), m_txSrc->getHeight(), GL_RGBA8, 99);
 		m_txDst[i]->setWrap(GL_CLAMP_TO_EDGE);
@@ -406,7 +404,7 @@ bool Convolution::update()
 			float weightsScale = 0.0f;
 			for (int i = 0; i < m_kernelWidth; ++i) 
 			{
-				weightsScale = APT_MAX(weightsScale, m_displayWeights[i]);
+				weightsScale = FRM_MAX(weightsScale, m_displayWeights[i]);
 			}
 			weightsScale = weightsScale * 1.1f;
 
@@ -493,8 +491,8 @@ void Convolution::draw()
 			auto localSize = m_shConvolutionCached[1]->getLocalSize();
 			auto txSize    = ivec2(m_txDst[0]->getHeight(), m_txDst[0]->getWidth()); // swap width/height
 			ctx->dispatch(
-				APT_MAX((txSize.x + localSize.x - 1) / localSize.x, 1),
-				APT_MAX((txSize.y + localSize.y - 1) / localSize.y, 1)
+				FRM_MAX((txSize.x + localSize.x - 1) / localSize.x, 1),
+				FRM_MAX((txSize.y + localSize.y - 1) / localSize.y, 1)
 				);
 		}
 		else if (m_kernelMode == Mode_Prefilter)
@@ -609,9 +607,9 @@ void Convolution::initKernel()
 
 void Convolution::shutdownKernel()
 {
-	APT_DELETE_ARRAY(m_weights);
-	APT_DELETE_ARRAY(m_displayWeights);
-	APT_DELETE_ARRAY(m_offsets);
+	FRM_DELETE_ARRAY(m_weights);
+	FRM_DELETE_ARRAY(m_displayWeights);
+	FRM_DELETE_ARRAY(m_offsets);
 
 	Shader::Release(m_shConvolutionCached[0]);
 	Shader::Release(m_shConvolutionCached[1]);
@@ -627,7 +625,7 @@ void Convolution::initOffsets()
 	const int kernelHalfWidth = m_kernelWidth / 2;
 	m_kernelSize = m_kernelWidth * (is2d ? m_kernelWidth : 1);
 
-	m_offsets = APT_NEW_ARRAY(float, m_kernelSize * (is2d ? 2 : 1)); // offsets are vec2 for a 2d kernel
+	m_offsets = FRM_NEW_ARRAY(float, m_kernelSize * (is2d ? 2 : 1)); // offsets are vec2 for a 2d kernel
 	if (is2d) 
 	{
 		for (int i = 0; i < m_kernelWidth; ++i) 
@@ -655,7 +653,7 @@ void Convolution::initWeights()
 {
 	const bool is2d = m_kernelMode == Mode_2d || m_kernelMode == Mode_2dBilinear;
 
-	m_weights = APT_NEW_ARRAY(float, m_kernelSize);
+	m_weights = FRM_NEW_ARRAY(float, m_kernelSize);
 	switch (m_kernelType) 
 	{
 		case Type_Box:
@@ -687,10 +685,10 @@ void Convolution::initWeights()
 			}
 			break;
 		default:
-			APT_ASSERT(false);
+			FRM_ASSERT(false);
 			break;
 	};
-	m_displayWeights = APT_NEW_ARRAY(float, m_kernelWidth);
+	m_displayWeights = FRM_NEW_ARRAY(float, m_kernelWidth);
 	memcpy(m_displayWeights, m_weights, sizeof(float) * m_kernelWidth);
 
  // optimize for bilinear modes
@@ -700,11 +698,11 @@ void Convolution::initWeights()
 		{
 			m_kernelSize = m_kernelWidth / 2 + 1;
 			m_kernelSize = m_kernelSize * m_kernelSize;
-			float* weightsOpt = APT_NEW_ARRAY(float, m_kernelSize);
-			float* offsetsOpt = APT_NEW_ARRAY(float, m_kernelSize * 2);
+			float* weightsOpt = FRM_NEW_ARRAY(float, m_kernelSize);
+			float* offsetsOpt = FRM_NEW_ARRAY(float, m_kernelSize * 2);
 			KernelOptimizeBilinear2d(m_kernelWidth, m_weights, weightsOpt, (vec2*)offsetsOpt);
-			APT_DELETE_ARRAY(m_weights);
-			APT_DELETE_ARRAY(m_offsets);
+			FRM_DELETE_ARRAY(m_weights);
+			FRM_DELETE_ARRAY(m_offsets);
 			m_weights = weightsOpt;
 			m_offsets = offsetsOpt;
 			break;
@@ -712,11 +710,11 @@ void Convolution::initWeights()
 		case Mode_SeparableBilinear: 
 		{
 			m_kernelSize = m_kernelWidth / 2 + 1;
-			float* weightsOpt = APT_NEW_ARRAY(float, m_kernelSize);
-			float* offsetsOpt = APT_NEW_ARRAY(float, m_kernelSize);
+			float* weightsOpt = FRM_NEW_ARRAY(float, m_kernelSize);
+			float* offsetsOpt = FRM_NEW_ARRAY(float, m_kernelSize);
 			KernelOptimizeBilinear1d(m_kernelWidth, m_weights, weightsOpt, offsetsOpt);
-			APT_DELETE_ARRAY(m_weights);
-			APT_DELETE_ARRAY(m_offsets);
+			FRM_DELETE_ARRAY(m_weights);
+			FRM_DELETE_ARRAY(m_offsets);
 			m_weights = weightsOpt;
 			m_offsets = offsetsOpt;
 			break;
