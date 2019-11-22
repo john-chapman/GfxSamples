@@ -2,11 +2,11 @@
 	"Font": {
 		"Font": "",
 		"FontOversample": 1,
-		"FontEnableScaling": false,
+		"FontEnableScaling": true,
 		"FontSize": 13.0
 	},
 	"AppSample": {
-		"ShowMenu": false,
+		"ShowMenu": true,
 		"ShowPropertyEditor": false,
 		"ShowProfiler": false,
 		"ShowShaderViewer": false,
