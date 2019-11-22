@@ -1,7 +1,6 @@
 // Welcome to the GfxSampleFramework tutorial! 
 //
-// The GfxSampleFramework uses the namespace 'frm'. You'll also see 'apt', plus macros beginning with 'APT_' - that's the ApplicationTools library on
-// which GfxSampleFramework is built.
+// The GfxSampleFramework uses the namespace 'frm'.
 //
 // The basis of any program written with the framework is the application class, which derives from a base class (AppSample3d in this case). The base
 // class does some common stuff like processing input and drawing the UI and debug lines. Your application needs to provide 4 functions:
@@ -49,7 +48,8 @@
 //
 #include "Tutorial.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
 #include <frm/core/Mesh.h>
@@ -57,10 +57,7 @@
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
-#include <apt/ArgList.h>
-
 using namespace frm;
-using namespace apt;
 
 static Tutorial s_inst;
 
@@ -73,7 +70,7 @@ Tutorial::~Tutorial()
 {
 }
 
-bool Tutorial::init(const apt::ArgList& _args)
+bool Tutorial::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) {
 		return false;
@@ -81,7 +78,7 @@ bool Tutorial::init(const apt::ArgList& _args)
 
  // Loading a texture from disk is trvial - most common image data types are supported.
 	m_txDiffuse = Texture::Create("textures/baboon.png");
-	APT_ASSERT(m_txDiffuse); // Create() returns a nullptr if the texture didn't load!
+	FRM_ASSERT(m_txDiffuse); // Create() returns a nullptr if the texture didn't load!
 	m_txDiffuse->generateMipmap(); // if the disk texture didn't have a mipmap we can generate one
 
  // Creating a texture via Create*() is used for render targets.
@@ -99,11 +96,11 @@ bool Tutorial::init(const apt::ArgList& _args)
 
  // Vertex/fragment shaders can be loaded and compiled in a single step, with optional defines.
 	m_shMesh = Shader::CreateVsFs("shaders/Mesh_vs.glsl", "shaders/Mesh_fs.glsl", { "DEFINE_ONE 1", "DEFINE_TWO 2", "DEFINE_THREE 3" });
-	APT_ASSERT(m_shMesh); // Create*() returns a nullptr if loading, compiling or linking the shader failed (check the output log in this case).
+	FRM_ASSERT(m_shMesh); // Create*() returns a nullptr if loading, compiling or linking the shader failed (check the output log in this case).
 
  // Compute shaders are loaded in the same way, but we must specify the group size.
 	m_shPostProcess = Shader::CreateCs("shaders/PostProcess_cs.glsl", 16, 16, 1);
-	APT_ASSERT(m_shPostProcess);
+	FRM_ASSERT(m_shPostProcess);
 
 	return true;
 }

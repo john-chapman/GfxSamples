@@ -1,7 +1,4 @@
 local FRM_ROOT = "../extern/GfxSampleFramework/"
-local APT_ROOT = FRM_ROOT .. "extern/ApplicationTools/"
-
-dofile(APT_ROOT .. "build/ApplicationTools_premake.lua")
 dofile(FRM_ROOT .. "build/GfxSampleFramework_premake.lua")
 
 workspace "GfxSamples"
@@ -30,13 +27,6 @@ workspace "GfxSamples"
 	filter {}
 	
 	group "libs"
-		--ApplicationTools_ProjectExternal(APT_ROOT)
-		ApplicationTools_Project(
-			APT_ROOT,
-			APT_ROOT .. "lib"
-			)
-	group ""
-	group "libs"
 		GfxSampleFramework_Project(
 			FRM_ROOT,
 			FRM_ROOT .. "lib",
@@ -60,7 +50,6 @@ workspace "GfxSamples"
 		project(tostring(name))
 			kind "ConsoleApp"
 			targetdir "../bin"
-				ApplicationTools_Link()
 				GfxSampleFramework_Link()
 
 				vpaths({ ["*"] = { "../src/" .. tostring(name) .. "/**" } })

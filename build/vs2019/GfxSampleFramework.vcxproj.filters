@@ -13,6 +13,24 @@
     <Filter Include="all\frm\core\extern">
       <UniqueIdentifier>{4F3CA491-BB9D-819F-440B-C851B06BB85E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="all\frm\core\extern\EABase">
+      <UniqueIdentifier>{DF9DFCEE-CBAD-A8BF-3467-0DDE20969758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\EABase\config">
+      <UniqueIdentifier>{24FC58F9-906A-AE78-D953-69784501A414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\EASTL">
+      <UniqueIdentifier>{B71CC216-23DF-F5A0-6C8F-842DD890CE7E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\EASTL\bonus">
+      <UniqueIdentifier>{6D22977A-D905-A6BA-E208-D4F64E6B6C0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\EASTL\internal">
+      <UniqueIdentifier>{E3FCC84F-CF38-CCB9-384B-E4B024A674D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\EASTL\source">
+      <UniqueIdentifier>{F7EA26F5-E33B-1237-0CA0-00F9F84FA5A0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="all\frm\core\extern\GL">
       <UniqueIdentifier>{51DF3600-3DD9-5F52-2646-F66212DFC5BE}</UniqueIdentifier>
     </Filter>
@@ -25,8 +43,23 @@
     <Filter Include="all\frm\core\extern\imgui">
       <UniqueIdentifier>{F9086619-65CB-99A3-AE7B-28301A7D7281}</UniqueIdentifier>
     </Filter>
+    <Filter Include="all\frm\core\extern\linalg">
+      <UniqueIdentifier>{55C2E14C-41D2-8D1D-AA8B-F23B96BA7CB6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="all\frm\core\extern\lua">
       <UniqueIdentifier>{806C1307-ECA3-5B9E-F5AD-BFC161648297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\rapidjson">
+      <UniqueIdentifier>{C8B4BD9C-34CD-A4C6-FD79-346069513960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\rapidjson\error">
+      <UniqueIdentifier>{21C2BA01-8D7B-25AC-16DB-3F868293DB1B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\rapidjson\internal">
+      <UniqueIdentifier>{1438034B-008A-DA3A-E9A8-174BD599F323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="all\frm\core\extern\rapidjson\msinttypes">
+      <UniqueIdentifier>{972F6602-83AC-5945-AC29-5A599805F6D8}</UniqueIdentifier>
     </Filter>
     <Filter Include="all\frm\core\extern\tinyobjloader">
       <UniqueIdentifier>{D415ABBA-4084-003A-896D-BB39F51AF6D5}</UniqueIdentifier>
@@ -54,6 +87,9 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ArgList.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
@@ -72,13 +108,28 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Factory.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\File.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\FileSystem.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Image.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Json.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.h">
@@ -87,10 +138,22 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MemoryPool.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Octree.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\PersistentVector.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Pool.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.h">
@@ -99,13 +162,22 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Property.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Quadtree.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RingBuffer.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Serializer.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.h">
@@ -117,10 +189,28 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Spline.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StaticInitializer.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StreamingQuadtree.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\String.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StringHash.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextParser.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Texture.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextureAtlas.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Time.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Window.h">
@@ -129,8 +219,404 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\XForm.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\def.h">
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\compress.h">
       <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\config.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eacompiler.h">
+      <Filter>all\frm\core\extern\EABase\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eacompilertraits.h">
+      <Filter>all\frm\core\extern\EABase\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eaplatform.h">
+      <Filter>all\frm\core\extern\EABase\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eabase.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eahave.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\earesult.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eastdarg.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eaunits.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\int128.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\nullptr.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\version.h">
+      <Filter>all\frm\core\extern\EABase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\algorithm.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\allocator.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\allocator_malloc.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\any.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\array.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bitset.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bitvector.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\adaptors.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\call_traits.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\compressed_pair.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_ring_buffer.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_string_abstract.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_tuple_vector.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\intrusive_sdlist.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\intrusive_slist.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\list_map.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\ring_buffer.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\sort_extra.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\sparse_matrix.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\string_abstract.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\tuple_vector.h">
+      <Filter>all\frm\core\extern\EASTL\bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\chrono.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\core_allocator.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\core_allocator_adapter.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\deque.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_allocator.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_function.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_hash_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_hash_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_list.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_slist.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_string.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_substring.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_vector.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\functional.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\hash_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\hash_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\heap.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\initializer_list.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\allocator_traits.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\allocator_traits_fwd_decls.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\char_traits.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\config.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\copy_help.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\enable_shared.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\fill_help.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\fixed_pool.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function_detail.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function_help.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\functional_base.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\generic_iterator.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\hashtable.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\in_place_t.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\integer_sequence.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\intrusive_hashtable.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\mem_fn.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\memory_base.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\meta.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\move_help.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\pair_fwd_decls.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\piecewise_construct_t.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\red_black_tree.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\smart_ptr.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\thread_support.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\tuple_fwd_decls.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_compound.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_fundamental.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_pod.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_properties.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_transformations.h">
+      <Filter>all\frm\core\extern\EASTL\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_hash_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_hash_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_list.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\iterator.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\linked_array.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\linked_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\list.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\memory.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\meta.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\numeric.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\numeric_limits.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\optional.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\priority_queue.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\queue.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\random.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\ratio.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\safe_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\scoped_array.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\scoped_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\segmented_vector.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\shared_array.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\shared_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\slist.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\sort.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\span.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\stack.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_hash_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_view.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\tuple.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\type_traits.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unique_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unordered_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unordered_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\utility.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\variant.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_map.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_multimap.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_multiset.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_set.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\version.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\weak_ptr.h">
+      <Filter>all\frm\core\extern\EASTL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\glew.h">
       <Filter>all\frm\core\extern\GL</Filter>
@@ -176,6 +662,12 @@
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\stb_truetype.h">
       <Filter>all\frm\core\extern\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\linalg\linalg.h">
+      <Filter>all\frm\core\extern\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lodepng.h">
+      <Filter>all\frm\core\extern</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lapi.h">
       <Filter>all\frm\core\extern\lua</Filter>
@@ -258,13 +750,139 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\md5mesh.h">
       <Filter>all\frm\core\extern</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\miniz.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\noise1234.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\allocators.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\document.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\encodedstream.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\encodings.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\error\en.h">
+      <Filter>all\frm\core\extern\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\error\error.h">
+      <Filter>all\frm\core\extern\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\filereadstream.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\filewritestream.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\fwd.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\biginteger.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\diyfp.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\dtoa.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\ieee754.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\itoa.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\meta.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\pow10.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\regex.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\stack.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\strfunc.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\strtod.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\swap.h">
+      <Filter>all\frm\core\extern\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\istreamwrapper.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\memorybuffer.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\memorystream.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\msinttypes\inttypes.h">
+      <Filter>all\frm\core\extern\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\msinttypes\stdint.h">
+      <Filter>all\frm\core\extern\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\ostreamwrapper.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\pointer.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\prettywriter.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\rapidjson.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\reader.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\schema.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\stream.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\stringbuffer.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\writer.h">
+      <Filter>all\frm\core\extern\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\stb_image.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\stb_image_write.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tinyexr.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tinyobjloader\tiny_obj_loader.h">
       <Filter>all\frm\core\extern\tinyobjloader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\frm.h">
+      <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\geom.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\gl.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\hash.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\interpolation.h">
@@ -273,8 +891,23 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\math.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\memory.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\platform.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\rand.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\types.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\win\frm\core\extern\renderdoc_app.h">
       <Filter>win\frm\core\extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\win\frm\core\win.h">
+      <Filter>win\frm\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +918,9 @@
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ArgList.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.cpp">
@@ -305,19 +941,34 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\File.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\FileSystem.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Image.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Json.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MemoryPool.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.cpp">
@@ -350,6 +1001,9 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Serializer.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
@@ -362,10 +1016,25 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Spline.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StreamingQuadtree.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\String.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StringHash.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextParser.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Texture.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextureAtlas.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Time.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Window.cpp">
@@ -374,8 +1043,41 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\XForm.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\compress.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\allocator_eastl.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\assert.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\fixed_pool.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\hashtable.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\intrusive_list.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\numeric_limits.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\red_black_tree.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\string_eastl.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\thread_support.cpp">
+      <Filter>all\frm\core\extern\EASTL\source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\glew.c">
       <Filter>all\frm\core\extern\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\dds.cpp">
+      <Filter>all\frm\core\extern</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\im3d\im3d.cpp">
       <Filter>all\frm\core\extern\im3d</Filter>
@@ -394,6 +1096,9 @@
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_ext.cpp">
       <Filter>all\frm\core\extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lodepng.cpp">
+      <Filter>all\frm\core\extern</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lapi.c">
       <Filter>all\frm\core\extern\lua</Filter>
@@ -494,11 +1199,38 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lzio.c">
       <Filter>all\frm\core\extern\lua</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\noise1234.cpp">
+      <Filter>all\frm\core\extern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\frm.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\geom.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\gl.cpp">
       <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\hash.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\math.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\memory.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\rand.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\types.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\FileImpl.cpp">
+      <Filter>win\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\FileSystemImpl.cpp">
+      <Filter>win\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\GlContextImpl.cpp">
       <Filter>win\frm\core</Filter>
@@ -506,7 +1238,13 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\InputImpl.cpp">
       <Filter>win\frm\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\TimeImpl.cpp">
+      <Filter>win\frm\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\WindowImpl.cpp">
+      <Filter>win\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\platform.cpp">
       <Filter>win\frm\core</Filter>
     </ClCompile>
   </ItemGroup>
