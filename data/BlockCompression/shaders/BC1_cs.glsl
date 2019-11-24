@@ -1,3 +1,7 @@
+/*	Notes:
+	- USE_SHARED_MEMORY can actually be slower due to the need for more barriers. Texture fetches are probably fast and coherent.
+*/
+
 #include "shaders/def.glsl"
 #include "shaders/sampling.glsl"
 
@@ -87,7 +91,8 @@ vec3 FindPrincipleAxis(in vec3 _min, in vec3 _max, in vec3 _avg)
 	float cov[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 	for (int i = 0; i < 16; ++i) 
 	{
-		vec3 data = SRC_TEXEL(i) - _avg;
+		//vec3 data = (SRC_TEXEL(i) - _avg);
+		vec3 data = SRC_TEXEL(i);
 		cov[0] += data.x * data.x;
 		cov[1] += data.x * data.y;
 		cov[2] += data.x * data.z;
@@ -190,7 +195,9 @@ void main()
 	#if USE_PCA
 	{
 		vec3 texelMin, texelMax, texelAvg;
-		texelMin = texelMax = texelAvg = SRC_TEXEL(0);
+		texelMin = SRC_TEXEL(0);
+		texelMax = texelMin;
+		texelAvg = texelMin;
 		for (int i = 1; i < 16; ++i)
 		{
 			texelMin  = min(texelMin, SRC_TEXEL(i));
@@ -209,7 +216,7 @@ void main()
 	}
 	#else
 	{
-		#if 0
+		#if 1
 		 // basic color space extents
 		 // this seems to work a bit better than the variance clipping method below, preserving luminance 
 			ep0 = ep1 = SRC_TEXEL(0);
@@ -224,7 +231,8 @@ void main()
 			vec3 m1 = SRC_TEXEL(0);
 			vec3 m2 = SRC_TEXEL(0) * SRC_TEXEL(0);
 			vec3 mn, mx;
-			mn, mx = SRC_TEXEL(0);
+			mn = SRC_TEXEL(0);
+			mx = mn;
 			for (int i = 1; i < 16; ++i) 
 			{
 				vec3 texel = SRC_TEXEL(i);
@@ -273,7 +281,7 @@ void main()
 	 // pack/unpack the endpoint values = quantize endpoints to minimize final error
 		ep0 = UnpackRGB565(PackRGB565(ep0));
 		ep1 = UnpackRGB565(PackRGB565(ep1));
-		
+
 	 // project onto (ep1 - ep0)
 		vec3 d = ep1 - ep0;
 		float dlen = length(d);
