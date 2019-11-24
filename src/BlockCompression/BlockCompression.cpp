@@ -129,6 +129,7 @@ bool BlockCompression::update()
 				glAssert(glBindBuffer(GL_PIXEL_UNPACK_BUFFER, test.m_bfDst->getHandle()));
 				glAssert(glCompressedTextureSubImage2D(test.m_txDst->getHandle(), 0, 0, 0, test.m_txDst->getWidth(), test.m_txDst->getHeight(), test.m_txDst->getFormat(), test.m_bfDst->getSize(), 0));
 				glAssert(glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
+				glAssert(glMemoryBarrier(GL_TEXTURE_UPDATE_BARRIER_BIT));
 			}
 		}
 	}
