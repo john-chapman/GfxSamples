@@ -134,6 +134,7 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Property.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Quadtree.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RingBuffer.h" />
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.h" />
@@ -411,6 +412,7 @@ if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/e
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Property.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.cpp" />
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Serializer.cpp" />
