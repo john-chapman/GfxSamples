@@ -14,7 +14,7 @@ return
 	{
 		"../src/Tutorial/**",
 	},
-
+	
 	Convolution =
 	{
 		"../src/Convolution/**",

@@ -1,9 +1,11 @@
 #include "LensFlare_ScreenSpace.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
 #include <frm/core/gl.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
+#include <frm/core/Image.h>
 #include <frm/core/Mesh.h>
 #include <frm/core/MeshData.h>
 #include <frm/core/Profiler.h>
@@ -11,11 +13,8 @@
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
-#include <apt/ArgList.h>
-#include <apt/Image.h>
 
 using namespace frm;
-using namespace apt;
 
 static LensFlare_ScreenSpace s_inst;
 
@@ -46,7 +45,7 @@ LensFlare_ScreenSpace::~LensFlare_ScreenSpace()
 {
 }
 
-bool LensFlare_ScreenSpace::init(const apt::ArgList& _args)
+bool LensFlare_ScreenSpace::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) {
 		return false;
@@ -169,8 +168,8 @@ void LensFlare_ScreenSpace::draw()
 			ctx->bindTexture("txSrc", m_txSceneColor);
 			ctx->bindImage("txDst", m_txSceneColor, GL_WRITE_ONLY, ++lvl);
 			ctx->dispatch(
-				APT_MAX((w + localX - 1) / localX, 1),
-				APT_MAX((h + localY - 1) / localY, 1)
+				Max((w + localX - 1) / localX, 1),
+				Max((h + localY - 1) / localY, 1)
 				);
 			glAssert(glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT));
 			w = w >> 1;
@@ -284,8 +283,8 @@ bool LensFlare_ScreenSpace::initLensFlare()
 	shutdownLensFlare();
 
 	ivec2 sz = ivec2(m_txSceneColor->getWidth(), m_txSceneColor->getHeight());
-	sz.x = APT_MAX(sz.x >> m_downsample, 1);
-	sz.y = APT_MAX(sz.y >> m_downsample, 1);
+	sz.x = Max(sz.x >> m_downsample, 1);
+	sz.y = Max(sz.y >> m_downsample, 1);
 	m_txFeatures[0] = Texture::Create2d(sz.x, sz.y, m_txSceneColor->getFormat());
 	m_txFeatures[0]->setName("txFeatures");
 	m_txFeatures[0]->setWrap(GL_CLAMP_TO_EDGE);

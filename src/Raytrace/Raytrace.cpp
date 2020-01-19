@@ -1,7 +1,9 @@
 #include "Raytrace.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/rand.h>
 #include <frm/core/geom.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Buffer.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
@@ -9,13 +11,10 @@
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
-#include <apt/rand.h>
-#include <apt/ArgList.h>
 
 #include <im3d/im3d.h>
 
 using namespace frm;
-using namespace apt;
 
 static Raytrace s_inst;
 
@@ -42,7 +41,7 @@ Raytrace::~Raytrace()
 {
 }
 
-bool Raytrace::init(const apt::ArgList& _args)
+bool Raytrace::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) 
 	{

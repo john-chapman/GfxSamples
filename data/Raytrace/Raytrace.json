@@ -6,13 +6,13 @@
 		"FontSize": 13.0
 	},
 	"Raytrace": {
-		"m_hitEpsilon": 0.0010000000474974514,
+		"m_hitEpsilon": 0.00009999999747378752,
 		"m_lightPath.m_azimuth": 2.6005406379699709,
 		"m_maxChildRayCount": 2,
 		"m_lightPath.m_elevation": 1.3962634801864625,
 		"m_sphereCount": 512,
-		"m_resolutionScale": 3,
-		"m_lightPath.m_theta": 0.6260000467300415
+		"m_resolutionScale": 2,
+		"m_lightPath.m_theta": 0.5590000152587891
 	},
 	"AppSample": {
 		"ShowMenu": false,
