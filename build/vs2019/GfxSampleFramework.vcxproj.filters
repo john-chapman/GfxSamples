@@ -168,6 +168,9 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
@@ -993,6 +996,9 @@
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.cpp">
