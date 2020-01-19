@@ -1,6 +1,7 @@
 #include "Voxelization.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Buffer.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
@@ -10,10 +11,7 @@
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
-#include <apt/ArgList.h>
-
 using namespace frm;
-using namespace apt;
 
 static Voxelization s_inst;
 
@@ -31,7 +29,7 @@ Voxelization::~Voxelization()
 {
 }
 
-bool Voxelization::init(const apt::ArgList& _args)
+bool Voxelization::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) 
 	{
@@ -40,9 +38,9 @@ bool Voxelization::init(const apt::ArgList& _args)
 
 	m_worldMatrix = ScaleMatrix(vec3(m_voxelVolumeSizeMeters.y / 2.0f));
 
-	//m_msTeapot = Mesh::Create("models/box.obj");
-	//m_msTeapot = Mesh::Create("models/teapot.obj");
-	m_msTeapot = Mesh::Create("models/md5/bob_lamp_update.md5mesh");
+	m_msTeapot = Mesh::Create("models/Box_1.obj");
+	//m_msTeapot = Mesh::Create("models/Teapot_1.obj");
+	//m_msTeapot = Mesh::Create("models/md5/bob_lamp_update.md5mesh");
 	if (!m_msTeapot || m_msTeapot->getState() != Mesh::State_Loaded)
 	{
 		return false;

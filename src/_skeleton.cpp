@@ -1,16 +1,18 @@
 #include "_skeleton.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/rand.h>
+#include <frm/core/ArgList.h>
+#include <frm/core/Buffer.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
+#include <frm/core/Mesh.h>
 #include <frm/core/Profiler.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
-
-#include <apt/ArgList.h>
+#include <frm/core/Window.h>
 
 using namespace frm;
-using namespace apt;
 
 static _skeleton s_inst;
 
@@ -23,9 +25,10 @@ _skeleton::~_skeleton()
 {
 }
 
-bool _skeleton::init(const apt::ArgList& _args)
+bool _skeleton::init(const frm::ArgList& _args)
 {
-	if (!AppBase::init(_args)) {
+	if (!AppBase::init(_args))
+	{
 		return false;
 	}
 
@@ -43,7 +46,8 @@ void _skeleton::shutdown()
 
 bool _skeleton::update()
 {
-	if (!AppBase::update()) {
+	if (!AppBase::update())
+	{
 		return false;
 	}
 
