@@ -9,6 +9,7 @@
 #include <frm/core/GlContext.h>
 #include <frm/core/Image.h>
 #include <frm/core/Profiler.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 #include <frm/core/Window.h>
@@ -20,16 +21,18 @@ static BlockCompression s_inst;
 BlockCompression::BlockCompression()
 	: AppBase("BlockCompression") 
 {
-	PropertyGroup& propGroup = m_props.addGroup("BlockCompression");
-	//                name                      default                 min     max          storage
-	propGroup.addInt ("m_mode",                 m_mode,                 0,      Mode_Count,  &m_mode);
-	propGroup.addBool("m_tests[0].m_usePCA",    m_tests[0].m_usePCA,                         &m_tests[0].m_usePCA);
-	propGroup.addBool("m_tests[1].m_usePCA",    m_tests[1].m_usePCA,                         &m_tests[1].m_usePCA);
-	propGroup.addPath("m_txSrcPath",            "kodim23.png",                               &m_txSrcPath);
+	Properties::PushGroup("BlockCompression");
+		//              name                           default                     min           max              storage
+		Properties::Add    ("m_mode",                  m_mode,                     0,            (int)Mode_Count, &m_mode);
+		Properties::Add    ("m_tests[0].m_usePCA",     m_tests[0].m_usePCA,                                       &m_tests[0].m_usePCA);
+		Properties::Add    ("m_tests[1].m_usePCA",     m_tests[1].m_usePCA,                                       &m_tests[1].m_usePCA);
+		Properties::AddPath("m_txSrcPath",             m_txSrcPath,                                               &m_txSrcPath);
+	Properties::PopGroup();
 }
 
 BlockCompression::~BlockCompression()
 {
+	Properties::InvalidateGroup("BlockCompression");
 }
 
 bool BlockCompression::init(const frm::ArgList& _args)
@@ -89,7 +92,7 @@ bool BlockCompression::update()
 		"Block EP1\0"
 		);
 	
-	if (ImGui::Button("Source Image"))
+	if (ImGui::Button(ICON_FA_FOLDER " Source Image"))
 	{
 		if (FileSystem::PlatformSelect(m_txSrcPath)) 
 		{
