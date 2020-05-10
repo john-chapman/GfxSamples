@@ -3,7 +3,6 @@
 #include <frm/core/AppSample3d.h>
 
 using namespace frm;
-using namespace apt;
 
 typedef AppSample3d AppBase;
 
@@ -13,7 +12,7 @@ public:
 	PCA();
 	virtual ~PCA();
 
-	virtual bool init(const apt::ArgList& _args) override;
+	virtual bool init(const ArgList& _args) override;
 	virtual void shutdown() override;
 	virtual bool update() override;
 	virtual void draw() override;

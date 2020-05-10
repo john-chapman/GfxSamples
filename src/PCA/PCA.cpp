@@ -1,35 +1,38 @@
 #include "PCA.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
+#include <frm/core/rand.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
 #include <frm/core/Profiler.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
-
-#include <apt/rand.h>
-#include <apt/ArgList.h>
 
 static PCA s_inst;
 
 PCA::PCA()
 	: AppBase("PCA") 
 {
-	PropertyGroup& propGroup = m_props.addGroup("PCA");
-	propGroup.addBool  ("m_showGizmo",              m_showGizmo,                                &m_showGizmo);
-	propGroup.addBool  ("m_incrementalEstimateAvg", m_incrementalEstimateAvg,                   &m_incrementalEstimateAvg);
-	propGroup.addInt   ("m_dataCount",              m_dataCount,               2,      512,     &m_dataCount);
-	propGroup.addInt   ("m_randomSeed",             m_randomSeed,              1,      99999,   &m_randomSeed);
-	propGroup.addBool  ("m_varianceBounds",         m_varianceBounds,                           &m_varianceBounds);
-	propGroup.addFloat ("m_varianceGamma",          m_varianceGamma,           0.0f,   2.0f,    &m_varianceGamma);
+	Properties::PushGroup("PCA");
+		//              name                         default                     min           max        storage
+		Properties::Add("m_showGizmo",               m_showGizmo,                                         &m_showGizmo);
+		Properties::Add("m_incrementalEstimateAvg",  m_incrementalEstimateAvg,                            &m_incrementalEstimateAvg);
+		Properties::Add("m_dataCount",               m_dataCount,                2,            512,       &m_dataCount);
+		Properties::Add("m_randomSeed",              m_randomSeed,               1,            999999,    &m_randomSeed);
+		Properties::Add("m_varianceBounds",          m_varianceBounds,                                    &m_varianceBounds);
+		Properties::Add("m_varianceGamma",           m_varianceGamma,            0.0f,         2.0f,      &m_varianceGamma);
+	Properties::PopGroup();
 
 }
 
 PCA::~PCA()
 {
+	Properties::InvalidateGroup("PCA");
 }
 
-bool PCA::init(const apt::ArgList& _args)
+bool PCA::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) 
 	{
