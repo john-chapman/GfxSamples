@@ -1,39 +1,42 @@
 {
-	"Font": {
-		"Font": "",
-		"FontOversample": 1,
-		"FontEnableScaling": false,
-		"FontSize": 13.0
-	},
 	"Raytrace": {
-		"m_hitEpsilon": 0.00009999999747378752,
 		"m_lightPath.m_azimuth": 2.6005406379699709,
-		"m_maxChildRayCount": 2,
-		"m_lightPath.m_elevation": 1.3962634801864625,
+		"m_lightPath.m_theta": 0.46700000762939455,
 		"m_sphereCount": 512,
-		"m_resolutionScale": 2,
-		"m_lightPath.m_theta": 0.5590000152587891
+		"m_lightPath.m_elevation": 1.3962634801864625,
+		"m_maxChildRayCount": 2,
+		"m_resolutionScale": 1,
+		"m_hitEpsilon": 0.00009999999747378752
 	},
-	"AppSample": {
-		"ShowMenu": false,
-		"ShowPropertyEditor": false,
-		"ShowProfiler": false,
-		"ShowShaderViewer": false,
-		"VsyncMode": 0,
-		"ShowLogNotifications": false,
-		"ShowTextureViewer": false,
-		"WindowSize": [-1, -1],
-		"Resolution": [-1, -1],
-		"ShowLog": false
-	},
-	"GlContext": {
-		"GlVersion": [-1, -1],
-		"GlCompatibility": false,
-		"GlDebug": false
-	},
+	"Font": {},
 	"AppSample3d": {
-		"Scene Path": "Scene.json",
-		"Show Helpers": false,
-		"Show Scene Editor": false
+		"ScenePath": "Scene.json",
+		"ShowSceneEditor": false,
+		"ShowHelpers": false
+	},
+	"GlContext": {},
+	"AppSample": {
+		"VsyncMode": 0,
+		"ShowShaderViewer": false,
+		"ShowLogNotifications": false,
+		"ShowPropertyEditor": false,
+		"WindowSize": [-1, -1],
+		"ShowMenu": false,
+		"ShowTextureViewer": false,
+		"Resolution": [-1, -1],
+		"ShowProfiler": false,
+		"ShowLog": false,
+		"Font": {
+			"FontEnableScaling": true,
+			"FontSize": 13.0,
+			"FontOversample": 1,
+			"FontPath": ""
+		},
+		"GlContext": {
+			"HDR": false,
+			"GlDebug": false,
+			"GlCompatibility": false,
+			"GlVersion": [-1, -1]
+		}
 	}
 }

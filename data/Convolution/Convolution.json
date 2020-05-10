@@ -6,7 +6,7 @@
 		"m_kernelWidth": 9,
 		"m_kernelMode": 2,
 		"m_kernelType": 1,
-		"m_prefilterBlurWidth": 3,
+		"m_prefilterBlurWidth": 64,
 		"m_gaussianSigma": 3.9800002574920656,
 		"m_prefilterSampleCount": 4,
 		"m_prefilterLodBias": 0.5

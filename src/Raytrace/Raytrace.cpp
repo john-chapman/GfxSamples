@@ -8,6 +8,7 @@
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
 #include <frm/core/Profiler.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
@@ -25,20 +26,22 @@ static vec3 Reflect(const vec3& _N, const vec3& _I)
 
 Raytrace::Raytrace()
 	: AppBase("Raytrace") 
-{	
-	PropertyGroup& propGroup = m_props.addGroup("Raytrace");
-	//                 name                        default                    min            max    storage
-	propGroup.addInt  ("m_sphereCount",            m_sphereCount,             1,             64,     &m_sphereCount);
-	propGroup.addInt  ("m_maxChildRayCount",       m_maxChildRayCount,        0,             64,     &m_maxChildRayCount);
-	propGroup.addFloat("m_hitEpsilon",             m_hitEpsilon,              1e-7f,         0.1f,   &m_hitEpsilon);
-	propGroup.addInt  ("m_resolutionScale",        m_resolutionScale,         1,             8,      &m_resolutionScale);
-	propGroup.addFloat("m_lightPath.m_theta",      m_lightPath.m_theta,       0.0f,          1.0f,   &m_lightPath.m_theta);
-	propGroup.addFloat("m_lightPath.m_azimuth",    m_lightPath.m_azimuth,     0.0f,          6.3f,   &m_lightPath.m_azimuth);
-	propGroup.addFloat("m_lightPath.m_elevation",  m_lightPath.m_elevation,   0.0f,          3.2f,   &m_lightPath.m_elevation);
+{
+	Properties::PushGroup("Raytrace");
+		//              name                        default                     min           max     storage
+		Properties::Add("m_sphereCount",            m_sphereCount,              1,            64,     &m_sphereCount);
+		Properties::Add("m_maxChildRayCount",       m_maxChildRayCount,         0,            64,     &m_maxChildRayCount);
+		Properties::Add("m_hitEpsilon",             m_hitEpsilon,               1e-7f,        0.1f,   &m_hitEpsilon);
+		Properties::Add("m_resolutionScale",        m_resolutionScale,          1,            8,      &m_resolutionScale);
+		Properties::Add("m_lightPath.m_theta",      m_lightPath.m_theta,        0.0f,         1.0f,   &m_lightPath.m_theta);
+		Properties::Add("m_lightPath.m_azimuth",    m_lightPath.m_azimuth,      0.0f,         6.3f,   &m_lightPath.m_azimuth);
+		Properties::Add("m_lightPath.m_elevation",  m_lightPath.m_elevation,    0.0f,         3.2f,   &m_lightPath.m_elevation);
+	Properties::PopGroup();
 }
 
 Raytrace::~Raytrace()
 {
+	Properties::InvalidateGroup("Raytrace");
 }
 
 bool Raytrace::init(const ArgList& _args)
