@@ -8,6 +8,7 @@
 #include <frm/core/GlContext.h>
 #include <frm/core/Mesh.h>
 #include <frm/core/Profiler.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 #include <frm/core/Window.h>
@@ -253,21 +254,23 @@ static Convolution s_inst;
 Convolution::Convolution()
 	: AppBase("Convolution")
 {
-	PropertyGroup& propGroup = m_props.addGroup("Convolution");
-	//                  name                       default                  min     max          storage
-	propGroup.addInt   ("m_kernelType",            m_kernelType,            0,      Type_Count,  &m_kernelType);
-	propGroup.addInt   ("m_kernelMode",            m_kernelMode,            0,      Mode_Count,  &m_kernelMode);
-	propGroup.addInt   ("m_kernelWidth",           m_kernelWidth,           1,      21,          &m_kernelWidth);
-	propGroup.addFloat ("m_gaussianSigma",         m_gaussianSigma,         0.0f,   4.0f,        &m_gaussianSigma);
-	propGroup.addFloat ("m_prefilterLodBias",      m_prefilterLodBias,      0.0f,   2.0f,        &m_prefilterLodBias);
-	propGroup.addInt   ("m_prefilterSampleCount",  m_prefilterSampleCount,  2,      64,          &m_prefilterSampleCount);
-	propGroup.addInt   ("m_prefilterBlurWidth",    m_prefilterBlurWidth,    0,      64,          &m_prefilterBlurWidth);
-	propGroup.addBool  ("m_cached",                m_cached,                                     &m_cached);
-	propGroup.addBool  ("m_showKernel",            m_showKernel,                                 &m_showKernel);
+	Properties::PushGroup("Convolution");
+		//              name                       default                     min           max            storage
+		Properties::Add("m_kernelType",            m_kernelType,               0,            Type_Count     &m_kernelType);
+		Properties::Add("m_kernelMode",            m_kernelMode,               0,            Mode_Count     &m_kernelMode);
+		Properties::Add("m_kernelWidth",           m_kernelWidth,              1,            21,            &m_kernelWidth);
+		Properties::Add("m_gaussianSigma",         m_gaussianSigma,            0.0f,         4.0f,          &m_gaussianSigma);
+		Properties::Add("m_prefilterLodBias",      m_prefilterLodBias,         0.0f,         2.0f,          &m_prefilterLodBias);
+		Properties::Add("m_prefilterSampleCount",  m_prefilterSampleCount,     2,            64,            &m_prefilterSampleCount);
+		Properties::Add("m_prefilterBlurWidth",    m_prefilterBlurWidth,       0,            64,            &m_prefilterBlurWidth);
+		Properties::Add("m_cached",                m_cached,                                                &m_cached);
+		Properties::Add("m_showKernel",            m_showKernel,                                            &m_showKernel);
+	Properties::PopGroup();
 }
 
 Convolution::~Convolution()
 {
+	Properties::InvalidateGroup("Convolution");
 }
 
 bool Convolution::init(const ArgList& _args)

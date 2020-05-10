@@ -96,6 +96,9 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicRenderer.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BitFlags.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Buffer.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
@@ -159,7 +162,7 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Property.h">
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Properties.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Quadtree.h">
@@ -184,6 +187,9 @@
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.h">
+      <Filter>all\frm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ShadowAtlas.h">
       <Filter>all\frm\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\SkeletonAnimation.h">
@@ -666,6 +672,9 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\stb_truetype.h">
       <Filter>all\frm\core\extern\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\json.hpp">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\linalg\linalg.h">
       <Filter>all\frm\core\extern\linalg</Filter>
     </ClInclude>
@@ -870,6 +879,9 @@
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\stb_image_write.h">
       <Filter>all\frm\core\extern</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tiny_gltf.h">
+      <Filter>all\frm\core\extern</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tinyexr.h">
       <Filter>all\frm\core\extern</Filter>
     </ClInclude>
@@ -980,7 +992,7 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_blend.cpp">
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_gltf.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_md5.cpp">
@@ -992,7 +1004,7 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Property.cpp">
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Properties.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.cpp">
@@ -1011,6 +1023,9 @@
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.cpp">
+      <Filter>all\frm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ShadowAtlas.cpp">
       <Filter>all\frm\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\SkeletonAnimation.cpp">
@@ -1253,5 +1268,10 @@
     <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\platform.cpp">
       <Filter>win\frm\core</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\EASTL.natvis">
+      <Filter>all\frm\core\extern\EASTL</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>

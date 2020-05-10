@@ -1,55 +1,51 @@
 {
-	"Font": {
-		"Font": "",
-		"FontOversample": 1,
-		"FontEnableScaling": true,
-		"FontSize": 13.0
-	},
-	"Lens Flare": {
-		"Ghost Spacing": 0.4000000059604645,
-		"Halo Aspect Ratio": 0.6000000238418579,
-		"Downsample": 2,
-		"Ghost Count": 5,
-		"Global Brightness": 0.05000000074505806,
-		"Halo Thickness": 0.10000000149011612,
-		"Blur Size": 12,
-		"Halo Radius": 0.6000000238418579,
-		"Lens Flare Only": false,
-		"Halo Threshold": 9.0,
-		"Features Only": false,
-		"Chromatic Aberration": 0.003000000026077032,
-		"Blur Step": 1.5,
-		"Ghost Threshold": 9.0
-	},
-	"AppSample": {
-		"ShowMenu": false,
-		"ShowPropertyEditor": false,
-		"ShowProfiler": false,
-		"ShowShaderViewer": false,
-		"VsyncMode": 0,
-		"ShowLogNotifications": false,
-		"ShowTextureViewer": false,
-		"WindowSize": [-1, -1],
-		"Resolution": [-1, -1],
-		"ShowLog": false
-	},
-	"GlContext": {
-		"GlVersion": [-1, -1],
-		"GlCompatibility": false,
-		"GlDebug": false
+	"Font": {},
+	"LensFlare": {
+		"m_globalBrightness": 0.20000000298023225,
+		"m_ghostThreshold": 12.0,
+		"m_chromaticAberration": 0.0020000000949949028,
+		"m_blurSize": 8,
+		"m_haloAspectRatio": 0.6000000238418579,
+		"m_haloRadius": 0.5,
+		"m_showFeaturesOnly": false,
+		"m_ghostCount": 8,
+		"m_downsample": 2,
+		"m_ghostSpacing": 0.30000001192092898,
+		"m_haloThreshold": 20.0,
+		"m_blurStep": 4.0,
+		"m_showLensFlareOnly": false,
+		"m_haloThickness": 0.05000000074505806
 	},
 	"AppSample3d": {
-		"Scene Path": "Scene.json",
-		"Show Helpers": false,
-		"Show Scene Editor": false
+		"ScenePath": "Scene.json",
+		"ShowSceneEditor": false,
+		"ShowHelpers": false
 	},
-	"Color Correction": {
-		"Saturation": 1.0,
-		"Tint": [1.0, 0.9999779462814331, 0.9999779462814331],
-		"Enabled": true,
-		"Exposure": 0.0,
-		"Local Exposure Max": 0.25,
-		"Contrast": 1.0,
-		"Local Exposure Lod": 2.0
+	"Lens Flare": {},
+	"Color Correction": {},
+	"GlContext": {},
+	"AppSample": {
+		"VsyncMode": 0,
+		"ShowShaderViewer": false,
+		"ShowLogNotifications": false,
+		"ShowPropertyEditor": false,
+		"WindowSize": [-1, -1],
+		"ShowMenu": false,
+		"ShowTextureViewer": false,
+		"Resolution": [-1, -1],
+		"ShowProfiler": false,
+		"ShowLog": false,
+		"Font": {
+			"FontEnableScaling": true,
+			"FontSize": 13.0,
+			"FontOversample": 1,
+			"FontPath": ""
+		},
+		"GlContext": {
+			"HDR": false,
+			"GlDebug": false,
+			"GlCompatibility": false,
+			"GlVersion": [-1, -1]
+		}
 	}
 }

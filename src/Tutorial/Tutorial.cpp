@@ -92,7 +92,7 @@ bool Tutorial::init(const ArgList& _args)
 	m_fbScene = Framebuffer::Create(2, m_txScene, m_txSceneDepth);
 
  // Loading a mesh from disk is also trivial, but only .obj is currently supported :'(
-	m_mesh = Mesh::Create("models/teapot.obj");
+	m_mesh = Mesh::Create("models/Teapot_1.obj");
 
  // Vertex/fragment shaders can be loaded and compiled in a single step, with optional defines.
 	m_shMesh = Shader::CreateVsFs("shaders/Mesh_vs.glsl", "shaders/Mesh_fs.glsl", { "DEFINE_ONE 1", "DEFINE_TWO 2", "DEFINE_THREE 3" });
