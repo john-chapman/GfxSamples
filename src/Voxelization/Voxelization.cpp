@@ -8,6 +8,7 @@
 #include <frm/core/Mesh.h>
 #include <frm/core/MeshData.h>
 #include <frm/core/Profiler.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
@@ -18,15 +19,17 @@ static Voxelization s_inst;
 Voxelization::Voxelization()
 	: AppBase("Voxelization") 
 {
-	PropertyGroup& propGroup = m_props.addGroup("Voxelization");
-	//                  name                       default                   min       max          storage
-	propGroup.addFloat ("m_voxelsPerMeter",        m_voxelsPerMeter,         0.1f,     2.0f,        &m_voxelsPerMeter);
-	propGroup.addFloat3("m_voxelVolumeSizeMeters", m_voxelVolumeSizeMeters,  1.0f,     256.0f,      &m_voxelVolumeSizeMeters);
-	propGroup.addFloat3("m_voxelVolumeOrigin",     m_voxelVolumeOrigin,      -FLT_MAX, FLT_MAX,     &m_voxelVolumeOrigin);
+	Properties::PushGroup("Voxelization");
+		//              name                       default                     min             max            storage
+		Properties::Add("m_voxelsPerMeter",        m_voxelsPerMeter,           0.1f,           2.0f,          &m_voxelsPerMeter);
+		Properties::Add("m_voxelVolumeSizeMeters", m_voxelVolumeSizeMeters,    vec3(1.0f),     vec3(256.0f),  &m_voxelVolumeSizeMeters);
+		Properties::Add("m_voxelVolumeOrigin",     m_voxelVolumeOrigin,        vec3(-FLT_MAX), vec3(FLT_MAX), &m_voxelVolumeOrigin);
+	Properties::PopGroup();
 }
 
 Voxelization::~Voxelization()
 {
+	Properties::InvalidateGroup("Voxelization");
 }
 
 bool Voxelization::init(const ArgList& _args)
@@ -38,8 +41,8 @@ bool Voxelization::init(const ArgList& _args)
 
 	m_worldMatrix = ScaleMatrix(vec3(m_voxelVolumeSizeMeters.y / 2.0f));
 
-	m_msTeapot = Mesh::Create("models/Box_1.obj");
-	//m_msTeapot = Mesh::Create("models/Teapot_1.obj");
+	//m_msTeapot = Mesh::Create("models/Box_1.obj");
+	m_msTeapot = Mesh::Create("models/Teapot_1.obj");
 	//m_msTeapot = Mesh::Create("models/md5/bob_lamp_update.md5mesh");
 	if (!m_msTeapot || m_msTeapot->getState() != Mesh::State_Loaded)
 	{
