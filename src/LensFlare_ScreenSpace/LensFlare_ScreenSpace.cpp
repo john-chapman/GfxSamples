@@ -1,52 +1,51 @@
 #include "LensFlare_ScreenSpace.h"
 
-#include <frm/core/def.h>
+#include <frm/core/frm.h>
 #include <frm/core/gl.h>
+#include <frm/core/ArgList.h>
 #include <frm/core/Framebuffer.h>
 #include <frm/core/GlContext.h>
+#include <frm/core/Image.h>
 #include <frm/core/Mesh.h>
 #include <frm/core/MeshData.h>
 #include <frm/core/Profiler.h>
-#include <frm/core/Property.h>
+#include <frm/core/Properties.h>
 #include <frm/core/Shader.h>
 #include <frm/core/Texture.h>
 
-#include <apt/ArgList.h>
-#include <apt/Image.h>
 
 using namespace frm;
-using namespace apt;
 
 static LensFlare_ScreenSpace s_inst;
 
 LensFlare_ScreenSpace::LensFlare_ScreenSpace()
 	: AppBase("LensFlare_ScreenSpace")
 {
-	PropertyGroup& propGroup = m_props.addGroup("Lens Flare");
-	//                  name                     default        min     max      storage
-	propGroup.addBool  ("Lens Flare Only",       false,                          &m_showLensFlareOnly);
-	propGroup.addBool  ("Features Only",         false,                          &m_showFeaturesOnly);
-	propGroup.addInt   ("Downsample",            1,             0,      4,       &m_downsample);
-	propGroup.addFloat ("Global Brightness",     0.01f,         0.0f,   1.0f,    &m_globalBrightness);
-	propGroup.addFloat ("Chromatic Aberration",  0.01f,         0.0f,   0.2f,    &m_chromaticAberration);
-	propGroup.addInt   ("Ghost Count",           4,             0,      32,      &m_ghostCount);
-	propGroup.addFloat ("Ghost Spacing",         0.1f,          0.0f,   2.0f,    &m_ghostSpacing);
-	propGroup.addFloat ("Ghost Threshold",       2.0f,          0.0f,   20.0f,   &m_ghostThreshold);
-	propGroup.addFloat ("Halo Radius",           0.6f,          0.0f,   2.0f,    &m_haloRadius);
-	propGroup.addFloat ("Halo Thickness",        0.1f,          0.0f,   0.4f,    &m_haloThickness);
-	propGroup.addFloat ("Halo Threshold",        2.0f,          0.0f,   20.0f,   &m_haloThreshold);
-	propGroup.addFloat ("Halo Aspect Ratio",     1.0f,          0.0f,   2.0f,    &m_haloAspectRatio);
-	propGroup.addInt   ("Blur Size",             16,            1,      64,      &m_blurSize);
-	propGroup.addFloat ("Blur Step",             1.5f,          1.0f,   4.0f,    &m_blurStep);
-
-	m_colorCorrection.setProps(m_props);
+	Properties::PushGroup("LensFlare");
+		//              name                       default                     min           max           storage
+		Properties::Add("m_showLensFlareOnly",     m_showLensFlareOnly,                                    &m_showLensFlareOnly);
+		Properties::Add("m_showFeaturesOnly",      m_showFeaturesOnly,                                     &m_showFeaturesOnly);
+		Properties::Add("m_downsample",            m_downsample,               0,            4,            &m_downsample);
+		Properties::Add("m_globalBrightness",      m_globalBrightness,         0.0f,         1.0f,         &m_globalBrightness);
+		Properties::Add("m_chromaticAberration",   m_chromaticAberration,      0.0f,         0.2f,         &m_chromaticAberration);
+		Properties::Add("m_ghostCount",            m_ghostCount,               0,            32,           &m_ghostCount);
+		Properties::Add("m_ghostSpacing",          m_ghostSpacing,             0.0f,         2.0f,         &m_ghostSpacing);
+		Properties::Add("m_ghostThreshold",        m_ghostThreshold,           0.0f,         20.0f,        &m_ghostThreshold);
+		Properties::Add("m_haloRadius",            m_haloRadius,               0.0f,         2.0f,         &m_haloRadius);
+		Properties::Add("m_haloThickness",         m_haloThickness,            0.0f,         0.5f,         &m_haloThickness);
+		Properties::Add("m_haloThreshold",         m_haloThreshold,            0.0f,         20.0f,        &m_haloThreshold);
+		Properties::Add("m_haloAspectRatio",       m_haloAspectRatio,          0.0f,         2.0f,         &m_haloAspectRatio);
+		Properties::Add("m_blurSize",              m_blurSize,                 1,            64,           &m_blurSize);
+		Properties::Add("m_blurStep",              m_blurStep,                 1.0f,         4.0f,         &m_blurStep);
+	Properties::PopGroup();
 }
 
 LensFlare_ScreenSpace::~LensFlare_ScreenSpace()
 {
+	Properties::InvalidateGroup("LensFlare");
 }
 
-bool LensFlare_ScreenSpace::init(const apt::ArgList& _args)
+bool LensFlare_ScreenSpace::init(const ArgList& _args)
 {
 	if (!AppBase::init(_args)) {
 		return false;
@@ -169,8 +168,8 @@ void LensFlare_ScreenSpace::draw()
 			ctx->bindTexture("txSrc", m_txSceneColor);
 			ctx->bindImage("txDst", m_txSceneColor, GL_WRITE_ONLY, ++lvl);
 			ctx->dispatch(
-				APT_MAX((w + localX - 1) / localX, 1),
-				APT_MAX((h + localY - 1) / localY, 1)
+				Max((w + localX - 1) / localX, 1),
+				Max((h + localY - 1) / localY, 1)
 				);
 			glAssert(glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT));
 			w = w >> 1;
@@ -284,8 +283,8 @@ bool LensFlare_ScreenSpace::initLensFlare()
 	shutdownLensFlare();
 
 	ivec2 sz = ivec2(m_txSceneColor->getWidth(), m_txSceneColor->getHeight());
-	sz.x = APT_MAX(sz.x >> m_downsample, 1);
-	sz.y = APT_MAX(sz.y >> m_downsample, 1);
+	sz.x = Max(sz.x >> m_downsample, 1);
+	sz.y = Max(sz.y >> m_downsample, 1);
 	m_txFeatures[0] = Texture::Create2d(sz.x, sz.y, m_txSceneColor->getFormat());
 	m_txFeatures[0]->setName("txFeatures");
 	m_txFeatures[0]->setWrap(GL_CLAMP_TO_EDGE);

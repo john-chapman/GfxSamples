@@ -10,7 +10,7 @@ public:
 	Tutorial();
 	virtual ~Tutorial();
 
-	virtual bool init(const apt::ArgList& _args) override;
+	virtual bool init(const frm::ArgList& _args) override;
 	virtual void shutdown() override;
 	virtual bool update() override;
 	virtual void draw() override;

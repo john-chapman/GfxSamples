@@ -5,14 +5,14 @@ return
 		"../src/PCA/**",
 	},
 
+	Tutorial =
+	{
+		"../src/Tutorial/**",
+	},
+
 	Convolution =
 	{
 		"../src/Convolution/**",
-	},
-
-	Tutorial =
-	{
-		"../src/PCA/**",
 	},
 
 	LensFlare_ScreenSpace =

@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug Win64|x64">
+      <Configuration>Debug Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release Win64|x64">
+      <Configuration>Release Win64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{33827CC1-9FEC-3038-E82A-E2DD54D40E8D}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GfxSampleFramework</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
+    <OutDir>..\..\extern\GfxSampleFramework\lib\</OutDir>
+    <IntDir>obj\Win64\Debug\GfxSampleFramework\</IntDir>
+    <TargetName>GfxSampleFramework_debug</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
+    <OutDir>..\..\extern\GfxSampleFramework\lib\</OutDir>
+    <IntDir>obj\Win64\Release\GfxSampleFramework\</IntDir>
+    <TargetName>GfxSampleFramework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLEW_STATIC=1;FRM_MODULE_CORE=1;EA_COMPILER_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;FRM_DEBUG;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\all\frm\core\extern;..\..\extern\GfxSampleFramework\src\win\frm\core\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
+if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/extern" "$(ProjectDir)../../extern/GfxSampleFramework//extern"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Win64|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLEW_STATIC=1;FRM_MODULE_CORE=1;EA_COMPILER_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\extern\GfxSampleFramework\src\all;..\..\extern\GfxSampleFramework\src\win;..\..\extern\GfxSampleFramework\src\all\frm\core\extern;..\..\extern\GfxSampleFramework\src\win\frm\core\extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(ProjectDir)..\..\bin\sample_common" mklink /j "$(ProjectDir)..\..\bin\sample_common" "$(ProjectDir)..\..\data\common"
+if not exist "$(ProjectDir)../../bin/common" mklink /j "$(ProjectDir)../../bin/common" "$(ProjectDir)../../extern/GfxSampleFramework//data/common"
+if not exist "$(ProjectDir)../../bin/extern" mklink /j "$(ProjectDir)../../bin/extern" "$(ProjectDir)../../extern/GfxSampleFramework//extern"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\App.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ArgList.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicRenderer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BitFlags.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Buffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Camera.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Component.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Factory.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\File.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\FileSystem.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Image.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Json.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MemoryPool.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Octree.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\PersistentVector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Pool.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Properties.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Quadtree.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RingBuffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Serializer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ShadowAtlas.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\SkeletonAnimation.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Spline.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StaticInitializer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StreamingQuadtree.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\String.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StringHash.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextParser.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Texture.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextureAtlas.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Time.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Window.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\XForm.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\compress.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\config.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eacompiler.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eacompilertraits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\config\eaplatform.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eabase.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eahave.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\earesult.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eastdarg.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\eaunits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\int128.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\nullptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EABase\version.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\algorithm.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\allocator.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\allocator_malloc.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\any.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\array.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bitset.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bitvector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\adaptors.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\call_traits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\compressed_pair.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_ring_buffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_string_abstract.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\fixed_tuple_vector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\intrusive_sdlist.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\intrusive_slist.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\list_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\ring_buffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\sort_extra.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\sparse_matrix.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\string_abstract.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\bonus\tuple_vector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\chrono.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\core_allocator.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\core_allocator_adapter.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\deque.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_allocator.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_function.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_hash_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_hash_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_list.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_slist.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_string.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_substring.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\fixed_vector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\functional.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\hash_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\hash_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\heap.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\initializer_list.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\allocator_traits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\allocator_traits_fwd_decls.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\char_traits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\config.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\copy_help.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\enable_shared.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\fill_help.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\fixed_pool.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function_detail.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\function_help.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\functional_base.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\generic_iterator.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\hashtable.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\in_place_t.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\integer_sequence.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\intrusive_hashtable.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\mem_fn.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\memory_base.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\meta.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\move_help.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\pair_fwd_decls.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\piecewise_construct_t.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\red_black_tree.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\smart_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\thread_support.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\tuple_fwd_decls.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_compound.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_fundamental.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_pod.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_properties.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\internal\type_transformations.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_hash_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_hash_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_list.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\intrusive_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\iterator.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\linked_array.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\linked_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\list.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\memory.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\meta.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\numeric.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\numeric_limits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\optional.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\priority_queue.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\queue.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\random.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\ratio.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\safe_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\scoped_array.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\scoped_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\segmented_vector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\shared_array.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\shared_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\slist.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\sort.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\span.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\stack.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_hash_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\string_view.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\tuple.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\type_traits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unique_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unordered_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\unordered_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\utility.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\variant.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_map.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_multimap.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_multiset.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\vector_set.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\version.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\weak_ptr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\glew.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\glxew.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\wglew.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\IconFontCppHeaders\IconsFontAwesome4.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\IconFontCppHeaders\IconsFontAwesome5.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\im3d\im3d.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\im3d\im3d_config.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\im3d\im3d_math.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imconfig.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_ext.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\stb_rect_pack.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\stb_textedit.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\stb_truetype.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\json.hpp" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\linalg\linalg.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lodepng.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lapi.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lauxlib.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lcode.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lctype.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldebug.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldo.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lfunc.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lgc.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\llex.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\llimits.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lmem.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lobject.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lopcodes.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lparser.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lprefix.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lstate.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lstring.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ltable.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ltm.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lua.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lua.hpp" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\luaconf.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lualib.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lundump.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lvm.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lzio.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\md5mesh.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\miniz.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\noise1234.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\allocators.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\document.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\encodedstream.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\encodings.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\error\en.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\error\error.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\filereadstream.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\filewritestream.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\fwd.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\itoa.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\meta.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\regex.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\strtod.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\internal\swap.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\memorybuffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\memorystream.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\pointer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\reader.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\schema.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\stream.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\rapidjson\writer.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\stb_image.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\stb_image_write.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tiny_gltf.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tinyexr.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\tinyobjloader\tiny_obj_loader.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\frm.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\geom.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\gl.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\hash.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\interpolation.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\math.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\memory.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\platform.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\rand.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\all\frm\core\types.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\win\frm\core\extern\renderdoc_app.h" />
+    <ClInclude Include="..\..\extern\GfxSampleFramework\src\win\frm\core\win.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\App.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\AppSample3d.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ArgList.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicMaterial.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\BasicRenderer.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Buffer.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Camera.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Component.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Curve.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\File.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\FileSystem.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Framebuffer.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\GlContext.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Image.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Input.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Json.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Log.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\LuaScript.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MemoryPool.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Mesh.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_gltf.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_md5.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\MeshData_obj.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Profiler.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Properties.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderNodes.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\RenderTarget.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Resource.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Scene.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Serializer.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Shader.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\ShadowAtlas.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\SkeletonAnimation.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\SkeletonAnimation_md5.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Spline.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StreamingQuadtree.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\String.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\StringHash.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextParser.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Texture.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Time.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\Window.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\XForm.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\compress.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\allocator_eastl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\assert.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\fixed_pool.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\hashtable.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\intrusive_list.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\numeric_limits.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\red_black_tree.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\string_eastl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\source\thread_support.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\GL\glew.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\dds.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\im3d\im3d.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imconfig.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\imgui\imgui_ext.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lodepng.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lapi.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lauxlib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lbaselib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lbitlib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lcode.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lcorolib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lctype.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldblib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldebug.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldo.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ldump.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lfunc.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lgc.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\linit.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\liolib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\llex.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lmathlib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lmem.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\loadlib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lobject.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lopcodes.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\loslib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lparser.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lstate.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lstring.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lstrlib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ltable.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ltablib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\ltm.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lundump.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lutf8lib.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lvm.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\lua\lzio.c" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\noise1234.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\frm.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\geom.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\gl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\hash.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\math.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\memory.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\rand.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\all\frm\core\types.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\FileImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\FileSystemImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\GlContextImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\InputImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\TimeImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\WindowImpl.cpp" />
+    <ClCompile Include="..\..\extern\GfxSampleFramework\src\win\frm\core\platform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\extern\GfxSampleFramework\src\all\frm\core\extern\EASTL\EASTL.natvis" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

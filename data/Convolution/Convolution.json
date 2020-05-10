@@ -1,36 +1,39 @@
 {
-	"Font": {
-		"Font": "",
-		"FontOversample": 1,
-		"FontEnableScaling": false,
-		"FontSize": 13.0
-	},
-	"AppSample": {
-		"ShowMenu": false,
-		"ShowPropertyEditor": false,
-		"ShowProfiler": false,
-		"ShowShaderViewer": false,
-		"VsyncMode": 2,
-		"ShowLogNotifications": false,
-		"ShowTextureViewer": false,
-		"WindowSize": [-1, -1],
-		"Resolution": [-1, -1],
-		"ShowLog": false
-	},
-	"GlContext": {
-		"GlVersion": [-1, -1],
-		"GlCompatibility": false,
-		"GlDebug": false
-	},
+	"Font": {},
 	"Convolution": {
 		"m_showKernel": false,
-		"m_prefilterLodBias": 0.5,
+		"m_cached": true,
 		"m_kernelWidth": 9,
-		"m_kernelMode": 3,
-		"m_gaussianSigma": 1.7740000486373902,
+		"m_kernelMode": 2,
 		"m_kernelType": 1,
-		"m_prefilterBlurWidth": 8,
+		"m_prefilterBlurWidth": 3,
+		"m_gaussianSigma": 3.9800002574920656,
 		"m_prefilterSampleCount": 4,
-		"m_cached": true
+		"m_prefilterLodBias": 0.5
+	},
+	"GlContext": {},
+	"AppSample": {
+		"VsyncMode": 2,
+		"ShowShaderViewer": false,
+		"ShowLogNotifications": false,
+		"ShowPropertyEditor": false,
+		"WindowSize": [-1, -1],
+		"ShowMenu": true,
+		"ShowTextureViewer": false,
+		"Resolution": [-1, -1],
+		"ShowProfiler": false,
+		"ShowLog": false,
+		"Font": {
+			"FontEnableScaling": true,
+			"FontSize": 13.0,
+			"FontOversample": 1,
+			"FontPath": ""
+		},
+		"GlContext": {
+			"HDR": false,
+			"GlDebug": false,
+			"GlCompatibility": false,
+			"GlVersion": [-1, -1]
+		}
 	}
 }
