@@ -1,3 +1,5 @@
+//https://github.com/GPUOpen-Tools/compressonator/blob/master/Compressonator/CMP_Core/shaders/BC1_Encode_kernel.cpp
+
 /*	Notes:
 	- USE_SHARED_MEMORY can actually be slower due to the need for more barriers. Texture fetches are probably fast and coherent.
 */
@@ -69,23 +71,23 @@ vec3 FindPrincipleAxis(in vec3 _min, in vec3 _max, in vec3 _avg)
 #if 0
 	// Incremental PCA
 	vec3 axis = _max - _min;
-      for (int i = 0; i < 16; i++)
-      {
-        	vec3 x = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[0]);
-            vec3 y = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[1]);
-            vec3 z = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[2]);
+	for (int i = 0; i < 16; i++)
+	{
+		vec3 x = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[0]);
+		vec3 y = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[1]);
+		vec3 z = vec3(SRC_TEXEL(i) * SRC_TEXEL(i)[2]);
 
-            vec3 v = vec3((i == 0) ? SRC_TEXEL(i) : axis);
+		vec3 v = vec3((i == 0) ? SRC_TEXEL(i) : axis);
 
-			v = normalize(v);
-            //v.normalize(&def);
+		v = normalize(v);
+		//v.normalize(&def);
 
-            axis += (x * v);
-            axis += (y * v);
-            axis += (z * v);
-      }
+		axis += (x * v);
+		axis += (y * v);
+		axis += (z * v);
+	}
 
-      return normalize(axis);
+	return normalize(axis);
 #else
  // compute the covariance matrix (it's symmetrical, only need 6 elements)
 	float cov[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -267,14 +269,14 @@ void main()
 	block[0] = bitfieldInsert(block[0], ep0i, 16, 16);
 
  // early-out solid color blocks
- 	/*if (ep0i == ep1i) 
+ 	if (ep0i == ep1i) 
 	{
 		if (TEXEL_INDEX == 0) 
 		{
 			bfDst[BLOCK_INDEX] = block;
 		}
 		return;
-	}*/
+	}
 
  // find indices
 	{
@@ -318,6 +320,5 @@ void main()
 		}	
 	 // write block data
 		bfDst[BLOCK_INDEX] = block;
-	}
-	
+	}	
 }
